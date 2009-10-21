@@ -1,0 +1,257 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.jvnet.hudson.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>1.318</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <artifactId>monitoring</artifactId>
+  <packaging>hpi</packaging>
+  <version>1.8.0</version>
+  <name>Monitoring</name>
+  <description>Monitoring of hudson</description>
+  <url>http://wiki.hudson-ci.org/display/HUDSON/monitoring</url>
+  <inceptionYear>2009</inceptionYear>
+
+  <properties>
+    <!-- which version of Hudson is this plugin built against? -->
+    <hudson.version>${project.parent.version}</hudson.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <java.net.id>evernat</java.net.id>
+  </properties>
+
+  <developers>
+    <developer>
+      <id>evernat</id>
+      <email>evernat@free.fr</email>
+      <name>Emeric Vernat</name>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <distribution>repo</distribution>
+      <name>LGPL</name>
+      <url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+    </license>
+  </licenses>
+  <dependencies>
+	<dependency>
+	  <groupId>net.bull.javamelody</groupId>
+	  <artifactId>javamelody-core</artifactId>
+	  <version>1.8.0</version>
+	  <systemPath>${basedir}/javamelody-1.8.0.jar</systemPath>
+	  <scope>system</scope>
+	</dependency>
+	<dependency>
+	  <groupId>org.jrobin</groupId>
+	  <artifactId>jrobin</artifactId>
+	  <version>1.5.9</version>
+	</dependency>
+    <dependency>
+      <!-- pour les tests unitaires -->
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.5</version>
+      <scope>provided</scope>
+    </dependency>
+	  	<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<artifactId>bcmail-jdk14</artifactId>
+					<groupId>bouncycastle</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>bcprov-jdk14</artifactId>
+					<groupId>bouncycastle</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>bctsp-jdk14</artifactId>
+					<groupId>bouncycastle</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	  <dependency>
+      <groupId>org.jvnet.hudson.main</groupId>
+      <artifactId>hudson-core</artifactId>
+      <version>${hudson.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.hudson.main</groupId>
+      <artifactId>hudson-war</artifactId>
+      <type>war</type>
+      <version>${hudson.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.5</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jvnet.hudson.main</groupId>
+      <artifactId>hudson-test-harness</artifactId>
+      <version>${hudson.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <!--
+      Since new versions need to overwrite old versions, it's better
+      not to have version number in the .hpi file name.
+    -->
+    <finalName>${project.artifactId}</finalName>
+    <defaultGoal>package</defaultGoal>
+    <extensions>
+      <extension>
+        <groupId>org.jvnet.wagon-svn</groupId>
+        <artifactId>wagon-svn</artifactId>
+        <!-- For some reason RELEASE doesn't work in Netbeans -->
+        <version>1.9</version>
+      </extension>
+    </extensions>
+    <plugins>
+      <plugin>
+        <groupId>org.jvnet.hudson.tools</groupId>
+        <artifactId>maven-hpi-plugin</artifactId>
+        <version>1.30</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <scm>
+    <connection>scm:svn:https://svn.dev.java.net/svn/hudson/trunk/hudson/plugins/javamelody</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/trunk/hudson/plugins/javamelody</developerConnection>
+    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/javamelody</url>
+  </scm>
+
+  <repositories>
+    <!-- We put the central repository first, as most artifacts will be
+         found there
+    -->
+    <repository>
+      <id>central</id>
+      <url>http://repo1.maven.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+        <!-- only look for jars here when they are not present locally -->
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <!-- We put the java.net2 repository second, as it's a Maven2 format
+         and therefore _should_ be faster for Maven2. Hopefully, people
+         will stop pushing their artifacts to java.net and push to java.net2
+         or somebody will put a synchronizer in place to require
+         only the java.net2 repository.
+    -->
+    <repository>
+      <id>java.net2</id>
+      <url>http://download.java.net/maven/2</url>
+      <releases>
+        <enabled>true</enabled>
+        <!-- only look for jars here when they are not present locally -->
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <!-- Now for the java.net repository (legacy layout) -->
+    <repository>
+      <id>java.net</id>
+      <url>http://download.java.net/maven/1</url>
+      <layout>legacy</layout>
+      <releases>
+        <enabled>true</enabled>
+        <!-- only look for jars here when they are not present locally -->
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+
+    <!-- Finally, the slowest repository of them all -->
+    <repository>
+      <id>hudson-libs</id>
+      <url>https://hudson.dev.java.net/source/browse/*checkout*/hudson/hudson/main/lib</url>
+      <layout>legacy</layout>
+      <releases>
+        <enabled>true</enabled>
+        <!-- only look for jars here when they are not present locally -->
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <pluginRepositories>
+    <!-- We put the central repository first, as most artifacts will be
+         found there
+    -->
+    <pluginRepository>
+      <id>central</id>
+      <url>http://repo1.maven.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+        <!-- only look for jars here when they are not present locally -->
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+
+    <pluginRepository>
+      <id>java.net2</id>
+      <url>http://download.java.net/maven/2</url>
+      <releases>
+        <enabled>true</enabled>
+        <!-- only look for jars here when they are not present locally -->
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <distributionManagement>
+    <repository>
+      <id>java.net-m2-repository</id>
+      <url>java-net:/maven2-repository/trunk/repository/</url>
+    </repository>
+  </distributionManagement>
+
+</project>
