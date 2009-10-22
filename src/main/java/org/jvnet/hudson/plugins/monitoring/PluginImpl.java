@@ -18,10 +18,14 @@ public class PluginImpl extends Plugin {
   public void start() throws Exception {
     super.start();
 	
-	// on active les actions systèmes (gc, heap dump, histogramme mémoire, processus...)
-	System.setProperty("javamelody.system-actions-enabled", "true");
+	// on active les actions systèmes (gc, heap dump, histogramme mémoire, processus...), sauf si l'administrateur a dit différemment
+	if (System.getProperty("javamelody.system-actions-enabled") == null) {
+		System.setProperty("javamelody.system-actions-enabled", "true");
+	}
 	// on désactive les statistiques sql puisqu'il n'y en aura pas
-	System.setProperty("javamelody.displayed-counters", "http,error,log");
+	if (System.getProperty("javamelody.displayed-counters") == null) {
+		System.setProperty("javamelody.displayed-counters", "http,error,log");
+	}
 	
 	PluginServletFilter.addFilter(new net.bull.javamelody.MonitoringFilter());
 	
