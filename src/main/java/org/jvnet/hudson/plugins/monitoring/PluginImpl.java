@@ -26,6 +26,11 @@ public class PluginImpl extends Plugin {
 	if (System.getProperty("javamelody.displayed-counters") == null) {
 		System.setProperty("javamelody.displayed-counters", "http,error,log");
 	}
+	// le répertoire de stockage est dans le répertoire de hudson au lieu d'être dans le répertoire temporaire
+	// ("/" initial nécessaire sous windows pour javamelody v1.8.1)
+	if (System.getProperty("javamelody.storage-directory") == null && System.getenv("HUDSON_HOME") != null) {
+		System.setProperty("javamelody.storage-directory", "/" + System.getenv("HUDSON_HOME") + "/monitoring");
+	}
 	// google-analytics pour connaître le nombre d'installations actives et pour connaître les fonctions les plus utilisées
 	if (System.getProperty("javamelody.analytics-id") == null) {
 		System.setProperty("javamelody.analytics-id", "UA-1335263-7");
