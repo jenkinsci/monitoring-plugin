@@ -9,7 +9,7 @@
   </parent>
   <artifactId>monitoring</artifactId>
   <packaging>hpi</packaging>
-  <version>1.8.0</version>
+  <version>1.8.1</version>
   <name>Monitoring</name>
   <description>Monitoring of hudson</description>
   <url>http://wiki.hudson-ci.org/display/HUDSON/monitoring</url>
@@ -39,9 +39,7 @@
 	<dependency>
 	  <groupId>net.bull.javamelody</groupId>
 	  <artifactId>javamelody-core</artifactId>
-	  <version>1.8.0</version>
-	  <systemPath>${basedir}/javamelody-1.8.0.jar</systemPath>
-	  <scope>system</scope>
+	  <version>1.8.1</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.jrobin</groupId>
@@ -59,7 +57,6 @@
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>
-			<optional>true</optional>
 			<exclusions>
 				<exclusion>
 					<artifactId>bcmail-jdk14</artifactId>
