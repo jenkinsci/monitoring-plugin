@@ -26,6 +26,10 @@ public class PluginImpl extends Plugin {
 	if (System.getProperty("javamelody.displayed-counters") == null) {
 		System.setProperty("javamelody.displayed-counters", "http,error,log");
 	}
+	// google-analytics pour connaître le nombre d'installations actives et pour connaître les fonctions les plus utilisées
+	if (System.getProperty("javamelody.analytics-id") == null) {
+		System.setProperty("javamelody.analytics-id", "UA-1335263-7");
+	}
 	
 	PluginServletFilter.addFilter(new net.bull.javamelody.MonitoringFilter());
 	
