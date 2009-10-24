@@ -9,7 +9,7 @@
   </parent>
   <artifactId>monitoring</artifactId>
   <packaging>hpi</packaging>
-  <version>1.8.1</version>
+  <version>1.8.1-SNAPSHOT</version>
   <name>Monitoring</name>
   <description>Monitoring of hudson</description>
   <url>http://wiki.hudson-ci.org/display/HUDSON/monitoring</url>
