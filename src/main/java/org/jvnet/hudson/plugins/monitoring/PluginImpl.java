@@ -22,9 +22,9 @@ public class PluginImpl extends Plugin {
 	if (System.getProperty("javamelody.system-actions-enabled") == null) {
 		System.setProperty("javamelody.system-actions-enabled", "true");
 	}
-	// on désactive les statistiques sql puisqu'il n'y en aura pas
-	if (System.getProperty("javamelody.displayed-counters") == null) {
-		System.setProperty("javamelody.displayed-counters", "http,error,log");
+	// on désactive les graphiques jdbc et statistiques sql puisqu'il n'y en aura pas
+	if (System.getProperty("javamelody.no-database") == null) {
+		System.setProperty("javamelody.no-database", "true");
 	}
 	// le répertoire de stockage est dans le répertoire de hudson au lieu d'être dans le répertoire temporaire
 	// ("/" initial nécessaire sous windows pour javamelody v1.8.1)
@@ -36,11 +36,9 @@ public class PluginImpl extends Plugin {
 		System.setProperty("javamelody.analytics-id", "UA-1335263-7");
 	}
 	
-	PluginServletFilter.addFilter(new net.bull.javamelody.MonitoringFilter());
+	PluginServletFilter.addFilter(new HudsonMonitoringFilter());
 	
-	// TODO on ne peut pas ajouter aussi un SessionListener comme dans un web.xml ?
-	// TODO il faudrait enlever used jdbc connections & active jdbc connections qui ne servent pas pour hudson
-	// TODO on pourrait vérifier si la page "/manage" est appelée et ajouter un lien "/monitoring" dans le flux html avant <a href="load-statistics">
-	// mais pour l'instant on se contentera d'ajouter un lien dans la liste des plugins disponibles ou installés (index.jelly)
+	// Rq: avec hudson, on ne peut pas ajouter un SessionListener comme dans un web.xml
+	// TODO on pourrait ajouter un counter de nom job avec les temps de build
   }
 }
