@@ -2,6 +2,8 @@ package org.jvnet.hudson.plugins.monitoring;
 
 import hudson.Extension;
 import hudson.model.ManagementLink;
+import org.kohsuke.stapler.Stapler;
+import org.kohsuke.stapler.StaplerRequest;
 
 /**
  * ManagementLink of the plugin to add a link in the "/manage" page.
@@ -52,6 +54,10 @@ public class PluginManagementLink extends ManagementLink {
      * so relative paths are interpreted against the root {@link Hudson} object.
      */
     public String getUrlName() {
+		StaplerRequest req = Stapler.getCurrentRequest();
+        if (req != null) {
+			return req.getContextPath() + "/monitoring";
+		}
 		return "/monitoring";
 	}
 }
