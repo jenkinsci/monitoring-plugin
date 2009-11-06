@@ -5,5 +5,5 @@
 -->
 <div>
   Hudson's monitoring with <a href='http://javamelody.googlecode.com' target='_blank'>JavaMelody</a>.
-  Open <a href='/monitoring'>report</a> after installation.
+  Open <a href='${request.contextPath}/monitoring'>report</a> after installation.
 </div>
