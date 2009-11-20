@@ -12,7 +12,7 @@ import org.kohsuke.stapler.StaplerRequest;
 @Extension
 public class PluginManagementLink extends ManagementLink {
     /**
-     * Mostly works like {@link Action#getIconFileName()}, except that
+     * Mostly works like {@link hudson.model.Action#getIconFileName()}, except that
      * the expected icon size is 48x48, not 24x24. So if you give
      * just a file name, "/images/48x48" will be assumed.
      *
@@ -51,7 +51,7 @@ public class PluginManagementLink extends ManagementLink {
      *
      * <p>
      * In case of {@link ManagementLink}, this value is put straight into the href attribute,
-     * so relative paths are interpreted against the root {@link Hudson} object.
+     * so relative paths are interpreted against the root {@link hudson.model.Hudson} object.
      */
     public String getUrlName() {
 		StaplerRequest req = Stapler.getCurrentRequest();
