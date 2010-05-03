@@ -45,13 +45,12 @@
 	  <version>1.5.9</version>
 	</dependency>
     <dependency>
-      <!-- pour les tests unitaires -->
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-      <scope>provided</scope>
+	  <groupId>javax</groupId>
+	  <artifactId>javaee-web-api</artifactId>
+	  <version>6.0</version>
+	  <scope>provided</scope>
     </dependency>
-	  	<dependency>
+      	<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
 			<version>2.1.7</version>

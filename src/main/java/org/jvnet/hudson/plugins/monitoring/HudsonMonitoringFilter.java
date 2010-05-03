@@ -1,9 +1,11 @@
 package org.jvnet.hudson.plugins.monitoring;
 
 import net.bull.javamelody.MonitoringFilter;
+import net.bull.javamelody.SessionListener;
 import hudson.model.Hudson;
 import java.io.IOException;
 import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -14,6 +16,15 @@ import javax.servlet.http.HttpServletRequest;
  * @author Emeric Vernat
  */
 public class HudsonMonitoringFilter extends MonitoringFilter {
+	/** {@inheritDoc} */
+	public void init(FilterConfig config) throws ServletException {
+		// Rq: avec hudson, on ne peut pas ajouter un SessionListener comme dans un web.xml, sauf si api servlet 3.0
+		if (config.getServletContext().getMajorVersion() >= 3) {
+			config.getServletContext().addListener(SessionListener.class);
+		}
+		super.init(config);
+	}
+	
     /** {@inheritDoc} */
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
