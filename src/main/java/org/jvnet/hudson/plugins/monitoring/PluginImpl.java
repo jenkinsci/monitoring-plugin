@@ -38,7 +38,6 @@ public class PluginImpl extends Plugin {
 	
 	PluginServletFilter.addFilter(new HudsonMonitoringFilter());
 	
-	// Rq: avec hudson, on ne peut pas ajouter un SessionListener comme dans un web.xml
 	// TODO on pourrait ajouter un counter de nom job avec les temps de build
   }
 }
