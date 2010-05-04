@@ -5,7 +5,8 @@ import java.net.URL;
 import org.jvnet.hudson.test.HudsonTestCase;
 
 /**
- *
+ * This test is disabled because of "ClassFormatError: Absent Code attribute..."
+ * with the maven dependency "javaee-web-api" in pom.xml
  * @author Emeric Vernat
  */
 public class MonitoringFilterIntegrationTest extends HudsonTestCase {
