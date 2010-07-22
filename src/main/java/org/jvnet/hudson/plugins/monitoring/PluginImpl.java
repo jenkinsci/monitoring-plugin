@@ -52,8 +52,6 @@ public class PluginImpl extends Plugin {
 		System.setProperty("javamelody.http-transform-pattern", "/\\d+/|/site/.+|avadoc/.+|/ws/.+|obertura/.+|estReport/.+|iolations/file/.+|/user/.+|/static/\\w+/");
 	}
 	
-	net.bull.javamelody.HttpMonitoringCleaner.cleanIfFirstStart(context);
-	
 	PluginServletFilter.addFilter(new HudsonMonitoringFilter());
 	
 	// TODO on pourrait ajouter un counter avec les temps de build
