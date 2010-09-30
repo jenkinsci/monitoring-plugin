@@ -19,9 +19,10 @@ public class HudsonMonitoringFilter extends MonitoringFilter {
 	/** {@inheritDoc} */
 	public void init(FilterConfig config) throws ServletException {
 		// Rq: avec hudson, on ne peut pas ajouter un SessionListener comme dans un web.xml, sauf si api servlet 3.0
-		if (config.getServletContext().getMajorVersion() >= 3) {
-			config.getServletContext().addListener(SessionListener.class);
-		}
+		// sauf que cela ne marche dans Hudson avec Tomcat 7.0.0
+		// if (config.getServletContext().getMajorVersion() >= 3) {
+		//	config.getServletContext().addListener(SessionListener.class);
+		// }
 		super.init(config);
 	}
 	
