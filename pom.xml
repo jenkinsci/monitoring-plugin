@@ -9,7 +9,7 @@
   </parent>
   <artifactId>monitoring</artifactId>
   <packaging>hpi</packaging>
-  <version>1.20.0</version>
+  <version>1.21.0-SNAPSHOT</version>
   <name>Monitoring</name>
   <description>Monitoring of hudson</description>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Monitoring</url>
@@ -86,10 +86,4 @@
       </snapshots>
     </repository>
   </repositories>
-
-  <scm>
-    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/monitoring-1.20.0</connection>
-    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/monitoring-1.20.0</developerConnection>
-    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/monitoring/tags/monitoring-1.20.0</url>
-  </scm>
 </project>
