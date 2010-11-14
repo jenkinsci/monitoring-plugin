@@ -36,7 +36,8 @@ public class HudsonMonitoringFilter extends MonitoringFilter {
 		}
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
 
-		if (httpRequest.getRequestURI().equals(getMonitoringUrl(httpRequest))) {
+		if (httpRequest.getRequestURI().equals(getMonitoringUrl(httpRequest))
+				&& !Boolean.parseBoolean(System.getProperty("javamelody.plugin-authentication-disabled"))) {
 			// only the hudson administrator can view the monitoring report
 			Hudson.getInstance().checkPermission(Hudson.ADMINISTER);
 		}
