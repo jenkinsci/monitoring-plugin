@@ -1,7 +1,6 @@
 package org.jvnet.hudson.plugins.monitoring;
 
-import net.bull.javamelody.MonitoringFilter;
-import net.bull.javamelody.SessionListener;
+import net.bull.javamelody.PluginMonitoringFilter;
 import hudson.model.Hudson;
 import java.io.IOException;
 import javax.servlet.FilterChain;
@@ -15,7 +14,10 @@ import javax.servlet.http.HttpServletRequest;
  * Filter of monitoring JavaMelody with security check for Hudson administrator.
  * @author Emeric Vernat
  */
-public class HudsonMonitoringFilter extends MonitoringFilter {
+public class HudsonMonitoringFilter extends PluginMonitoringFilter {
+	private static final boolean PLUGIN_AUTHENTICATION_DISABLED = Boolean.parseBoolean(System.getProperty(
+		"javamelody.plugin-authentication-disabled"));
+
 	/** {@inheritDoc} */
 	public void init(FilterConfig config) throws ServletException {
 		// Rq: avec hudson, on ne peut pas ajouter un SessionListener comme dans un web.xml, sauf si api servlet 3.0
@@ -36,8 +38,8 @@ public class HudsonMonitoringFilter extends MonitoringFilter {
 		}
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
 
-		if (httpRequest.getRequestURI().equals(getMonitoringUrl(httpRequest))
-				&& !Boolean.parseBoolean(System.getProperty("javamelody.plugin-authentication-disabled"))) {
+		if (!PLUGIN_AUTHENTICATION_DISABLED
+				&& httpRequest.getRequestURI().equals(getMonitoringUrl(httpRequest))) {
 			// only the hudson administrator can view the monitoring report
 			Hudson.getInstance().checkPermission(Hudson.ADMINISTER);
 		}
