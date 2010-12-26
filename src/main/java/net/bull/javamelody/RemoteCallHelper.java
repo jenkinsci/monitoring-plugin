@@ -1,3 +1,6 @@
+/*
+ * Copyright 2008-2011 by Emeric Vernat
+ */
 package net.bull.javamelody;
 
 import hudson.model.Computer;
