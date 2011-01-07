@@ -4,6 +4,7 @@
 package net.bull.javamelody;
 
 import static net.bull.javamelody.HttpParameters.ACTION_PARAMETER;
+import static net.bull.javamelody.HttpParameters.FORMAT_PARAMETER;
 import static net.bull.javamelody.HttpParameters.HEAP_HISTO_PART;
 import static net.bull.javamelody.HttpParameters.HTML_CONTENT_TYPE;
 import static net.bull.javamelody.HttpParameters.JMX_VALUE;
@@ -12,10 +13,14 @@ import static net.bull.javamelody.HttpParameters.MBEANS_PART;
 import static net.bull.javamelody.HttpParameters.PART_PARAMETER;
 import static net.bull.javamelody.HttpParameters.PROCESSES_PART;
 import static net.bull.javamelody.HttpParameters.SESSION_ID_PARAMETER;
+import static net.bull.javamelody.HttpParameters.THREADS_PART;
 import static net.bull.javamelody.HttpParameters.THREAD_ID_PARAMETER;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -81,6 +86,8 @@ public class NodesController {
 					final List<String> jmxValues = RemoteCallHelper.collectJmxValues(req
 							.getParameter(JMX_VALUE));
 					doJmxValue(resp, jmxValues);
+				} else if (TransportFormat.isATransportFormat(req.getParameter(FORMAT_PARAMETER))) {
+					doCompressedSerializable(req, resp, monitoringController);
 				} else if (partParameter == null) {
 					monitoringController.doReport(req, resp, lastJavaInformationsList);
 				} else {
@@ -245,6 +252,38 @@ public class NodesController {
 		htmlReport.writeHeapHistogram(heapHistogram, null, HEAP_HISTO_PART);
 		htmlReport.writeHtmlFooter();
 		writer.close();
+	}
+
+	private void doCompressedSerializable(HttpServletRequest httpRequest,
+			HttpServletResponse httpResponse, MonitoringController monitoringController)
+			throws IOException {
+		Serializable serializable;
+		try {
+			serializable = createSerializable(httpRequest, monitoringController);
+		} catch (final Exception e) {
+			serializable = e;
+		}
+		monitoringController.doCompressedSerializable(httpRequest, httpResponse, serializable);
+	}
+
+	private Serializable createSerializable(HttpServletRequest httpRequest,
+			MonitoringController monitoringController) throws Exception { // NOPMD
+		final String part = httpRequest.getParameter(PART_PARAMETER);
+		if (HEAP_HISTO_PART.equalsIgnoreCase(part)) {
+			return RemoteCallHelper.collectGlobalHeapHistogram();
+		} else if (PROCESSES_PART.equalsIgnoreCase(part)) {
+			return new LinkedHashMap<String, List<ProcessInformations>>(
+					RemoteCallHelper.collectProcessInformationsByNodeName());
+		} else if (THREADS_PART.equalsIgnoreCase(part)) {
+			final ArrayList<List<ThreadInformations>> result = new ArrayList<List<ThreadInformations>>();
+			for (final JavaInformations javaInformations : lastJavaInformationsList) {
+				result.add(new ArrayList<ThreadInformations>(javaInformations
+						.getThreadInformationsList()));
+			}
+			return result;
+		}
+
+		return monitoringController.createDefaultSerializable(lastJavaInformationsList);
 	}
 
 	private HtmlReport createHtmlReport(HttpServletRequest req, HttpServletResponse resp,
