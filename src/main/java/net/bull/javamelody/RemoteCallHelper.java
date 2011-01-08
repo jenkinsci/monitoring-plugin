@@ -34,7 +34,10 @@ final class RemoteCallHelper {
 
 		@Override
 		public HeapHistogram call() throws Throwable {
-			return VirtualMachine.createHeapHistogram();
+			if (VirtualMachine.isSupported()) {
+				return VirtualMachine.createHeapHistogram();
+			}
+			return null;
 		}
 	};
 	private static final Callable<List<ProcessInformations>, Throwable> PROCESS_INFORMATIONS_TASK = new Callable<List<ProcessInformations>, Throwable>() {
@@ -167,9 +170,12 @@ final class RemoteCallHelper {
 		for (final HeapHistogram heapHisto : heapHistograms.values()) {
 			if (heapHistoTotal == null) {
 				heapHistoTotal = heapHisto;
-			} else {
+			} else if (heapHisto != null) {
 				heapHistoTotal.add(heapHisto);
 			}
+		}
+		if (heapHistoTotal == null) {
+			throw new IllegalStateException(I18N.getString("heap_histo_non_supporte"));
 		}
 		return heapHistoTotal;
 	}
