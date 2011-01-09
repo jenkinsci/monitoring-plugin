@@ -112,7 +112,7 @@ public class NodesCollector {
 		}
 	}
 
-	void scheduleReportMailForSlaves() {
+	private void scheduleReportMailForSlaves() {
 		for (final Period period : MailReport.getMailPeriods()) {
 			scheduleReportMailForSlaves(period);
 		}
