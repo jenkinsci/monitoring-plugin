@@ -41,7 +41,7 @@ public class CounterRunListener extends RunListener<AbstractBuild> {
 			return;
 		}
 		final String name = r.getProject().getName();
-		BUILD_COUNTER.bindContext(name, name);
+		BUILD_COUNTER.bindContextIncludingCpu(name);
 	}
 
 	/** {@inheritDoc} */
@@ -52,9 +52,7 @@ public class CounterRunListener extends RunListener<AbstractBuild> {
 		if (DISABLED || !BUILD_COUNTER.isDisplayed()) {
 			return;
 		}
-		final String name = r.getProject().getName();
-		final long duration = r.getDuration();
 		final boolean error = Result.FAILURE.equals(r.getResult());
-		BUILD_COUNTER.addRequest(name, duration, -1, error, -1);
+		BUILD_COUNTER.addRequestForCurrentContext(error);
 	}
 }
