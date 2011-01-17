@@ -173,7 +173,7 @@ public class NodesController {
 			doProcesses(req, resp, processInformationsByNodeName);
 		} else if (HEAP_HISTO_PART.equalsIgnoreCase(partParameter)) {
 			final HeapHistogram heapHistoTotal = RemoteCallHelper.collectGlobalHeapHistogram();
-			doHeapHisto(req, resp, heapHistoTotal);
+			doHeapHisto(req, resp, heapHistoTotal, monitoringController);
 		} else {
 			monitoringController.doReport(req, resp, lastJavaInformationsList);
 		}
@@ -245,13 +245,25 @@ public class NodesController {
 	}
 
 	private void doHeapHisto(HttpServletRequest req, HttpServletResponse resp,
-			HeapHistogram heapHistogram) throws IOException {
-		final PrintWriter writer = createWriterFromOutputStream(resp);
-		final HtmlReport htmlReport = createHtmlReport(req, resp, writer);
-		htmlReport.writeHtmlHeader();
-		htmlReport.writeHeapHistogram(heapHistogram, null, HEAP_HISTO_PART);
-		htmlReport.writeHtmlFooter();
-		writer.close();
+			HeapHistogram heapHistogram, MonitoringController monitoringController)
+			throws IOException {
+		if ("pdf".equalsIgnoreCase(req.getParameter(FORMAT_PARAMETER))) {
+			monitoringController.addPdfContentTypeAndDisposition(req, resp);
+			try {
+				final PdfOtherReport pdfOtherReport = new PdfOtherReport(
+						collector.getApplication(), resp.getOutputStream());
+				pdfOtherReport.writeHeapHistogram(heapHistogram);
+			} finally {
+				resp.getOutputStream().flush();
+			}
+		} else {
+			final PrintWriter writer = createWriterFromOutputStream(resp);
+			final HtmlReport htmlReport = createHtmlReport(req, resp, writer);
+			htmlReport.writeHtmlHeader();
+			htmlReport.writeHeapHistogram(heapHistogram, null, HEAP_HISTO_PART);
+			htmlReport.writeHtmlFooter();
+			writer.close();
+		}
 	}
 
 	private void doCompressedSerializable(HttpServletRequest httpRequest,
