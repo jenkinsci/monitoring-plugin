@@ -82,12 +82,15 @@ public class NodesController {
 					return;
 				}
 
+				final String formatParameter = req.getParameter(FORMAT_PARAMETER);
 				if (req.getParameter(JMX_VALUE) != null) {
 					final List<String> jmxValues = RemoteCallHelper.collectJmxValues(req
 							.getParameter(JMX_VALUE));
 					doJmxValue(resp, jmxValues);
 				} else if (TransportFormat.isATransportFormat(req.getParameter(FORMAT_PARAMETER))) {
 					doCompressedSerializable(req, resp, monitoringController);
+				} else if ("pdf".equalsIgnoreCase(formatParameter)) {
+					doPdf(req, resp, monitoringController);
 				} else if (partParameter == null) {
 					monitoringController.doReport(req, resp, lastJavaInformationsList);
 				} else {
@@ -119,6 +122,35 @@ public class NodesController {
 		new HtmlReport(collector, null, lastJavaInformationsList, Period.TOUT, writer)
 				.writeMessageIfNotNull(message, partToRedirectTo);
 		writer.close();
+	}
+
+	private void doPdf(HttpServletRequest req, HttpServletResponse resp,
+			MonitoringController monitoringController) throws IOException, InterruptedException,
+			ExecutionException {
+		if (PROCESSES_PART.equalsIgnoreCase(req.getParameter(PART_PARAMETER))) {
+			monitoringController.addPdfContentTypeAndDisposition(req, resp);
+			try {
+				doPdfProcesses(resp);
+			} finally {
+				resp.getOutputStream().flush();
+			}
+		} else {
+			monitoringController.doReport(req, resp, lastJavaInformationsList);
+		}
+	}
+
+	private void doPdfProcesses(HttpServletResponse resp) throws IOException, InterruptedException,
+			ExecutionException {
+		final Map<String, List<ProcessInformations>> processInformationsByNodeName = RemoteCallHelper
+				.collectProcessInformationsByNodeName();
+		final String title = I18N.getString("Processus");
+		final Map<String, List<ProcessInformations>> processInformationsByTitle = new LinkedHashMap<String, List<ProcessInformations>>();
+		for (final Map.Entry<String, List<ProcessInformations>> entry : processInformationsByNodeName
+				.entrySet()) {
+			processInformationsByTitle.put(title + " (" + entry.getKey() + ')', entry.getValue());
+		}
+		new PdfOtherReport(collector.getApplication(), resp.getOutputStream())
+				.writeProcessInformations(processInformationsByTitle);
 	}
 
 	private void doJmxValue(HttpServletResponse resp, List<String> jmxValues) throws IOException {
@@ -191,9 +223,13 @@ public class NodesController {
 		writer.write("<a href='?part=");
 		writer.write(PROCESSES_PART);
 		writer.write("'>");
-		I18N.writelnTo("<img src='?resource=action_refresh.png' alt='#Actualiser#'/> #Actualiser#",
+		I18N.writelnTo(
+				"<img src='?resource=action_refresh.png' alt='#Actualiser#'/> #Actualiser#</a>",
 				writer);
-		writer.write("</a></div>");
+		writer.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+		I18N.writelnTo("<a href='?part=processes&amp;format=pdf' title='#afficher_PDF#'>", writer);
+		I18N.writelnTo("<img src='?resource=pdf.png' alt='#PDF#'/> #PDF#</a>", writer);
+		writer.write("</div>");
 		final String title = I18N.getString("Processus");
 		for (final Map.Entry<String, List<ProcessInformations>> entry : processListByNodeName
 				.entrySet()) {
