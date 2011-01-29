@@ -9,13 +9,14 @@ import hudson.model.AbstractBuild;
 import hudson.model.listeners.RunListener;
 
 /**
- * Listener de début et de fin de builds pour alimenter les tableaux des builds en cours
- * et les statistiques des temps des builds.
+ * Listener de début et de fin de builds pour alimenter les tableaux des builds en cours,
+ * le graphique du nombre de builds en cours et les statistiques des temps des builds.
  * @author Emeric Vernat
  */
 @SuppressWarnings("rawtypes")
 public class CounterRunListener extends RunListener<AbstractBuild> {
-	private static final Counter BUILD_COUNTER = new Counter("builds", "jobs.png");
+	private static final Counter BUILD_COUNTER = new Counter(Counter.BUILDS_COUNTER_NAME,
+			"jobs.png");
 	private static final boolean COUNTER_HIDDEN = Parameters.isCounterHidden(BUILD_COUNTER
 			.getName());
 	private static final boolean DISABLED = Boolean.parseBoolean(Parameters
@@ -42,6 +43,7 @@ public class CounterRunListener extends RunListener<AbstractBuild> {
 		}
 		final String name = r.getProject().getName();
 		BUILD_COUNTER.bindContextIncludingCpu(name);
+		JdbcWrapper.RUNNING_BUILD_COUNT.incrementAndGet();
 	}
 
 	/** {@inheritDoc} */
@@ -52,6 +54,7 @@ public class CounterRunListener extends RunListener<AbstractBuild> {
 		if (DISABLED || !BUILD_COUNTER.isDisplayed()) {
 			return;
 		}
+		JdbcWrapper.RUNNING_BUILD_COUNT.decrementAndGet();
 		final boolean error = Result.FAILURE.equals(r.getResult());
 		BUILD_COUNTER.addRequestForCurrentContext(error);
 	}
