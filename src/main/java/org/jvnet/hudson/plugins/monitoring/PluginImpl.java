@@ -48,7 +48,7 @@ public class PluginImpl extends Plugin {
 		if (isParameterUndefined("javamelody.no-database")) {
 			System.setProperty("javamelody.no-database", "true");
 		}
-		// le repertoire de stockage est dans le repertoire de hudson au lieu
+		// le repertoire de stockage est dans le repertoire de Hudson/Jenkins au lieu
 		// d'etre dans le repertoire temporaire
 		// ("/" initial necessaire sous windows pour javamelody v1.8.1)
 		if (isParameterUndefined("javamelody.storage-directory")) {
