@@ -20,7 +20,7 @@ import net.bull.javamelody.NodesController;
 import net.bull.javamelody.PluginMonitoringFilter;
 
 /**
- * Filter of monitoring JavaMelody with security check for Hudson administrator.
+ * Filter of monitoring JavaMelody with security check for Hudson/Jenkins administrator.
  * 
  * @author Emeric Vernat
  */
@@ -56,7 +56,7 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 		final String monitoringSlavesUrl = monitoringUrl + "/nodes";
 		if (!PLUGIN_AUTHENTICATION_DISABLED
 				&& (requestURI.equals(monitoringUrl) || requestURI.equals(monitoringSlavesUrl))) {
-			// only the hudson administrator can view the monitoring report
+			// only the Hudson/Jenkins administrator can view the monitoring report
 			Hudson.getInstance().checkPermission(Hudson.ADMINISTER);
 		}
 

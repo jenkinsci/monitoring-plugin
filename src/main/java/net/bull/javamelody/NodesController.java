@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Controller between data and presentation for Hudson's nodes (slaves in
+ * Controller between data and presentation for Hudson/Jenkins' nodes (slaves in
  * general)
  * 
  * @author Emeric Vernat

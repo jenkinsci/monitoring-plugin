@@ -9,7 +9,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Collector of data for Hudson's nodes (slaves in general)
+ * Collector of data for Hudson/Jenkins' nodes (slaves in general)
  * 
  * @author Emeric Vernat
  */

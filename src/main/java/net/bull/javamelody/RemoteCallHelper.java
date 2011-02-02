@@ -23,7 +23,7 @@ final class RemoteCallHelper {
 
 		@Override
 		public JavaInformations call() throws Throwable {
-			// otherwise static values of the hudson master are used, but web.xml does not exist
+			// otherwise static values of the Hudson/Jenkins master are used, but web.xml does not exist
 			// on the slaves (pom.xml exists and will not be displayed without dependencies)
 			JavaInformations.setWebXmlExistsAndPomXmlExists(false, true);
 			return new JavaInformations(null, true);
