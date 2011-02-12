@@ -11,8 +11,8 @@
   <packaging>hpi</packaging>
   <version>1.26.0-SNAPSHOT</version>
   <name>Monitoring</name>
-  <description>Monitoring of hudson</description>
-  <url>http://wiki.hudson-ci.org/display/HUDSON/Monitoring</url>
+  <description>Monitoring of Hudson or Jenkins</description>
+  <url>http://wiki.jenkins-ci.org/display/JENKINS/Monitoring</url>
   <inceptionYear>2009</inceptionYear>
 
   <properties>
