@@ -98,7 +98,12 @@
     </repository>
   </repositories>
   
-  <!-- temporary -->
+	<scm>
+		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</connection>
+		<developerConnection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</developerConnection>
+	</scm>
+	
+	<!-- temporary -->
 	<distributionManagement>
 		<repository>
 			<id>java.net-m2-repository</id>
