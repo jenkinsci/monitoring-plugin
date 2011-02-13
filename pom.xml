@@ -101,7 +101,7 @@
 	<scm>
 		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</connection>
 		<developerConnection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</developerConnection>
-	  <url>https://svn.java.net/svn/hudson~svn/trunk/hudson/plugins/monitoring</url>
+	  <url>https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</url>
   </scm>
 	
 	<!-- temporary -->
