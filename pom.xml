@@ -32,6 +32,7 @@
 		<license>
 			<name>LGPL</name>
 			<url>http://www.gnu.org/licenses/lgpl-3.0.txt</url>
+			<!-- same license as the JavaMelody dependency, contact the author if it is a problem -->
 		</license>
 	</licenses>
 	<dependencies>
