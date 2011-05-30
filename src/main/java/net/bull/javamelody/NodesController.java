@@ -346,7 +346,8 @@ public class NodesController {
 			return result;
 		}
 
-		return monitoringController.createDefaultSerializable(lastJavaInformationsList);
+		final Range range = monitoringController.getRangeForSerializable(httpRequest);
+		return monitoringController.createDefaultSerializable(lastJavaInformationsList, range);
 	}
 
 	private HtmlReport createHtmlReport(HttpServletRequest req, HttpServletResponse resp,
