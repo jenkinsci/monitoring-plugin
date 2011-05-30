@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>net.bull.javamelody</groupId>
 			<artifactId>javamelody-core</artifactId>
-			<version>1.28.0</version>
+			<version>1.29.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jrobin</groupId>
