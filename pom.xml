@@ -40,11 +40,12 @@
 			<artifactId>javamelody-core</artifactId>
 			<version>1.30.0</version>
 		</dependency>
+		<!-- jrobin dependency is included in javamelody-core
 		<dependency>
 			<groupId>org.jrobin</groupId>
 			<artifactId>jrobin</artifactId>
 			<version>1.5.9</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-web-api</artifactId>
@@ -88,6 +89,7 @@
 			</plugin>
 		</plugins>
 	</build>
+	<!-- jrobin dependency is available in jenkins-ci repository
 	<repositories>
 		<repository>
 			<id>opennms-repo</id>
@@ -97,7 +99,7 @@
 				<enabled>false</enabled>
 			</snapshots>
 		</repository>
-	</repositories>
+	</repositories> -->
 
 	<scm>
 		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</connection>
