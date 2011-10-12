@@ -92,7 +92,7 @@ final class RemoteCallHelper {
 		@Override
 		public String call() throws Throwable {
 			final Action action = Action.valueOfIgnoreCase(actionName);
-			return action.execute(null, null, sessionId, threadId, jobId);
+			return action.execute(null, null, null, sessionId, threadId, jobId);
 		}
 	}
 
