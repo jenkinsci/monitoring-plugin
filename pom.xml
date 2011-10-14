@@ -9,7 +9,7 @@
 	</parent>
 	<artifactId>monitoring</artifactId>
 	<packaging>hpi</packaging>
-	<version>1.32.1-SNAPSHOT</version>
+	<version>1.32.1</version>
 	<name>Monitoring</name>
 	<description>Monitoring of Hudson or Jenkins</description>
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Monitoring</url>
@@ -102,9 +102,9 @@
 	</repositories> -->
 
 	<scm>
-		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</connection>
-		<developerConnection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</developerConnection>
-		<url>https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</url>
+		<connection>scm:svn:https://svn.jenkins-ci.org/tags/monitoring-1.32.1</connection>
+		<developerConnection>scm:svn:https://svn.jenkins-ci.org/tags/monitoring-1.32.1</developerConnection>
+		<url>https://svn.jenkins-ci.org/tags/monitoring-1.32.1</url>
 	</scm>
 
 	<!-- temporary -->
