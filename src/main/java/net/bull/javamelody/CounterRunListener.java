@@ -24,7 +24,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.listeners.RunListener;
 
 /**
- * Listener de début et de fin de builds pour alimenter les tableaux des builds en cours,
+ * Listener de debut et de fin de builds pour alimenter les tableaux des builds en cours,
  * le graphique du nombre de builds en cours et les statistiques des temps des builds.
  * @author Emeric Vernat
  */
@@ -39,7 +39,7 @@ public class CounterRunListener extends RunListener<AbstractBuild> {
 
 	public CounterRunListener() {
 		super(AbstractBuild.class);
-		// le compteur est affiché sauf si le paramètre displayed-counters dit
+		// le compteur est affiche sauf si le parametre displayed-counters dit
 		// le contraire
 		BUILD_COUNTER.setDisplayed(!COUNTER_HIDDEN);
 	}
