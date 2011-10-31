@@ -190,7 +190,7 @@ public class NodesController {
 			InterruptedException, ExecutionException {
 		if (MonitoringController.isCompressionSupported(httpRequest)) {
 			// comme la page html peut etre volumineuse
-			// on compresse le flux de reponse en gzip à partir de 4 Ko
+			// on compresse le flux de reponse en gzip a partir de 4 Ko
 			// (a moins que la compression http ne soit pas supportee
 			// comme par ex s'il y a un proxy squid qui ne supporte que http
 			// 1.0)
