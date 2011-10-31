@@ -75,7 +75,7 @@ public class PluginImpl extends Plugin {
 		if (isParameterUndefined("javamelody.analytics-id")) {
 			System.setProperty("javamelody.analytics-id", "UA-1335263-7");
 		}
-		// http-transform-pattern pour agreger les requêtes contenant des
+		// http-transform-pattern pour agreger les requetes contenant des
 		// parties "dynamiques" comme des numeros des builds,
 		// les fichiers dans job/<name>/site/, javadoc/, ws/, cobertura/,
 		// testReport/, violations/file/

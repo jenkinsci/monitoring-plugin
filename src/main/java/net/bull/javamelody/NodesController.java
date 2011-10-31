@@ -80,8 +80,8 @@ public class NodesController {
 				if (actionParameter != null) {
 					final String messageForReport;
 					if (Action.valueOfIgnoreCase(actionParameter) != Action.CLEAR_COUNTER) {
-						// on forwarde l'action (gc ou heap dump) sur l'application monitorée
-						// et on récupère les informations à jour (notamment mémoire)
+						// on forwarde l'action (gc ou heap dump) sur l'application monitoree
+						// et on recupere les informations a jour (notamment memoire)
 						final String actionName = req.getParameter(ACTION_PARAMETER);
 						final String sessionId = req.getParameter(SESSION_ID_PARAMETER);
 						final String threadId = req.getParameter(THREAD_ID_PARAMETER);
@@ -90,7 +90,7 @@ public class NodesController {
 								threadId, jobId);
 						writeMessage(resp, messageForReport, partParameter);
 					} else {
-						// nécessaire si action clear_counter
+						// necessaire si action clear_counter
 						messageForReport = monitoringController.executeActionIfNeeded(req);
 						writeMessage(resp, messageForReport, null);
 					}
@@ -133,7 +133,7 @@ public class NodesController {
 			throws IOException {
 		MonitoringController.noCache(resp);
 		final PrintWriter writer = createWriterFromOutputStream(resp);
-		// la période n'a pas d'importance pour writeMessageIfNotNull
+		// la periode n'a pas d'importance pour writeMessageIfNotNull
 		new HtmlReport(collector, null, lastJavaInformationsList, Period.TOUT, writer)
 				.writeMessageIfNotNull(message, partToRedirectTo);
 		writer.close();
@@ -189,9 +189,9 @@ public class NodesController {
 			MonitoringController monitoringController, String partParameter) throws IOException,
 			InterruptedException, ExecutionException {
 		if (MonitoringController.isCompressionSupported(httpRequest)) {
-			// comme la page html peut être volumineuse
-			// on compresse le flux de réponse en gzip à partir de 4 Ko
-			// (à moins que la compression http ne soit pas supportée
+			// comme la page html peut etre volumineuse
+			// on compresse le flux de reponse en gzip à partir de 4 Ko
+			// (a moins que la compression http ne soit pas supportee
 			// comme par ex s'il y a un proxy squid qui ne supporte que http
 			// 1.0)
 			final CompressionServletResponseWrapper wrappedResponse = new CompressionServletResponseWrapper(
