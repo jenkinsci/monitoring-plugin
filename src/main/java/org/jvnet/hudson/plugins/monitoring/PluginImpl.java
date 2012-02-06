@@ -26,8 +26,6 @@ import java.io.File;
 
 import javax.servlet.ServletContext;
 
-import net.bull.javamelody.CounterRunListener;
-
 /**
  * Entry point of the plugin.
  * 
