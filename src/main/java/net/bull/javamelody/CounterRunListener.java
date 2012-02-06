@@ -18,6 +18,7 @@
  */
 package net.bull.javamelody;
 
+import hudson.Extension;
 import hudson.model.Result;
 import hudson.model.TaskListener;
 import hudson.model.AbstractBuild;
@@ -28,6 +29,7 @@ import hudson.model.listeners.RunListener;
  * le graphique du nombre de builds en cours et les statistiques des temps des builds.
  * @author Emeric Vernat
  */
+@Extension
 @SuppressWarnings("rawtypes")
 public class CounterRunListener extends RunListener<AbstractBuild> {
 	private static final Counter BUILD_COUNTER = new Counter(Counter.BUILDS_COUNTER_NAME,

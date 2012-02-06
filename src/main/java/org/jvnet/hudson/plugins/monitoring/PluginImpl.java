@@ -107,9 +107,10 @@ public class PluginImpl extends Plugin {
 		super.postInitialize();
 		filter.getNodesCollector().init();
 
-		// I had no success with @Extension twice
+		// I had no success with @Extension for NodesListener (and there is a constructor parameter)
 		new NodesListener(filter.getNodesCollector()).register();
-		new CounterRunListener().register();
+
+		// replaced by @Extension in CounterRunListener: new CounterRunListener().register();
 	}
 
 	/** {@inheritDoc} */
