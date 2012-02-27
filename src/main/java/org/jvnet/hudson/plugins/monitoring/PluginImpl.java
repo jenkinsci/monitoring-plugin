@@ -70,7 +70,7 @@ public class PluginImpl extends Plugin {
 		}
 		// google-analytics pour connaitre le nombre d'installations actives et
 		// pour connaitre les fonctions les plus utilisees
-		if (isParameterUndefined("javamelody.analytics-id")) {
+		if (isParameterUndefined("javamelody.analytics-disabled") && isParameterUndefined("javamelody.analytics-id")) {
 			System.setProperty("javamelody.analytics-id", "UA-1335263-7");
 		}
 		// http-transform-pattern pour agreger les requetes contenant des
