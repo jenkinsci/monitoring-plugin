@@ -96,6 +96,9 @@ public class NodesCollector {
 	 * Schedule a collect now (used to collect data on new online nodes)
 	 */
 	public void scheduleCollectNow() {
+		if (monitoringDisabled) {
+			return;
+		}
 		final TimerTask collectTask = new TimerTask() {
 			/** {@inheritDoc} */
 			@Override
