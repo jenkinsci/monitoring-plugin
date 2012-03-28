@@ -96,17 +96,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	<!-- jrobin dependency is available in jenkins-ci repository
-	<repositories>
-		<repository>
-			<id>opennms-repo</id>
-			<name>OpenNMS Repository</name>
-			<url>http://repo.opennms.org/maven2</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories> -->
 
 	<scm>
 		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</connection>
