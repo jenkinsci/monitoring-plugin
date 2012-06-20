@@ -86,6 +86,11 @@ public class PluginImpl extends Plugin {
 					"/\\d+/|/site/.+|avadoc/.+|/ws/.+|obertura/.+|estReport/.+|iolations/file/.+|/user/.+|/static/\\w+/");
 		}
 
+		// fix for JENKINS-14050: Unreadable HTML response for the monitoring reports
+		if (isParameterUndefined("javamelody.gzip-compression-disabled")) {
+			System.setProperty("javamelody.gzip-compression-disabled", "true");
+		}
+
 		// we could set "javamelody.admin-emails" with
 		// ((Mailer.DescriptorImpl) Hudson.getInstance().getDescriptorByType(
 		// hudson.tasks.Mailer.DescriptorImpl.class)).getAdminAddress();
