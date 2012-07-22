@@ -109,7 +109,7 @@ public class NodesController {
 				} else if (partParameter == null) {
 					monitoringController.doReport(req, resp, lastJavaInformationsList);
 				} else {
-					doCompressedPart(req, resp, monitoringController, partParameter);
+					doPart(req, resp, monitoringController, partParameter);
 				}
 			} catch (final Exception e) {
 				writeMessage(resp, e.getMessage(), null);
@@ -183,27 +183,6 @@ public class NodesController {
 			writer.write(jmxValue);
 		}
 		writer.close();
-	}
-
-	private void doCompressedPart(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-			MonitoringController monitoringController, String partParameter) throws IOException,
-			InterruptedException, ExecutionException {
-		if (MonitoringController.isCompressionSupported(httpRequest)) {
-			// comme la page html peut etre volumineuse
-			// on compresse le flux de reponse en gzip a partir de 4 Ko
-			// (a moins que la compression http ne soit pas supportee
-			// comme par ex s'il y a un proxy squid qui ne supporte que http
-			// 1.0)
-			final CompressionServletResponseWrapper wrappedResponse = new CompressionServletResponseWrapper(
-					httpResponse, 4096);
-			try {
-				doPart(httpRequest, wrappedResponse, monitoringController, partParameter);
-			} finally {
-				wrappedResponse.finishResponse();
-			}
-		} else {
-			doPart(httpRequest, httpResponse, monitoringController, partParameter);
-		}
 	}
 
 	private void doPart(HttpServletRequest req, HttpServletResponse resp,
