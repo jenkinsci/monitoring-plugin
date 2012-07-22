@@ -24,7 +24,6 @@ import hudson.remoting.Callable;
 import hudson.remoting.Future;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -63,14 +62,12 @@ final class RemoteCallHelper {
 			return ProcessInformations.buildProcessInformations();
 		}
 	};
-	private static final Callable<String, Throwable> MBEANS_HTML_TASK = new Callable<String, Throwable>() {
+	private static final Callable<List<MBeanNode>, Throwable> MBEANS_TASK = new Callable<List<MBeanNode>, Throwable>() {
 		private static final long serialVersionUID = 7010512609895185019L;
 
 		@Override
-		public String call() throws Throwable {
-			final StringWriter writer = new StringWriter();
-			new HtmlMBeansReport(writer).writeTree();
-			return writer.toString();
+		public List<MBeanNode> call() throws Throwable {
+			return MBeans.getAllMBeanNodes();
 		}
 	};
 
@@ -168,9 +165,9 @@ final class RemoteCallHelper {
 				.values());
 	}
 
-	static Map<String, String> collectMBeansHtmlInformations() throws IOException,
+	static Map<String, List<MBeanNode>> collectMBeanNodesByNodeName() throws IOException,
 			InterruptedException, ExecutionException {
-		return collectDataByNodeName(MBEANS_HTML_TASK);
+		return collectDataByNodeName(MBEANS_TASK);
 	}
 
 	static Map<String, List<ProcessInformations>> collectProcessInformationsByNodeName()
