@@ -144,8 +144,20 @@ public class NodesController {
 			ExecutionException {
 		if (PROCESSES_PART.equalsIgnoreCase(req.getParameter(PART_PARAMETER))) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
+			final Map<String, List<ProcessInformations>> processInformationsByNodeName = RemoteCallHelper
+					.collectProcessInformationsByNodeName();
 			try {
-				doPdfProcesses(resp);
+				doPdfProcesses(resp, processInformationsByNodeName);
+			} finally {
+				resp.getOutputStream().flush();
+			}
+		} else if (MBEANS_PART.equalsIgnoreCase(req
+				.getParameter(PART_PARAMETER))) {
+			monitoringController.addPdfContentTypeAndDisposition(req, resp);
+			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = RemoteCallHelper
+					.collectMBeanNodesByNodeName();
+			try {
+				doPdfMBeans(resp, mbeanNodesByNodeName);
 			} finally {
 				resp.getOutputStream().flush();
 			}
@@ -154,18 +166,24 @@ public class NodesController {
 		}
 	}
 
-	private void doPdfProcesses(HttpServletResponse resp) throws IOException, InterruptedException,
-			ExecutionException {
-		final Map<String, List<ProcessInformations>> processInformationsByNodeName = RemoteCallHelper
-				.collectProcessInformationsByNodeName();
+	private void doPdfProcesses(HttpServletResponse resp,
+			Map<String, List<ProcessInformations>> processInformationsByNodeName)
+			throws IOException {
 		final String title = I18N.getString("Processus");
-		final Map<String, List<ProcessInformations>> processInformationsByTitle = new LinkedHashMap<String, List<ProcessInformations>>();
-		for (final Map.Entry<String, List<ProcessInformations>> entry : processInformationsByNodeName
-				.entrySet()) {
-			processInformationsByTitle.put(title + " (" + entry.getKey() + ')', entry.getValue());
-		}
+		final Map<String, List<ProcessInformations>> processInformationsByTitle = convertMapByNodeToMapByTitle(
+				processInformationsByNodeName, title);
 		new PdfOtherReport(collector.getApplication(), resp.getOutputStream())
 				.writeProcessInformations(processInformationsByTitle);
+	}
+
+	private void doPdfMBeans(HttpServletResponse resp,
+			Map<String, List<MBeanNode>> mbeanNodesByNodeName)
+			throws IOException {
+		final String title = I18N.getString("MBeans");
+		final Map<String, List<MBeanNode>> mbeanNodesByTitle = convertMapByNodeToMapByTitle(
+				mbeanNodesByNodeName, title);
+		new PdfOtherReport(collector.getApplication(), resp.getOutputStream())
+				.writeMBeans(mbeanNodesByTitle);
 	}
 
 	private void doJmxValue(HttpServletResponse resp, List<String> jmxValues) throws IOException {
@@ -186,19 +204,20 @@ public class NodesController {
 	}
 
 	private void doPart(HttpServletRequest req, HttpServletResponse resp,
-			MonitoringController monitoringController, String partParameter) throws IOException,
-			InterruptedException, ExecutionException {
+			MonitoringController monitoringController, String partParameter)
+			throws IOException, InterruptedException, ExecutionException {
 		// ici, ni web.xml ni pom.xml
 		if (MBEANS_PART.equalsIgnoreCase(partParameter)) {
-			final Map<String, String> mbeansHtmlInformations = RemoteCallHelper
-					.collectMBeansHtmlInformations();
-			doMBeans(req, resp, mbeansHtmlInformations);
+			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = RemoteCallHelper
+					.collectMBeanNodesByNodeName();
+			doMBeans(req, resp, mbeanNodesByNodeName);
 		} else if (PROCESSES_PART.equalsIgnoreCase(partParameter)) {
 			final Map<String, List<ProcessInformations>> processInformationsByNodeName = RemoteCallHelper
 					.collectProcessInformationsByNodeName();
 			doProcesses(req, resp, processInformationsByNodeName);
 		} else if (HEAP_HISTO_PART.equalsIgnoreCase(partParameter)) {
-			final HeapHistogram heapHistoTotal = RemoteCallHelper.collectGlobalHeapHistogram();
+			final HeapHistogram heapHistoTotal = RemoteCallHelper
+					.collectGlobalHeapHistogram();
 			doHeapHisto(req, resp, heapHistoTotal, monitoringController);
 		} else {
 			monitoringController.doReport(req, resp, lastJavaInformationsList);
@@ -206,72 +225,43 @@ public class NodesController {
 	}
 
 	private void doProcesses(HttpServletRequest req, HttpServletResponse resp,
-			Map<String, List<ProcessInformations>> processListByNodeName) throws IOException {
+			Map<String, List<ProcessInformations>> processListByNodeName)
+			throws IOException {
 		final PrintWriter writer = createWriterFromOutputStream(resp);
 		final HtmlReport htmlReport = createHtmlReport(req, resp, writer);
-		htmlReport.writeHtmlHeader();
-		writer.write("<div class='noPrint'>");
-		I18N.writelnTo(
-				"<a href='javascript:history.back()'><img src='?resource=action_back.png' alt='#Retour#'/> #Retour#</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-				writer);
-		writer.write("<a href='?part=");
-		writer.write(PROCESSES_PART);
-		writer.write("'>");
-		I18N.writelnTo(
-				"<img src='?resource=action_refresh.png' alt='#Actualiser#'/> #Actualiser#</a>",
-				writer);
-		writer.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-		I18N.writelnTo("<a href='?part=processes&amp;format=pdf' title='#afficher_PDF#'>", writer);
-		I18N.writelnTo("<img src='?resource=pdf.png' alt='#PDF#'/> #PDF#</a>", writer);
-		writer.write("</div>");
 		final String title = I18N.getString("Processus");
-		for (final Map.Entry<String, List<ProcessInformations>> entry : processListByNodeName
-				.entrySet()) {
-			final String htmlTitle = "<h3><img width='24' height='24' src='?resource=processes.png' alt='"
-					+ title
-					+ "'/>&nbsp;"
-					+ title
-					+ " ("
-					+ I18N.htmlEncode(entry.getKey(), false)
-					+ ")</h3>";
-			writer.write(htmlTitle);
-			writer.flush();
-
-			new HtmlProcessInformationsReport(entry.getValue(), writer).writeTable();
-		}
-		htmlReport.writeHtmlFooter();
+		final Map<String, List<ProcessInformations>> processListByTitle = convertMapByNodeToMapByTitle(
+				processListByNodeName, title);
+		htmlReport.writeProcesses(processListByTitle);
 		writer.close();
 	}
 
 	private void doMBeans(HttpServletRequest req, HttpServletResponse resp,
-			Map<String, String> mbeansHtmlInformations) throws IOException {
+			Map<String, List<MBeanNode>> mbeanNodesByNodeName)
+			throws IOException {
 		final PrintWriter writer = createWriterFromOutputStream(resp);
 		final HtmlReport htmlReport = createHtmlReport(req, resp, writer);
-		htmlReport.writeHtmlHeader();
-		writer.write("<div class='noPrint'>");
-		I18N.writelnTo(
-				"<a href='javascript:history.back()'><img src='?resource=action_back.png' alt='#Retour#'/> #Retour#</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
-				writer);
-		writer.write("<a href='?part=");
-		writer.write(MBEANS_PART);
-		writer.write("'>");
-		I18N.writelnTo("<img src='?resource=action_refresh.png' alt='#Actualiser#'/> #Actualiser#",
-				writer);
-		writer.write("</a></div>");
 		final String title = I18N.getString("MBeans");
-		for (final Map.Entry<String, String> entry : mbeansHtmlInformations.entrySet()) {
-			final String htmlTitle = "<h3><img width='24' height='24' src='?resource=mbeans.png' alt='"
-					+ title
-					+ "'/>&nbsp;"
-					+ title
-					+ " ("
-					+ I18N.htmlEncode(entry.getKey(), false)
-					+ ")</h3>";
-			writer.write(htmlTitle);
-			writer.write(entry.getValue());
-		}
-		htmlReport.writeHtmlFooter();
+		final Map<String, List<MBeanNode>> mbeanNodesByTitle = convertMapByNodeToMapByTitle(
+				mbeanNodesByNodeName, title);
+		htmlReport.writeMBeans(mbeanNodesByTitle);
 		writer.close();
+	}
+
+	private <T> Map<String, T> convertMapByNodeToMapByTitle(
+			Map<String, T> mapByNodeName, final String title) {
+		final Map<String, T> mapByTitle = new LinkedHashMap<String, T>(
+				mapByNodeName.size());
+		for (final Map.Entry<String, T> entry : mapByNodeName.entrySet()) {
+			final String name = entry.getKey();
+			if (name != null && name.length() != 0) {
+				mapByTitle.put(title + " (" + entry.getKey() + ")",
+						entry.getValue());
+			} else {
+				mapByTitle.put(title, entry.getValue());
+			}
+		}
+		return mapByTitle;
 	}
 
 	private void doHeapHisto(HttpServletRequest req, HttpServletResponse resp,
