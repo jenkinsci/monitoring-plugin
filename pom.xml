@@ -85,6 +85,17 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.jenkins-ci.tools</groupId>
+				<artifactId>maven-hpi-plugin</artifactId>
+  				<configuration>
+					<disabledTestInjection>true</disabledTestInjection>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 	<scm>
 		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</connection>
