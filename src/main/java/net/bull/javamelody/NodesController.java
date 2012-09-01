@@ -301,11 +301,14 @@ public class NodesController {
 	private Serializable createSerializable(HttpServletRequest httpRequest,
 			MonitoringController monitoringController) throws Exception { // NOPMD
 		final String part = httpRequest.getParameter(PART_PARAMETER);
-		if (HEAP_HISTO_PART.equalsIgnoreCase(part)) {
-			return RemoteCallHelper.collectGlobalHeapHistogram();
+		if (MBEANS_PART.equalsIgnoreCase(part)) {
+			return new LinkedHashMap<String, List<MBeanNode>>(
+					RemoteCallHelper.collectMBeanNodesByNodeName());
 		} else if (PROCESSES_PART.equalsIgnoreCase(part)) {
 			return new LinkedHashMap<String, List<ProcessInformations>>(
 					RemoteCallHelper.collectProcessInformationsByNodeName());
+		} else if (HEAP_HISTO_PART.equalsIgnoreCase(part)) {
+			return RemoteCallHelper.collectGlobalHeapHistogram();
 		} else if (THREADS_PART.equalsIgnoreCase(part)) {
 			final ArrayList<List<ThreadInformations>> result = new ArrayList<List<ThreadInformations>>();
 			for (final JavaInformations javaInformations : lastJavaInformationsList) {
@@ -315,8 +318,10 @@ public class NodesController {
 			return result;
 		}
 
-		final Range range = monitoringController.getRangeForSerializable(httpRequest);
-		return monitoringController.createDefaultSerializable(lastJavaInformationsList, range);
+		// utile pour JROBINS_PART, OTHER_JROBINS_PART, SESSIONS_PART et
+		// defaultSerializable notamment
+		return monitoringController.createSerializable(httpRequest,
+				lastJavaInformationsList);
 	}
 
 	private HtmlReport createHtmlReport(HttpServletRequest req, HttpServletResponse resp,
