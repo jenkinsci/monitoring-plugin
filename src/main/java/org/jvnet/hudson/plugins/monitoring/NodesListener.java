@@ -35,6 +35,10 @@ import net.bull.javamelody.NodesCollector;
 public class NodesListener extends ComputerListener {
 	private final NodesCollector nodesCollector;
 
+	/**
+	 * Constructor.
+	 * @param nodesCollector NodesCollector
+	 */
 	public NodesListener(NodesCollector nodesCollector) {
 		super();
 		this.nodesCollector = nodesCollector;
