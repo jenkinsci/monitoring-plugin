@@ -39,6 +39,9 @@ public class CounterRunListener extends RunListener<AbstractBuild> {
 	private static final boolean DISABLED = Boolean.parseBoolean(Parameters
 			.getParameter(Parameter.DISABLED));
 
+	/**
+	 * Constructor.
+	 */
 	public CounterRunListener() {
 		super(AbstractBuild.class);
 		// le compteur est affiche sauf si le parametre displayed-counters dit
