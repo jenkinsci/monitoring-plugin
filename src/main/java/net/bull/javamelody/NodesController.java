@@ -92,11 +92,22 @@ public class NodesController {
 						final String jobId = req.getParameter(JOB_ID_PARAMETER);
 						messageForReport = RemoteCallHelper.forwardAction(actionName, sessionId,
 								threadId, jobId);
-						writeMessage(resp, messageForReport, partParameter);
 					} else {
 						// necessaire si action clear_counter
 						messageForReport = monitoringController.executeActionIfNeeded(req);
-						writeMessage(resp, messageForReport, null);
+					}
+					if (TransportFormat.isATransportFormat(req.getParameter(FORMAT_PARAMETER))) {
+						final Range range = monitoringController.getRangeForSerializable(req);
+						final List<Object> serializable = new ArrayList<Object>();
+						final List<JavaInformations> javaInformationsList = RemoteCallHelper
+								.collectJavaInformationsList();
+						serializable.addAll((List<?>) monitoringController
+								.createDefaultSerializable(javaInformationsList, range));
+						serializable.add(messageForReport);
+						monitoringController.doCompressedSerializable(req, resp,
+								(Serializable) serializable);
+					} else {
+						writeMessage(resp, messageForReport, partParameter);
 					}
 					return;
 				}
