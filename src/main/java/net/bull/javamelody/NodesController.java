@@ -54,6 +54,10 @@ public class NodesController {
 	private final List<JavaInformations> lastJavaInformationsList;
 	private final HttpCookieManager httpCookieManager = new HttpCookieManager();
 
+	/**
+	 * Constructor.
+	 * @param nodesCollector NodesCollector
+	 */
 	public NodesController(NodesCollector nodesCollector) {
 		super();
 		this.collector = nodesCollector.getCollector();
@@ -151,8 +155,7 @@ public class NodesController {
 			} finally {
 				resp.getOutputStream().flush();
 			}
-		} else if (MBEANS_PART.equalsIgnoreCase(req
-				.getParameter(PART_PARAMETER))) {
+		} else if (MBEANS_PART.equalsIgnoreCase(req.getParameter(PART_PARAMETER))) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
 			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = RemoteCallHelper
 					.collectMBeanNodesByNodeName();
@@ -177,8 +180,7 @@ public class NodesController {
 	}
 
 	private void doPdfMBeans(HttpServletResponse resp,
-			Map<String, List<MBeanNode>> mbeanNodesByNodeName)
-			throws IOException {
+			Map<String, List<MBeanNode>> mbeanNodesByNodeName) throws IOException {
 		final String title = I18N.getString("MBeans");
 		final Map<String, List<MBeanNode>> mbeanNodesByTitle = convertMapByNodeToMapByTitle(
 				mbeanNodesByNodeName, title);
@@ -204,8 +206,8 @@ public class NodesController {
 	}
 
 	private void doPart(HttpServletRequest req, HttpServletResponse resp,
-			MonitoringController monitoringController, String partParameter)
-			throws IOException, InterruptedException, ExecutionException {
+			MonitoringController monitoringController, String partParameter) throws IOException,
+			InterruptedException, ExecutionException {
 		// ici, ni web.xml ni pom.xml
 		if (MBEANS_PART.equalsIgnoreCase(partParameter)) {
 			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = RemoteCallHelper
@@ -216,8 +218,7 @@ public class NodesController {
 					.collectProcessInformationsByNodeName();
 			doProcesses(req, resp, processInformationsByNodeName);
 		} else if (HEAP_HISTO_PART.equalsIgnoreCase(partParameter)) {
-			final HeapHistogram heapHistoTotal = RemoteCallHelper
-					.collectGlobalHeapHistogram();
+			final HeapHistogram heapHistoTotal = RemoteCallHelper.collectGlobalHeapHistogram();
 			doHeapHisto(req, resp, heapHistoTotal, monitoringController);
 		} else {
 			monitoringController.doReport(req, resp, lastJavaInformationsList);
@@ -225,8 +226,7 @@ public class NodesController {
 	}
 
 	private void doProcesses(HttpServletRequest req, HttpServletResponse resp,
-			Map<String, List<ProcessInformations>> processListByNodeName)
-			throws IOException {
+			Map<String, List<ProcessInformations>> processListByNodeName) throws IOException {
 		final PrintWriter writer = createWriterFromOutputStream(resp);
 		final HtmlReport htmlReport = createHtmlReport(req, resp, writer);
 		final String title = I18N.getString("Processus");
@@ -237,8 +237,7 @@ public class NodesController {
 	}
 
 	private void doMBeans(HttpServletRequest req, HttpServletResponse resp,
-			Map<String, List<MBeanNode>> mbeanNodesByNodeName)
-			throws IOException {
+			Map<String, List<MBeanNode>> mbeanNodesByNodeName) throws IOException {
 		final PrintWriter writer = createWriterFromOutputStream(resp);
 		final HtmlReport htmlReport = createHtmlReport(req, resp, writer);
 		final String title = I18N.getString("MBeans");
@@ -248,15 +247,13 @@ public class NodesController {
 		writer.close();
 	}
 
-	private <T> Map<String, T> convertMapByNodeToMapByTitle(
-			Map<String, T> mapByNodeName, final String title) {
-		final Map<String, T> mapByTitle = new LinkedHashMap<String, T>(
-				mapByNodeName.size());
+	private <T> Map<String, T> convertMapByNodeToMapByTitle(Map<String, T> mapByNodeName,
+			final String title) {
+		final Map<String, T> mapByTitle = new LinkedHashMap<String, T>(mapByNodeName.size());
 		for (final Map.Entry<String, T> entry : mapByNodeName.entrySet()) {
 			final String name = entry.getKey();
 			if (name != null && name.length() != 0) {
-				mapByTitle.put(title + " (" + entry.getKey() + ")",
-						entry.getValue());
+				mapByTitle.put(title + " (" + entry.getKey() + ")", entry.getValue());
 			} else {
 				mapByTitle.put(title, entry.getValue());
 			}
@@ -320,8 +317,7 @@ public class NodesController {
 
 		// utile pour JROBINS_PART, OTHER_JROBINS_PART, SESSIONS_PART et
 		// defaultSerializable notamment
-		return monitoringController.createSerializable(httpRequest,
-				lastJavaInformationsList);
+		return monitoringController.createSerializable(httpRequest, lastJavaInformationsList);
 	}
 
 	private HtmlReport createHtmlReport(HttpServletRequest req, HttpServletResponse resp,
@@ -337,6 +333,11 @@ public class NodesController {
 		return new PrintWriter(MonitoringController.getWriter(httpResponse));
 	}
 
+	/**
+	 * Is it necessary to collect java informations for this monitoring request?
+	 * @param httpRequest HttpServletRequest
+	 * @return boolean
+	 */
 	public static boolean isJavaInformationsNeeded(HttpServletRequest httpRequest) {
 		return MonitoringController.isJavaInformationsNeeded(httpRequest);
 	}
