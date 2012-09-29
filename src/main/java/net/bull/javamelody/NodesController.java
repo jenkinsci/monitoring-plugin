@@ -97,15 +97,15 @@ public class NodesController {
 						messageForReport = monitoringController.executeActionIfNeeded(req);
 					}
 					if (TransportFormat.isATransportFormat(req.getParameter(FORMAT_PARAMETER))) {
-						final Range range = monitoringController.getRangeForSerializable(req);
-						final List<Object> serializable = new ArrayList<Object>();
+						final SerializableController serializableController = new SerializableController(
+								collector);
+						final Range range = serializableController.getRangeForSerializable(req);
 						final List<JavaInformations> javaInformationsList = RemoteCallHelper
 								.collectJavaInformationsList();
-						serializable.addAll((List<?>) monitoringController
-								.createDefaultSerializable(javaInformationsList, range));
-						serializable.add(messageForReport);
-						monitoringController.doCompressedSerializable(req, resp,
-								(Serializable) serializable);
+						final Serializable serializable = serializableController
+								.createDefaultSerializable(javaInformationsList, range,
+										messageForReport);
+						monitoringController.doCompressedSerializable(req, resp, serializable);
 					} else {
 						writeMessage(resp, messageForReport, partParameter);
 					}
@@ -299,15 +299,14 @@ public class NodesController {
 			throws IOException {
 		Serializable serializable;
 		try {
-			serializable = createSerializable(httpRequest, monitoringController);
+			serializable = createSerializable(httpRequest);
 		} catch (final Exception e) {
 			serializable = e;
 		}
 		monitoringController.doCompressedSerializable(httpRequest, httpResponse, serializable);
 	}
 
-	private Serializable createSerializable(HttpServletRequest httpRequest,
-			MonitoringController monitoringController) throws Exception { // NOPMD
+	private Serializable createSerializable(HttpServletRequest httpRequest) throws Exception { // NOPMD
 		final String part = httpRequest.getParameter(PART_PARAMETER);
 		if (MBEANS_PART.equalsIgnoreCase(part)) {
 			return new LinkedHashMap<String, List<MBeanNode>>(
@@ -328,7 +327,9 @@ public class NodesController {
 
 		// utile pour JROBINS_PART, OTHER_JROBINS_PART, SESSIONS_PART et
 		// defaultSerializable notamment
-		return monitoringController.createSerializable(httpRequest, lastJavaInformationsList);
+		final SerializableController serializableController = new SerializableController(collector);
+		return serializableController.createSerializable(httpRequest, lastJavaInformationsList,
+				null);
 	}
 
 	private HtmlReport createHtmlReport(HttpServletRequest req, HttpServletResponse resp,
