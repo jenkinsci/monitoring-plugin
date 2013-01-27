@@ -10,7 +10,7 @@
 	<groupId>org.jvnet.hudson.plugins</groupId>
     <artifactId>monitoring</artifactId>
 	<packaging>hpi</packaging>
-	<version>1.43.0</version>
+	<version>1.44.0-SNAPSHOT</version>
 	<name>Monitoring</name>
 	<description>Monitoring of Hudson or Jenkins</description>
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Monitoring</url>
@@ -99,9 +99,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:svn:https://svn.jenkins-ci.org/tags/monitoring-1.43.0</connection>
-		<developerConnection>scm:svn:https://svn.jenkins-ci.org/tags/monitoring-1.43.0</developerConnection>
-		<url>https://svn.jenkins-ci.org/tags/monitoring-1.43.0</url>
+		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</connection>
+		<developerConnection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</developerConnection>
+		<url>https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</url>
 	</scm>
 
 	<distributionManagement>
