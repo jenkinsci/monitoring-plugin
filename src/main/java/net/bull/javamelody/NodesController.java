@@ -19,6 +19,7 @@
 package net.bull.javamelody;
 
 import static net.bull.javamelody.HttpParameters.ACTION_PARAMETER;
+import static net.bull.javamelody.HttpParameters.CACHE_ID_PARAMETER;
 import static net.bull.javamelody.HttpParameters.FORMAT_PARAMETER;
 import static net.bull.javamelody.HttpParameters.HEAP_HISTO_PART;
 import static net.bull.javamelody.HttpParameters.HTML_CONTENT_TYPE;
@@ -90,8 +91,9 @@ public class NodesController {
 						final String sessionId = req.getParameter(SESSION_ID_PARAMETER);
 						final String threadId = req.getParameter(THREAD_ID_PARAMETER);
 						final String jobId = req.getParameter(JOB_ID_PARAMETER);
+						final String cacheId = req.getParameter(CACHE_ID_PARAMETER);
 						messageForReport = RemoteCallHelper.forwardAction(actionName, sessionId,
-								threadId, jobId);
+								threadId, jobId, cacheId);
 					} else {
 						// necessaire si action clear_counter
 						messageForReport = monitoringController.executeActionIfNeeded(req);

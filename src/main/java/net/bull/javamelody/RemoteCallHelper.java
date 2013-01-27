@@ -77,19 +77,22 @@ final class RemoteCallHelper {
 		private final String sessionId;
 		private final String threadId;
 		private final String jobId;
+		private final String cacheId;
 
-		ActionTask(String actionName, String sessionId, String threadId, String jobId) {
+		ActionTask(String actionName, String sessionId, String threadId, String jobId,
+				String cacheId) {
 			super();
 			this.actionName = actionName;
 			this.sessionId = sessionId;
 			this.threadId = threadId;
 			this.jobId = jobId;
+			this.cacheId = cacheId;
 		}
 
 		@Override
 		public String call() throws Throwable {
 			final Action action = Action.valueOfIgnoreCase(actionName);
-			return action.execute(null, null, null, sessionId, threadId, jobId);
+			return action.execute(null, null, null, sessionId, threadId, jobId, cacheId);
 		}
 	}
 
@@ -192,9 +195,9 @@ final class RemoteCallHelper {
 		return heapHistoTotal;
 	}
 
-	static String forwardAction(String actionName, String sessionId, String threadId, String jobId)
-			throws IOException, InterruptedException, ExecutionException {
-		final ActionTask task = new ActionTask(actionName, sessionId, threadId, jobId);
+	static String forwardAction(String actionName, String sessionId, String threadId, String jobId,
+			String cacheId) throws IOException, InterruptedException, ExecutionException {
+		final ActionTask task = new ActionTask(actionName, sessionId, threadId, jobId, cacheId);
 		final Map<String, String> messagesByNodeName = collectDataByNodeName(task);
 		final StringBuilder sb = new StringBuilder();
 		for (final String messageForReport : messagesByNodeName.values()) {
