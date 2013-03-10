@@ -48,7 +48,8 @@
 			<version>1.5.9</version>
 		</dependency> -->
 		<!-- slf4j-api for Jenkins issue https://issues.jenkins-ci.org/browse/JENKINS-11293
-		NoClassDefFoundError: org.slf4j.ILoggerFactory on IBM J9 JVM -->
+		NoClassDefFoundError: org.slf4j.ILoggerFactory on IBM J9 JVM,
+		(this may not be needed anymore since with JENKINS-12650, slf4j-api and slf4j-jdk14 are now bundled in core) -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
