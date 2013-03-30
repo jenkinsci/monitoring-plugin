@@ -78,12 +78,13 @@ public class PluginImpl extends Plugin {
 		// parties "dynamiques" comme des numeros des builds,
 		// les fichiers dans job/<name>/site/, javadoc/, ws/, cobertura/,
 		// testReport/, violations/file/
-		// ou les utilisateurs dans user/ ou les fichiers dans
-		// /static/abcdef123/
+		// ou les utilisateurs dans user/
+		// ou les fichiers dans /static/abcdef123/ et dans /adjuncts/abcdef123/
+		// ou les renders ajax lors de l'ajout de build step dans /$stapler/bound/c285ac3d-39c1-4515-86aa-0b42d75212b3/render
 		if (isParameterUndefined("javamelody.http-transform-pattern")) {
 			System.setProperty(
 					"javamelody.http-transform-pattern",
-					"/\\d+/|/site/.+|avadoc/.+|/ws/.+|obertura/.+|estReport/.+|iolations/file/.+|/user/.+|/static/\\w+/");
+					"/\\d+/|/site/.+|avadoc/.+|/ws/.+|obertura/.+|estReport/.+|iolations/file/.+|/user/.+|/static/\\w+/|/adjuncts/\\w+/|/bound/[\\w\\-]+");
 		}
 
 		// fix for JENKINS-14050: Unreadable HTML response for the monitoring reports
