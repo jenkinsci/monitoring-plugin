@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 final class RemoteCallHelper {
 	private static final Callable<JavaInformations, Throwable> JAVA_INFORMATIONS_TASK = new Callable<JavaInformations, Throwable>() {
@@ -148,9 +150,20 @@ final class RemoteCallHelper {
 				futuresByNodeName.put(c.getName(), c.getChannel().callAsync(delegatingTask));
 			}
 		}
+		final long now = System.currentTimeMillis();
+		// timeout dans 59 secondes
+		final long end = now + TimeUnit.SECONDS.toMillis(59);
+
 		final Map<String, T> result = new LinkedHashMap<String, T>(futuresByNodeName.size());
 		for (final Map.Entry<String, Future<T>> entry : futuresByNodeName.entrySet()) {
-			result.put(entry.getKey(), entry.getValue().get());
+			final String nodeName = entry.getKey();
+			final Future<T> future = entry.getValue();
+			final long timeout = Math.max(0, end - System.currentTimeMillis());
+			try {
+				result.put(nodeName, future.get(timeout, TimeUnit.MILLISECONDS));
+			} catch (final TimeoutException e) {
+				continue;
+			}
 		}
 		return result;
 	}
