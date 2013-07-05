@@ -83,8 +83,9 @@ public class NodesController {
 				final String partParameter = req.getParameter(PART_PARAMETER);
 				final String actionParameter = req.getParameter(ACTION_PARAMETER);
 				if (actionParameter != null) {
+					final Action action = Action.valueOfIgnoreCase(actionParameter);
 					final String messageForReport;
-					if (Action.valueOfIgnoreCase(actionParameter) != Action.CLEAR_COUNTER) {
+					if (action != Action.CLEAR_COUNTER && action != Action.PURGE_OBSOLETE_FILES) {
 						// on forwarde l'action (gc ou heap dump) sur l'application monitoree
 						// et on recupere les informations a jour (notamment memoire)
 						final String actionName = req.getParameter(ACTION_PARAMETER);
