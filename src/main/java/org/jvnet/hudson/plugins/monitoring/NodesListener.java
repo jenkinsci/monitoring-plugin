@@ -48,7 +48,12 @@ public class NodesListener extends ComputerListener {
 	@Override
 	public void onOnline(Computer c, TaskListener listener) throws IOException,
 			InterruptedException {
-		nodesCollector.scheduleCollectNow();
+		try {
+			nodesCollector.scheduleCollectNow();
+		} catch (final IllegalStateException e) {
+			// if timer already canceled, do nothing
+			// [JENKINS-17757] IllegalStateException: Timer already cancelled from NodesCollector.scheduleCollectNow
+		}
 		super.onOnline(c, listener);
 	}
 
