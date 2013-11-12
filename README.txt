@@ -1,4 +1,4 @@
-Monitoring of Hudson / Jenkins itself
+Monitoring of Jenkins itself
 
 Author : Emeric Vernat (evernat at free.fr)
 License : LGPL, http://www.gnu.org/licenses/lgpl-3.0.txt
