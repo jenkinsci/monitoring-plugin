@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,17 +53,26 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class NodesController {
 	private final Collector collector;
+	private final String nodeName;
 	private final List<JavaInformations> lastJavaInformationsList;
 	private final HttpCookieManager httpCookieManager = new HttpCookieManager();
 
 	/**
 	 * Constructor.
 	 * @param nodesCollector NodesCollector
+	 * @param nodeName Nom du node
 	 */
-	public NodesController(NodesCollector nodesCollector) {
+	public NodesController(NodesCollector nodesCollector, String nodeName) {
 		super();
 		this.collector = nodesCollector.getCollector();
-		this.lastJavaInformationsList = nodesCollector.getLastJavaInformationsList();
+		this.nodeName = nodeName;
+		if (nodeName == null) {
+			this.lastJavaInformationsList = new ArrayList<JavaInformations>(nodesCollector
+					.getLastJavaInformationsList().values());
+		} else {
+			this.lastJavaInformationsList = Collections.singletonList(nodesCollector
+					.getLastJavaInformationsList().get(nodeName));
+		}
 	}
 
 	/**
@@ -93,8 +103,8 @@ public class NodesController {
 						final String threadId = req.getParameter(THREAD_ID_PARAMETER);
 						final String jobId = req.getParameter(JOB_ID_PARAMETER);
 						final String cacheId = req.getParameter(CACHE_ID_PARAMETER);
-						messageForReport = RemoteCallHelper.forwardAction(actionName, sessionId,
-								threadId, jobId, cacheId);
+						messageForReport = getRemoteCallHelper().forwardAction(actionName,
+								sessionId, threadId, jobId, cacheId);
 					} else {
 						// necessaire si action clear_counter
 						messageForReport = monitoringController.executeActionIfNeeded(req);
@@ -103,8 +113,8 @@ public class NodesController {
 						final SerializableController serializableController = new SerializableController(
 								collector);
 						final Range range = serializableController.getRangeForSerializable(req);
-						final List<JavaInformations> javaInformationsList = RemoteCallHelper
-								.collectJavaInformationsList();
+						final List<JavaInformations> javaInformationsList = new ArrayList<JavaInformations>(
+								getRemoteCallHelper().collectJavaInformationsListByName().values());
 						final Serializable serializable = serializableController
 								.createDefaultSerializable(javaInformationsList, range,
 										messageForReport);
@@ -117,8 +127,8 @@ public class NodesController {
 
 				final String formatParameter = req.getParameter(FORMAT_PARAMETER);
 				if (req.getParameter(JMX_VALUE) != null) {
-					final List<String> jmxValues = RemoteCallHelper.collectJmxValues(req
-							.getParameter(JMX_VALUE));
+					final List<String> jmxValues = getRemoteCallHelper().collectJmxValues(
+							req.getParameter(JMX_VALUE));
 					doJmxValue(resp, jmxValues);
 				} else if (TransportFormat.isATransportFormat(req.getParameter(FORMAT_PARAMETER))) {
 					doCompressedSerializable(req, resp, monitoringController);
@@ -160,18 +170,19 @@ public class NodesController {
 	private void doPdf(HttpServletRequest req, HttpServletResponse resp,
 			MonitoringController monitoringController) throws IOException, InterruptedException,
 			ExecutionException {
-		if (PROCESSES_PART.equalsIgnoreCase(req.getParameter(PART_PARAMETER))) {
+		final String partParameter = req.getParameter(PART_PARAMETER);
+		if (PROCESSES_PART.equalsIgnoreCase(partParameter)) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
-			final Map<String, List<ProcessInformations>> processInformationsByNodeName = RemoteCallHelper
+			final Map<String, List<ProcessInformations>> processInformationsByNodeName = getRemoteCallHelper()
 					.collectProcessInformationsByNodeName();
 			try {
 				doPdfProcesses(resp, processInformationsByNodeName);
 			} finally {
 				resp.getOutputStream().flush();
 			}
-		} else if (MBEANS_PART.equalsIgnoreCase(req.getParameter(PART_PARAMETER))) {
+		} else if (MBEANS_PART.equalsIgnoreCase(partParameter)) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
-			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = RemoteCallHelper
+			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = getRemoteCallHelper()
 					.collectMBeanNodesByNodeName();
 			try {
 				doPdfMBeans(resp, mbeanNodesByNodeName);
@@ -224,15 +235,15 @@ public class NodesController {
 			InterruptedException, ExecutionException {
 		// ici, ni web.xml ni pom.xml
 		if (MBEANS_PART.equalsIgnoreCase(partParameter)) {
-			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = RemoteCallHelper
+			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = getRemoteCallHelper()
 					.collectMBeanNodesByNodeName();
 			doMBeans(req, resp, mbeanNodesByNodeName);
 		} else if (PROCESSES_PART.equalsIgnoreCase(partParameter)) {
-			final Map<String, List<ProcessInformations>> processInformationsByNodeName = RemoteCallHelper
+			final Map<String, List<ProcessInformations>> processInformationsByNodeName = getRemoteCallHelper()
 					.collectProcessInformationsByNodeName();
 			doProcesses(req, resp, processInformationsByNodeName);
 		} else if (HEAP_HISTO_PART.equalsIgnoreCase(partParameter)) {
-			final HeapHistogram heapHistoTotal = RemoteCallHelper.collectGlobalHeapHistogram();
+			final HeapHistogram heapHistoTotal = getRemoteCallHelper().collectGlobalHeapHistogram();
 			doHeapHisto(req, resp, heapHistoTotal, monitoringController);
 		} else {
 			monitoringController.doReport(req, resp, lastJavaInformationsList);
@@ -312,13 +323,13 @@ public class NodesController {
 	private Serializable createSerializable(HttpServletRequest httpRequest) throws Exception { // NOPMD
 		final String part = httpRequest.getParameter(PART_PARAMETER);
 		if (MBEANS_PART.equalsIgnoreCase(part)) {
-			return new LinkedHashMap<String, List<MBeanNode>>(
-					RemoteCallHelper.collectMBeanNodesByNodeName());
+			return new LinkedHashMap<String, List<MBeanNode>>(getRemoteCallHelper()
+					.collectMBeanNodesByNodeName());
 		} else if (PROCESSES_PART.equalsIgnoreCase(part)) {
-			return new LinkedHashMap<String, List<ProcessInformations>>(
-					RemoteCallHelper.collectProcessInformationsByNodeName());
+			return new LinkedHashMap<String, List<ProcessInformations>>(getRemoteCallHelper()
+					.collectProcessInformationsByNodeName());
 		} else if (HEAP_HISTO_PART.equalsIgnoreCase(part)) {
-			return RemoteCallHelper.collectGlobalHeapHistogram();
+			return getRemoteCallHelper().collectGlobalHeapHistogram();
 		} else if (THREADS_PART.equalsIgnoreCase(part)) {
 			final ArrayList<List<ThreadInformations>> result = new ArrayList<List<ThreadInformations>>();
 			for (final JavaInformations javaInformations : lastJavaInformationsList) {
@@ -346,6 +357,10 @@ public class NodesController {
 		MonitoringController.noCache(httpResponse);
 		httpResponse.setContentType(HTML_CONTENT_TYPE);
 		return new PrintWriter(MonitoringController.getWriter(httpResponse));
+	}
+
+	private RemoteCallHelper getRemoteCallHelper() {
+		return new RemoteCallHelper(nodeName);
 	}
 
 	/**

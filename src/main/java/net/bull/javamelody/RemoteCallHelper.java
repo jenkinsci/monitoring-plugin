@@ -135,11 +135,14 @@ final class RemoteCallHelper {
 		}
 	}
 
-	private RemoteCallHelper() {
+	private final String nodeName;
+
+	RemoteCallHelper(String nodeName) {
 		super();
+		this.nodeName = nodeName;
 	}
 
-	private static <T> Map<String, T> collectDataByNodeName(Callable<T, Throwable> task)
+	private <T> Map<String, T> collectDataByNodeName(Callable<T, Throwable> task)
 			throws IOException, InterruptedException, ExecutionException {
 		final Computer[] computers = Hudson.getInstance().getComputers();
 		final Map<String, Future<T>> futuresByNodeName = new LinkedHashMap<String, Future<T>>(
@@ -147,7 +150,9 @@ final class RemoteCallHelper {
 		final DelegatingTask<T> delegatingTask = new DelegatingTask<T>(task);
 		for (final Computer c : computers) {
 			if (c.isOnline()) {
-				futuresByNodeName.put(c.getName(), c.getChannel().callAsync(delegatingTask));
+				if (nodeName == null || nodeName.equals(c.getName())) {
+					futuresByNodeName.put(c.getName(), c.getChannel().callAsync(delegatingTask));
+				}
 			}
 		}
 		final long now = System.currentTimeMillis();
@@ -156,11 +161,11 @@ final class RemoteCallHelper {
 
 		final Map<String, T> result = new LinkedHashMap<String, T>(futuresByNodeName.size());
 		for (final Map.Entry<String, Future<T>> entry : futuresByNodeName.entrySet()) {
-			final String nodeName = entry.getKey();
+			final String node = entry.getKey();
 			final Future<T> future = entry.getValue();
 			final long timeout = Math.max(0, end - System.currentTimeMillis());
 			try {
-				result.put(nodeName, future.get(timeout, TimeUnit.MILLISECONDS));
+				result.put(node, future.get(timeout, TimeUnit.MILLISECONDS));
 			} catch (final TimeoutException e) {
 				continue;
 			}
@@ -168,30 +173,28 @@ final class RemoteCallHelper {
 		return result;
 	}
 
-	static List<JavaInformations> collectJavaInformationsList() throws IOException,
+	Map<String, JavaInformations> collectJavaInformationsListByName() throws IOException,
 			InterruptedException, ExecutionException {
-		final Map<String, JavaInformations> javaInformationsByNodeName = collectDataByNodeName(JAVA_INFORMATIONS_TASK);
-		return new ArrayList<JavaInformations>(javaInformationsByNodeName.values());
-
+		return collectDataByNodeName(JAVA_INFORMATIONS_TASK);
 	}
 
-	static List<String> collectJmxValues(String jmxValueParameter) throws IOException,
+	List<String> collectJmxValues(String jmxValueParameter) throws IOException,
 			InterruptedException, ExecutionException {
 		return new ArrayList<String>(collectDataByNodeName(new JmxValueTask(jmxValueParameter))
 				.values());
 	}
 
-	static Map<String, List<MBeanNode>> collectMBeanNodesByNodeName() throws IOException,
+	Map<String, List<MBeanNode>> collectMBeanNodesByNodeName() throws IOException,
 			InterruptedException, ExecutionException {
 		return collectDataByNodeName(MBEANS_TASK);
 	}
 
-	static Map<String, List<ProcessInformations>> collectProcessInformationsByNodeName()
+	Map<String, List<ProcessInformations>> collectProcessInformationsByNodeName()
 			throws IOException, InterruptedException, ExecutionException {
 		return collectDataByNodeName(PROCESS_INFORMATIONS_TASK);
 	}
 
-	static HeapHistogram collectGlobalHeapHistogram() throws IOException, InterruptedException,
+	HeapHistogram collectGlobalHeapHistogram() throws IOException, InterruptedException,
 			ExecutionException {
 		final Map<String, HeapHistogram> heapHistograms = collectDataByNodeName(HEAP_HISTOGRAM_TASK);
 		HeapHistogram heapHistoTotal = null;
@@ -208,7 +211,7 @@ final class RemoteCallHelper {
 		return heapHistoTotal;
 	}
 
-	static String forwardAction(String actionName, String sessionId, String threadId, String jobId,
+	String forwardAction(String actionName, String sessionId, String threadId, String jobId,
 			String cacheId) throws IOException, InterruptedException, ExecutionException {
 		final ActionTask task = new ActionTask(actionName, sessionId, threadId, jobId, cacheId);
 		final Map<String, String> messagesByNodeName = collectDataByNodeName(task);
