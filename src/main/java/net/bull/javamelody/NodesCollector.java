@@ -18,8 +18,10 @@
  */
 package net.bull.javamelody;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -44,7 +46,7 @@ public class NodesCollector {
 	private final boolean monitoringDisabled;
 	private final Timer timer;
 	private final Collector collector;
-	private List<JavaInformations> lastJavaInformationsList;
+	private Map<String, JavaInformations> lastJavaInformationsList;
 
 	/**
 	 * Constructor.
@@ -126,7 +128,8 @@ public class NodesCollector {
 	 */
 	public void collectWithoutErrors() {
 		try {
-			lastJavaInformationsList = RemoteCallHelper.collectJavaInformationsList();
+			lastJavaInformationsList = new RemoteCallHelper(null)
+					.collectJavaInformationsListByName();
 
 			// inspired by https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/model/LoadStatistics.java#L197
 			// (note: jobs in quiet period are not counted)
@@ -136,7 +139,9 @@ public class NodesCollector {
 			// including values for buildQueueLength in translations*.properties
 			JdbcWrapper.BUILD_QUEUE_LENGTH.set(queueLength);
 
-			collector.collectWithoutErrors(lastJavaInformationsList);
+			final List<JavaInformations> javaInformations = new ArrayList<JavaInformations>(
+					getLastJavaInformationsList().values());
+			collector.collectWithoutErrors(javaInformations);
 		} catch (final Throwable t) { // NOPMD
 			LOG.warn("exception while collecting data", t);
 		}
@@ -156,8 +161,9 @@ public class NodesCollector {
 			public void run() {
 				try {
 					// send the report
-					new MailReport().sendReportMail(getCollector(), true,
-							getLastJavaInformationsList(), period);
+					final List<JavaInformations> javaInformations = new ArrayList<JavaInformations>(
+							getLastJavaInformationsList().values());
+					new MailReport().sendReportMail(getCollector(), true, javaInformations, period);
 				} catch (final Throwable t) { // NOPMD
 					// no error in this task
 					LOG.warn("sending mail report failed", t);
@@ -178,7 +184,7 @@ public class NodesCollector {
 		return collector;
 	}
 
-	List<JavaInformations> getLastJavaInformationsList() {
+	Map<String, JavaInformations> getLastJavaInformationsList() {
 		return lastJavaInformationsList;
 	}
 

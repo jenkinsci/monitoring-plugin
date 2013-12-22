@@ -75,9 +75,15 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 			Hudson.getInstance().checkPermission(Hudson.ADMINISTER);
 		}
 
-		if (requestURI.equals(monitoringSlavesUrl)) {
+		if (requestURI.startsWith(monitoringSlavesUrl)) {
+			final String nodeName;
+			if (requestURI.equals(monitoringSlavesUrl)) {
+				nodeName = null;
+			} else {
+				nodeName = requestURI.substring(monitoringSlavesUrl.length()).replace("/", "");
+			}
 			final HttpServletResponse httpResponse = (HttpServletResponse) response;
-			doMonitoring(httpRequest, httpResponse);
+			doMonitoring(httpRequest, httpResponse, nodeName);
 			return;
 		}
 
@@ -89,14 +95,15 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 	 * 
 	 * @param httpRequest Http request
 	 * @param httpResponse Http response
+	 * @param nodeName nom du node (slave ou "")
 	 * @throws IOException e
 	 */
-	private void doMonitoring(HttpServletRequest httpRequest, HttpServletResponse httpResponse)
-			throws IOException {
+	private void doMonitoring(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			String nodeName) throws IOException {
 		if (NodesController.isJavaInformationsNeeded(httpRequest)) {
 			getNodesCollector().collectWithoutErrors();
 		}
-		final NodesController nodesController = new NodesController(getNodesCollector());
+		final NodesController nodesController = new NodesController(getNodesCollector(), nodeName);
 		nodesController.doMonitoring(httpRequest, httpResponse);
 	}
 
