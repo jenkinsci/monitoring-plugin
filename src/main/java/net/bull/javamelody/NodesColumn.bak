@@ -1,0 +1,76 @@
+/*
+ * Copyright 2008-2011 by Emeric Vernat
+ *
+ *     This file is part of the Monitoring plugin.
+ *
+ * The Monitoring plugin is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * The Monitoring plugin is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with the Monitoring plugin.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package net.bull.javamelody;
+
+import hudson.Extension;
+import hudson.model.Computer;
+import hudson.node_monitors.AbstractNodeMonitorDescriptor;
+import hudson.node_monitors.NodeMonitor;
+
+import java.io.IOException;
+
+import jenkins.model.Jenkins;
+import net.sf.json.JSONObject;
+
+import org.kohsuke.stapler.StaplerRequest;
+
+/**
+ * Add a Monitoring actions column in the nodes list.
+ * This class is currently not used: NodesMonitoringActionFactory is used instead.
+ * 
+ * @author Emeric Vernat
+ */
+public class NodesColumn extends NodeMonitor {
+	@Extension
+	public static final AbstractNodeMonitorDescriptor<String> DESCRIPTOR = new AbstractNodeMonitorDescriptor<String>() {
+		@Override
+		protected String monitor(Computer c) throws IOException, InterruptedException {
+			return c.getName();
+		}
+
+		@Override
+		public String getDisplayName() {
+			return "Monitoring";
+		}
+
+		@Override
+		public NodeMonitor newInstance(StaplerRequest req, JSONObject formData)
+				throws FormException {
+			return new NodesColumn();
+		}
+	};
+
+	/**
+	 * Constructor.
+	 */
+	public NodesColumn() {
+		super();
+		setIgnored(true);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getColumnCaption() {
+		// Hide this column from non-admins
+		return Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER) ? super.getColumnCaption()
+				: null;
+	}
+}
