@@ -27,37 +27,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import jenkins.model.Jenkins;
-
 /**
  * Generates a {@link NodeMonitoringAction} for the each slave computer.
  * @author Oleg Nenashev <o.v.nenashev@gmail.com>, Emeric Vernat
  */
 @Extension
 public class NodesMonitoringActionFactory extends TransientComputerActionFactory {
-
 	/** {@inheritDoc} */
 	@Override
 	public Collection<? extends Action> createFor(Computer computer) {
 		final List<NodeMonitoringAction> result = new ArrayList<NodeMonitoringAction>();
-		result.add(new NodeMonitoringAction(computer, "View threads",
-				"../../../../monitoring?resource=threads.png", "../../monitoring?part=threads"));
-		result.add(new NodeMonitoringAction(computer, "Execute the garbage collector",
-				"../../../../monitoring?resource=broom.png", "../../monitoring?action=gc"));
-		result.add(new NodeMonitoringAction(computer, "Generate a heap dump",
-				"../../../../monitoring?resource=heapdump.png", "../../monitoring?action=heap_dump"));
-		result.add(new NodeMonitoringAction(computer, "View memory histogram",
-				"../../../../monitoring?resource=memory.png", "../../monitoring?part=heaphisto"));
-		result.add(new NodeMonitoringAction(computer, "MBeans",
-				"../../../../monitoring?resource=mbeans.png", "../../monitoring?part=mbeans"));
-		result.add(new NodeMonitoringAction(computer, "View OS processes",
-				"../../../../monitoring?resource=processes.png", "../../monitoring?part=processes"));
-		if (!(computer instanceof Jenkins.MasterComputer)) {
-			for (final NodeMonitoringAction action : result) {
-				action.setUrlName(action.getUrlName().replace("/monitoring",
-						"/monitoring/nodes/" + computer.getName()));
-			}
-		}
+		// Add a single monitoring action, which will handle all monitoring features
+		result.add(new NodeMonitoringAction(computer, "Monitoring", "monitor.gif"));
 		return result;
 	}
 }

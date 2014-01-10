@@ -21,6 +21,7 @@ package org.jvnet.hudson.plugins.monitoring;
 import hudson.model.Action;
 import hudson.model.Computer;
 import hudson.model.Hudson;
+import jenkins.model.Jenkins;
 
 /**
  * Implements a "Monitoring" button for slaves.
@@ -32,21 +33,25 @@ public class NodeMonitoringAction implements Action {
 	private final Computer computer;
 	private final String displayName;
 	private final String iconPath;
-	private String url;
 
 	/**
-	 * Constructeur.
+	 * Constructor.
 	 * @param computer Computer
 	 * @param displayName String
 	 * @param iconPath String
-	 * @param url String
 	 */
-	public NodeMonitoringAction(Computer computer, String displayName, String iconPath, String url) {
+	public NodeMonitoringAction(Computer computer, String displayName, String iconPath) {
 		super();
 		this.computer = computer;
 		this.displayName = displayName;
 		this.iconPath = iconPath;
-		this.url = url;
+	}
+
+	/**
+	 * @return Computer
+	 */
+	public Computer getComputer() {
+		return computer;
 	}
 
 	/** {@inheritDoc} */
@@ -64,15 +69,17 @@ public class NodeMonitoringAction implements Action {
 	/** {@inheritDoc} */
 	@Override
 	public String getUrlName() {
-		return url;
+		return "monitoring";
 	}
 
 	/**
-	 * Sets urlName.
-	 * @param url String
+	 * Used in index.jelly
+	 * @return String
 	 */
-	public void setUrlName(String url) {
-		this.url = url;
+	public String getMonitoringUrl() {
+		final String urlSuffix = computer instanceof Jenkins.MasterComputer ? "" : "/nodes/"
+				+ computer.getName();
+		return "/" + getUrlName() + urlSuffix;
 	}
 
 	/**
