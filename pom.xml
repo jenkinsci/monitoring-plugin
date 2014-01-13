@@ -18,7 +18,6 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.net.id>evernat</java.net.id>
 	</properties>
 
 	<developers>
@@ -100,9 +99,9 @@
 	</build>
 
 	<scm>
-		<connection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</connection>
-		<developerConnection>scm:svn:https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</developerConnection>
-		<url>https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring</url>
+		<connection>scm:git:ssh://github.com/jenkinsci/monitoring-plugin.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/jenkinsci/monitoring-plugin.git</developerConnection>
+		<url>https://github.com/jenkinsci/monitoring-plugin</url>
 	</scm>
 
 	<distributionManagement>
