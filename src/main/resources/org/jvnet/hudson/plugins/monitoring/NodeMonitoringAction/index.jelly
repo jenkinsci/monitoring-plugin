@@ -62,22 +62,22 @@
             
             <h2>${%System reports}</h2>
             <table style="padding-left: 2em;" id="management-links">
-                <local:feature icon="${rootUrl}/monitoring?resource=threads.png" 
+                <local:feature icon="${it.monitoringUrl}?resource=threads.png" 
                              href="${it.monitoringUrl}?part=threads" 
                              title="${%View Threads}">
                     ${%View threads on the node}
                 </local:feature>
-                <local:feature icon="${rootUrl}/monitoring?resource=processes.png" 
+                <local:feature icon="${it.monitoringUrl}?resource=processes.png" 
                              href="${it.monitoringUrl}?part=processes" 
                              title="${%OS Processes}">
                     ${%View OS processes}
                 </local:feature>
-                <local:feature icon="${rootUrl}/monitoring?resource=memory.png" 
+                <local:feature icon="${it.monitoringUrl}?resource=memory.png" 
                              href="${it.monitoringUrl}?part=heaphisto" 
                              title="${%Memory histogram}">
                     ${%View memory usage histogram.} <b>${%JDK is required}</b>
                 </local:feature>
-                <local:feature icon="${rootUrl}/monitoring?resource=mbeans.png" 
+                <local:feature icon="${it.monitoringUrl}?resource=mbeans.png" 
                              href="${it.monitoringUrl}?part=mbeans" 
                              title="${%MBeans}">
                     ${%Display data collected by MBeans}
@@ -86,12 +86,12 @@
               
             <h2>${%System actions}</h2>
             <table style="padding-left: 2em;" id="management-actions">
-                <local:feature icon="${rootUrl}/monitoring?resource=broom.png" 
+                <local:feature icon="${it.monitoringUrl}?resource=broom.png" 
                                href="${it.monitoringUrl}?action=gc" 
                                title="${%Execute the garbage collector}">
                     ${%Runs gargbage collection on the node}
                 </local:feature>
-                <local:feature icon="${rootUrl}/monitoring?resource=heapdump.png" 
+                <local:feature icon="${it.monitoringUrl}?resource=heapdump.png" 
                              href="${it.monitoringUrl}?action=heap_dump" 
                              title="${%Generate a heap dump}">
                     <b style="color:red">${%Warning!}</b> ${%This operation may affect performance of the node}
