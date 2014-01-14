@@ -55,8 +55,8 @@ public class PluginManagementLink extends ManagementLink {
 	 */
 	@Override
 	public String getDescription() {
-		return "Monitoring of memory, cpu, http requests and more in Hudson/Jenkins master."
-				+ "<br/>You can also view the monitoring of <a href='./monitoring/nodes'>Hudson/Jenkins nodes</a>.";
+		return "Monitoring of memory, cpu, http requests and more in Jenkins master."
+				+ "<br/>You can also view the monitoring of <a href='./monitoring/nodes'>Jenkins nodes</a>.";
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class PluginManagementLink extends ManagementLink {
 	 */
 	@Override
 	public String getDisplayName() {
-		return "Monitoring of Hudson/Jenkins master";
+		return "Monitoring of Jenkins master";
 	}
 
 	/** {@inheritDoc} */
