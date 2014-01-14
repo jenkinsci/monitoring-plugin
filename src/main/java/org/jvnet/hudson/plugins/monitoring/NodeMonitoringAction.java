@@ -73,13 +73,14 @@ public class NodeMonitoringAction implements Action {
 	}
 
 	/**
-	 * Used in index.jelly
-	 * @return String
+	 * Provides a base link to the monitoring page of the {@link NodeMonitoringAction#computer}.
+         * Used in index.jelly
+	 * @return An absolute URL to the monitoring page
 	 */
 	public String getMonitoringUrl() {
-		final String urlSuffix = computer instanceof Jenkins.MasterComputer ? "" : "/nodes/"
-				+ computer.getName();
-		return "/" + getUrlName() + urlSuffix;
+		final String urlSuffix = computer instanceof Jenkins.MasterComputer ? "" 
+                        : "/nodes/" + computer.getName();
+		return Jenkins.getInstance().getRootUrl() + getUrlName() + urlSuffix;
 	}
 
 	/**
