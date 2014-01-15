@@ -31,7 +31,7 @@
                 ${%JavaMelody Monitoring}
             </h1>
             <p>This page provides access to the <a href="http://code.google.com/p/javamelody/">JavaMelody</a> monitoring of the
-                <a href="${rootUrl}/${it.computer.url}">${it.computer.displayName}</a> node.
+                <a href="..">${it.computer.displayName}</a> node.
             </p>
             
             <!-- table to show a map -->
