@@ -1,9 +1,0 @@
-<!--
-  This view is used to render the plugin list page.
-
-  Since we don't really have anything dynamic here, let's just use static HTML. 
--->
-<div>
-  Jenkins' monitoring with <a href='http://javamelody.googlecode.com' target='_blank'>JavaMelody</a>.
-  Open <a href='${request.contextPath}/monitoring'>report</a> after installation.
-</div>
