@@ -87,6 +87,14 @@ public class PluginImpl extends Plugin {
 					"/\\d+/|/site/.+|avadoc/.+|/ws/.+|obertura/.+|estReport/.+|iolations/file/.+|/user/.+|/static/\\w+/|/adjuncts/\\w+/|/bound/[\\w\\-]+");
 		}
 
+		// custom reports (v1.50+)
+		if (isParameterUndefined("javamelody.custom-reports")) {
+			System.setProperty("javamelody.custom-reports", "Jenkins Info,About Monitoring");
+			System.setProperty("javamelody.Jenkins Info", "/systemInfo");
+			System.setProperty("javamelody.About Monitoring",
+					"https://wiki.jenkins-ci.org/display/JENKINS/Monitoring");
+		}
+
 		// fix for JENKINS-14050: Unreadable HTML response for the monitoring reports
 		if (isParameterUndefined("javamelody.gzip-compression-disabled")) {
 			System.setProperty("javamelody.gzip-compression-disabled", "true");
