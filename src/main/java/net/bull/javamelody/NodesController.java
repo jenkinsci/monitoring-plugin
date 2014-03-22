@@ -44,6 +44,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.ServletException;
 
 /**
  * Controller between data and presentation for Hudson/Jenkins' nodes (slaves in
@@ -169,7 +170,7 @@ public class NodesController {
 
 	private void doPdf(HttpServletRequest req, HttpServletResponse resp,
 			MonitoringController monitoringController) throws IOException, InterruptedException,
-			ExecutionException {
+			ExecutionException, ServletException {
 		final String partParameter = req.getParameter(PART_PARAMETER);
 		if (PROCESSES_PART.equalsIgnoreCase(partParameter)) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
@@ -232,7 +233,7 @@ public class NodesController {
 
 	private void doPart(HttpServletRequest req, HttpServletResponse resp,
 			MonitoringController monitoringController, String partParameter) throws IOException,
-			InterruptedException, ExecutionException {
+			InterruptedException, ExecutionException, ServletException {
 		// ici, ni web.xml ni pom.xml
 		if (MBEANS_PART.equalsIgnoreCase(partParameter)) {
 			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = getRemoteCallHelper()
