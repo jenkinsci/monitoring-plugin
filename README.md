@@ -5,7 +5,7 @@ Plugin for [JavaMelody](http://javamelody.googlecode.com) to monitor performance
 
 Author : Emeric Vernat (evernat at free.fr)
 
-License : LGPL, http://www.gnu.org/licenses/lgpl-3.0.txt
+License ASL, http://www.apache.org/licenses/LICENSE-2.0
 
 Home : http://wiki.jenkins-ci.org/display/JENKINS/Monitoring
 
