@@ -95,6 +95,15 @@
 					<disabledTestInjection>true</disabledTestInjection>
 				</configuration>
 			</plugin>
+			<plugin>
+				<!-- mvn release does not work well with git, will do "git push" & "git push --tags" after mvn release -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<pushChanges>false</pushChanges>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 
