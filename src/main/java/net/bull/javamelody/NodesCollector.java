@@ -125,10 +125,31 @@ public class NodesCollector {
 		collector.stop();
 	}
 
+	boolean isNodesMonitoringDisabled() {
+		// if system property "javamelody.nodes-monitoring-disabled" is true,
+		// then no periodic monitoring for nodes (only for master and nodes when nodes report requested)
+		return Boolean.parseBoolean(System.getProperty("javamelody.nodes-monitoring-disabled"));
+	}
+
 	/**
 	 * Collect the data (and never throws any exception).
 	 */
 	public void collectWithoutErrors() {
+		try {
+			// reevaluate each time to disable or reenable at runtime
+			if (isNodesMonitoringDisabled()) {
+				return;
+			}
+			collectWithoutErrorsNow();
+		} catch (final Throwable t) { // NOPMD
+			LOG.warn("exception while collecting data", t);
+		}
+	}
+
+	/**
+	 * Collect the data (and never throws any exception).
+	 */
+	public void collectWithoutErrorsNow() {
 		try {
 			lastJavaInformationsList = new RemoteCallHelper(null)
 					.collectJavaInformationsListByName();
