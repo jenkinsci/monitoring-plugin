@@ -18,8 +18,6 @@
  */
 package org.jvnet.hudson.plugins.monitoring;
 
-import hudson.model.Hudson;
-
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -30,6 +28,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jenkins.model.Jenkins;
 import net.bull.javamelody.NodesCollector;
 import net.bull.javamelody.NodesController;
 import net.bull.javamelody.PluginMonitoringFilter;
@@ -72,7 +71,7 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 		if (!PLUGIN_AUTHENTICATION_DISABLED
 				&& (requestURI.equals(monitoringUrl) || requestURI.equals(monitoringSlavesUrl))) {
 			// only the Hudson/Jenkins administrator can view the monitoring report
-			Hudson.getInstance().checkPermission(Hudson.ADMINISTER);
+			Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
 		}
 
 		if (requestURI.startsWith(monitoringSlavesUrl)) {

@@ -19,7 +19,6 @@
 package net.bull.javamelody;
 
 import hudson.model.Computer;
-import hudson.model.Hudson;
 import hudson.remoting.Callable;
 import hudson.remoting.Future;
 
@@ -32,6 +31,8 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import jenkins.model.Jenkins;
 
 final class RemoteCallHelper {
 	private static final Callable<JavaInformations, Throwable> JAVA_INFORMATIONS_TASK = new Callable<JavaInformations, Throwable>() {
@@ -144,7 +145,7 @@ final class RemoteCallHelper {
 
 	private <T> Map<String, T> collectDataByNodeName(Callable<T, Throwable> task)
 			throws IOException, InterruptedException, ExecutionException {
-		final Computer[] computers = Hudson.getInstance().getComputers();
+		final Computer[] computers = Jenkins.getInstance().getComputers();
 		final Map<String, Future<T>> futuresByNodeName = new LinkedHashMap<String, Future<T>>(
 				computers.length);
 		final DelegatingTask<T> delegatingTask = new DelegatingTask<T>(task);

@@ -20,7 +20,6 @@ package org.jvnet.hudson.plugins.monitoring;
 
 import hudson.model.Action;
 import hudson.model.Computer;
-import hudson.model.Hudson;
 import jenkins.model.Jenkins;
 
 /**
@@ -88,6 +87,6 @@ public class NodeMonitoringAction implements Action {
 	 * @return boolean
 	 */
 	protected boolean hasMonitoringPermissions() {
-		return Hudson.getInstance().hasPermission(Hudson.ADMINISTER);
+		return Jenkins.getInstance().hasPermission(Jenkins.ADMINISTER);
 	}
 }

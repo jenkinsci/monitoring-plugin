@@ -25,6 +25,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import jenkins.model.Jenkins;
+
 /**
  * Collector of data for Hudson/Jenkins' nodes (slaves in general)
  * 
@@ -133,8 +135,7 @@ public class NodesCollector {
 
 			// inspired by https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/model/LoadStatistics.java#L197
 			// (note: jobs in quiet period are not counted)
-			final int queueLength = hudson.model.Hudson.getInstance().getQueue()
-					.getBuildableItems().size();
+			final int queueLength = Jenkins.getInstance().getQueue().getBuildableItems().size();
 			// note: this BUILD_QUEUE_LENGTH needs at least javamelody-core 1.35.0-SNAPSHOT
 			// including values for buildQueueLength in translations*.properties
 			JdbcWrapper.BUILD_QUEUE_LENGTH.set(queueLength);
