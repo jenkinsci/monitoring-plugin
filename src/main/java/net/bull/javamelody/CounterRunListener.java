@@ -61,6 +61,13 @@ public class CounterRunListener extends RunListener<AbstractBuild> {
 		if (DISABLED || !BUILD_COUNTER.isDisplayed()) {
 			return;
 		}
+		if (isMavenModuleBuild(r)) {
+			// si job maven, alors ok pour MavenModuleSetBuild,
+			// mais pas ok pour le MavenBuild de chaque module Maven,
+			// car onStarted et onCompleted seraient appelees sur des threads differents
+			// et des builds resteraient affiches "en cours"
+			return;
+		}
 		final String name = r.getProject().getName();
 		BUILD_COUNTER.bindContextIncludingCpu(name);
 		JdbcWrapper.RUNNING_BUILD_COUNT.incrementAndGet();
@@ -74,8 +81,15 @@ public class CounterRunListener extends RunListener<AbstractBuild> {
 		if (DISABLED || !BUILD_COUNTER.isDisplayed()) {
 			return;
 		}
+		if (isMavenModuleBuild(r)) {
+			return;
+		}
 		JdbcWrapper.RUNNING_BUILD_COUNT.decrementAndGet();
 		final boolean error = Result.FAILURE.equals(r.getResult());
 		BUILD_COUNTER.addRequestForCurrentContext(error);
+	}
+
+	private boolean isMavenModuleBuild(AbstractBuild r) {
+		return "hudson.maven.MavenBuild".equals(r.getClass().getName());
 	}
 }
