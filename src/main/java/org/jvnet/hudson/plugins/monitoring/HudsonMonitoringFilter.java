@@ -19,6 +19,7 @@
 package org.jvnet.hudson.plugins.monitoring;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -69,9 +70,19 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 		final String monitoringUrl = getMonitoringUrl(httpRequest);
 		final String monitoringSlavesUrl = monitoringUrl + "/nodes";
 		if (!PLUGIN_AUTHENTICATION_DISABLED
-				&& (requestURI.equals(monitoringUrl) || requestURI.equals(monitoringSlavesUrl))) {
+				&& (requestURI.equals(monitoringUrl) || requestURI.startsWith(monitoringSlavesUrl))) {
 			// only the Hudson/Jenkins administrator can view the monitoring report
 			Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
+            Enumeration<?> parameterNames = request.getParameterNames();
+            while (parameterNames.hasMoreElements()) {
+                String parameterName = (String) parameterNames.nextElement();
+                for (String value : request.getParameterValues(parameterName)) {
+                    if (value.indexOf('"') != -1 || value.indexOf('\'') != -1 || value.indexOf('<') != -1 || value.indexOf('&') != -1) {
+                        ((HttpServletResponse) response).sendError(HttpServletResponse.SC_BAD_REQUEST);
+                        return;
+                    }
+                }
+            }
 		}
 
 		if (requestURI.startsWith(monitoringSlavesUrl)) {
