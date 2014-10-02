@@ -36,7 +36,7 @@ import net.bull.javamelody.PluginMonitoringFilter;
 
 /**
  * Filter of monitoring JavaMelody with security check for Hudson/Jenkins administrator.
- * 
+ *
  * @author Emeric Vernat
  */
 public class HudsonMonitoringFilter extends PluginMonitoringFilter {
@@ -73,16 +73,13 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 				&& (requestURI.equals(monitoringUrl) || requestURI.startsWith(monitoringSlavesUrl))) {
 			// only the Hudson/Jenkins administrator can view the monitoring report
 			Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
-            Enumeration<?> parameterNames = request.getParameterNames();
-            while (parameterNames.hasMoreElements()) {
-                String parameterName = (String) parameterNames.nextElement();
-                for (String value : request.getParameterValues(parameterName)) {
-                    if (value.indexOf('"') != -1 || value.indexOf('\'') != -1 || value.indexOf('<') != -1 || value.indexOf('&') != -1) {
-                        ((HttpServletResponse) response).sendError(HttpServletResponse.SC_BAD_REQUEST);
-                        return;
-                    }
-                }
-            }
+
+			// this check of parameters is not supposed to be needed,
+			// but just in case we can check parameters here
+			if (hasInvalidParameters(request)) {
+				((HttpServletResponse) response).sendError(HttpServletResponse.SC_BAD_REQUEST);
+				return;
+			}
 		}
 
 		if (requestURI.startsWith(monitoringSlavesUrl)) {
@@ -100,9 +97,23 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 		super.doFilter(request, response, chain);
 	}
 
+	private boolean hasInvalidParameters(ServletRequest request) {
+		final Enumeration<?> parameterNames = request.getParameterNames();
+		while (parameterNames.hasMoreElements()) {
+			final String parameterName = (String) parameterNames.nextElement();
+			for (final String value : request.getParameterValues(parameterName)) {
+				if (value.indexOf('"') != -1 || value.indexOf('\'') != -1
+						|| value.indexOf('<') != -1 || value.indexOf('&') != -1) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Generate a report
-	 * 
+	 *
 	 * @param httpRequest Http request
 	 * @param httpResponse Http response
 	 * @param nodeName nom du node (slave ou "")
