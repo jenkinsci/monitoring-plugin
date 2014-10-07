@@ -19,6 +19,7 @@
 package org.jvnet.hudson.plugins.monitoring;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Enumeration;
 
 import javax.servlet.FilterChain;
@@ -87,7 +88,8 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 			if (requestURI.equals(monitoringSlavesUrl)) {
 				nodeName = null;
 			} else {
-				nodeName = requestURI.substring(monitoringSlavesUrl.length()).replace("/", "");
+				nodeName = URLDecoder.decode(
+						requestURI.substring(monitoringSlavesUrl.length()).replace("/", ""), "UTF-8");
 			}
 			final HttpServletResponse httpResponse = (HttpServletResponse) response;
 			doMonitoring(httpRequest, httpResponse, nodeName);
