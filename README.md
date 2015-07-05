@@ -1,7 +1,7 @@
 Monitoring of Jenkins itself
 ============================
 
-Plugin for [JavaMelody](http://javamelody.googlecode.com) to monitor performance in a [Jenkins](http://jenkins-ci.org/) server.
+Plugin for [JavaMelody](https://github.com/javamelody/javamelody/wiki) to monitor performance in a [Jenkins](http://jenkins-ci.org/) server.
 
 Author : Emeric Vernat (evernat at free.fr)
 
