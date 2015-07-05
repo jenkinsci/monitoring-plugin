@@ -14,3 +14,5 @@ Compiling and testing the plugin:
 Use maven commands "mvn hpi:run" or "mvn package" like for all Jenkins plugins
 
 http://wiki.jenkins-ci.org/display/JENKINS/Plugin+tutorial
+
+[![Build Status](https://jenkins.ci.cloudbees.com/buildStatus/icon?job=plugins/monitoring-plugin)](https://jenkins.ci.cloudbees.com/job/plugins/job/monitoring-plugin/)
