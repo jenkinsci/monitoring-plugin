@@ -110,7 +110,8 @@ public class PluginImpl extends Plugin {
 	}
 
 	private boolean isParameterUndefined(String key) {
-		return System.getProperty(key) == null && context != null && context.getInitParameter(key) == null;
+		return System.getProperty(key) == null && context != null
+				&& context.getInitParameter(key) == null;
 	}
 
 	/** {@inheritDoc} */
@@ -118,10 +119,11 @@ public class PluginImpl extends Plugin {
 	@Override
 	public void postInitialize() throws Exception {
 		super.postInitialize();
-                if (filter == null) {
-                    throw new Exception("Post-initialization hook has been called before the plugin start. "
-                        +"Filters are not available");
-                }
+		if (filter == null) {
+			throw new Exception(
+					"Post-initialization hook has been called before the plugin start. "
+							+ "Filters are not available");
+		}
 		filter.getNodesCollector().init();
 
 		// I had no success with @Extension for NodesListener (and there is a constructor parameter)

@@ -42,9 +42,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.ServletException;
 
 /**
  * Controller between data and presentation for Hudson/Jenkins' nodes (slaves in
@@ -96,7 +96,8 @@ public class NodesController {
 				if (actionParameter != null) {
 					final Action action = Action.valueOfIgnoreCase(actionParameter);
 					final String messageForReport;
-					if (action != Action.CLEAR_COUNTER && action != Action.PURGE_OBSOLETE_FILES && action != Action.LOGOUT) {
+					if (action != Action.CLEAR_COUNTER && action != Action.PURGE_OBSOLETE_FILES
+							&& action != Action.LOGOUT) {
 						// on forwarde l'action (gc ou heap dump) sur le(s) node(s)
 						// et on recupere les informations a jour (notamment memoire)
 						final String actionName = req.getParameter(ACTION_PARAMETER);

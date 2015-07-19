@@ -88,8 +88,8 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 			if (requestURI.equals(monitoringSlavesUrl)) {
 				nodeName = null;
 			} else {
-				nodeName = URLDecoder.decode(
-						requestURI.substring(monitoringSlavesUrl.length()).replace("/", ""), "UTF-8");
+				nodeName = URLDecoder.decode(requestURI.substring(monitoringSlavesUrl.length())
+						.replace("/", ""), "UTF-8");
 			}
 			final HttpServletResponse httpResponse = (HttpServletResponse) response;
 			doMonitoring(httpRequest, httpResponse, nodeName);
