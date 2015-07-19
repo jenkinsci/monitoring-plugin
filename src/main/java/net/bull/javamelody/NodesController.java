@@ -140,7 +140,7 @@ public class NodesController {
 				} else {
 					doPart(req, resp, monitoringController, partParameter);
 				}
-			} catch (final Throwable e) {
+			} catch (final Throwable e) { // NOPMD
 				writeMessage(resp, e.getMessage(), null);
 			} finally {
 				I18N.unbindLocale();
