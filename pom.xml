@@ -18,9 +18,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<findbugs-maven-plugin.version>3.0.1</findbugs-maven-plugin.version>
-		<!--TODO: change to true after the code cleanup-->
-		<maven.findbugs.failure.strict>false</maven.findbugs.failure.strict>
+		<findbugs-maven-plugin.version>3.0.0</findbugs-maven-plugin.version>
+		<maven.findbugs.failure.strict>true</maven.findbugs.failure.strict>
 	</properties>
 
 	<developers>
@@ -111,7 +110,6 @@
 				<configuration>
 					<failOnError>${maven.findbugs.failure.strict}</failOnError>
 					<xmlOutput>true</xmlOutput>
-					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
 				</configuration>
 				<executions>
 					<execution>
