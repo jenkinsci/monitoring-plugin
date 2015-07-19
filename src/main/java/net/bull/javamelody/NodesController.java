@@ -140,7 +140,7 @@ public class NodesController {
 				} else {
 					doPart(req, resp, monitoringController, partParameter);
 				}
-			} catch (final Exception e) {
+			} catch (final Throwable e) {
 				writeMessage(resp, e.getMessage(), null);
 			} finally {
 				I18N.unbindLocale();
