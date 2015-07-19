@@ -133,7 +133,9 @@ public class PluginImpl extends Plugin {
 	/** {@inheritDoc} */
 	@Override
 	public void stop() throws Exception {
-		filter.getNodesCollector().stop();
+		if (filter != null && filter.getNodesCollector() != null) {
+			filter.getNodesCollector().stop();
+		}
 		super.stop();
 	}
 }
