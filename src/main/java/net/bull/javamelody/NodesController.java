@@ -25,6 +25,7 @@ import static net.bull.javamelody.HttpParameters.HEAP_HISTO_PART;
 import static net.bull.javamelody.HttpParameters.HTML_CONTENT_TYPE;
 import static net.bull.javamelody.HttpParameters.JMX_VALUE;
 import static net.bull.javamelody.HttpParameters.JOB_ID_PARAMETER;
+import static net.bull.javamelody.HttpParameters.JVM_PART;
 import static net.bull.javamelody.HttpParameters.MBEANS_PART;
 import static net.bull.javamelody.HttpParameters.PART_PARAMETER;
 import static net.bull.javamelody.HttpParameters.PROCESSES_PART;
@@ -332,6 +333,8 @@ public class NodesController {
 					.collectProcessInformationsByNodeName());
 		} else if (HEAP_HISTO_PART.equalsIgnoreCase(part)) {
 			return getRemoteCallHelper().collectGlobalHeapHistogram();
+		} else if (JVM_PART.equalsIgnoreCase(part)) {
+			return new ArrayList<JavaInformations>(lastJavaInformationsList);
 		} else if (THREADS_PART.equalsIgnoreCase(part)) {
 			final ArrayList<List<ThreadInformations>> result = new ArrayList<List<ThreadInformations>>();
 			for (final JavaInformations javaInformations : lastJavaInformationsList) {
