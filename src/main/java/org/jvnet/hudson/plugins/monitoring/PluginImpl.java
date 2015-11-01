@@ -125,7 +125,6 @@ public class PluginImpl extends Plugin {
 	}
 
 	/** {@inheritDoc} */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void postInitialize() throws Exception {
 		super.postInitialize();
