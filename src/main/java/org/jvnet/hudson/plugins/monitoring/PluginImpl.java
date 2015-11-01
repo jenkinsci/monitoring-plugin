@@ -23,6 +23,8 @@ import hudson.model.Hudson;
 import hudson.util.PluginServletFilter;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.logging.LogRecord;
 
 import javax.servlet.ServletContext;
 
@@ -104,6 +106,10 @@ public class PluginImpl extends Plugin {
 		// ((Mailer.DescriptorImpl) Hudson.getInstance().getDescriptorByType(
 		// hudson.tasks.Mailer.DescriptorImpl.class)).getAdminAddress();
 		// but the admin-emails property is better next to the mail session
+
+		// try to fix https://issues.jenkins-ci.org/browse/JENKINS-23442 (ClassCircularityError: java/util/logging/LogRecord)
+		// by preloading the java.util.logging.LogRecord class
+		Arrays.hashCode(new Class<?>[] { LogRecord.class });
 
 		this.filter = new HudsonMonitoringFilter();
 		PluginServletFilter.addFilter(filter);
