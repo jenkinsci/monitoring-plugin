@@ -18,12 +18,14 @@
  */
 package org.jvnet.hudson.plugins.monitoring;
 
+import hudson.Extension;
 import hudson.model.TaskListener;
 import hudson.model.Computer;
 import hudson.slaves.ComputerListener;
 
 import java.io.IOException;
 
+import jenkins.model.Jenkins;
 import net.bull.javamelody.NodesCollector;
 
 /**
@@ -32,16 +34,15 @@ import net.bull.javamelody.NodesCollector;
  * 
  * @author Emeric Vernat
  */
+@Extension
 public class NodesListener extends ComputerListener {
-	private final NodesCollector nodesCollector;
+	private NodesCollector nodesCollector;
 
 	/**
 	 * Constructor.
-	 * @param nodesCollector NodesCollector
 	 */
-	public NodesListener(NodesCollector nodesCollector) {
+	public NodesListener() {
 		super();
-		this.nodesCollector = nodesCollector;
 	}
 
 	/** {@inheritDoc} */
@@ -49,7 +50,7 @@ public class NodesListener extends ComputerListener {
 	public void onOnline(Computer c, TaskListener listener) throws IOException,
 			InterruptedException {
 		try {
-			nodesCollector.scheduleCollectNow();
+			getNodesCollector().scheduleCollectNow();
 		} catch (final IllegalStateException e) {
 			// if timer already canceled, do nothing
 			// [JENKINS-17757] IllegalStateException: Timer already cancelled from NodesCollector.scheduleCollectNow
@@ -61,10 +62,18 @@ public class NodesListener extends ComputerListener {
 	@Override
 	public void onOffline(Computer c) {
 		try {
-			nodesCollector.scheduleCollectNow();
+			getNodesCollector().scheduleCollectNow();
 		} catch (final IllegalStateException e) {
 			// if timer already canceled, do nothing
 		}
 		super.onOffline(c);
+	}
+
+	private NodesCollector getNodesCollector() {
+		if (nodesCollector == null) {
+			final PluginImpl pluginImpl = Jenkins.getInstance().getPlugin(PluginImpl.class);
+			nodesCollector = pluginImpl.getFilter().getNodesCollector();
+		}
+		return nodesCollector;
 	}
 }

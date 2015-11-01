@@ -120,6 +120,10 @@ public class PluginImpl extends Plugin {
 				&& context.getInitParameter(key) == null;
 	}
 
+	HudsonMonitoringFilter getFilter() {
+		return filter;
+	}
+
 	/** {@inheritDoc} */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -132,8 +136,7 @@ public class PluginImpl extends Plugin {
 		}
 		filter.getNodesCollector().init();
 
-		// I had no success with @Extension for NodesListener (and there is a constructor parameter)
-		new NodesListener(filter.getNodesCollector()).register();
+		// replaced by @Extension in NodesListener: new NodesListener(filter.getNodesCollector()).register();
 
 		// replaced by @Extension in CounterRunListener: new CounterRunListener().register();
 	}
