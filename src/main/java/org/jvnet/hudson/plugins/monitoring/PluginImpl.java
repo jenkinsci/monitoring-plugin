@@ -28,6 +28,8 @@ import java.util.logging.LogRecord;
 
 import javax.servlet.ServletContext;
 
+import jenkins.model.Jenkins;
+
 /**
  * Entry point of the plugin.
  * 
@@ -43,15 +45,11 @@ public class PluginImpl extends Plugin {
 
 	/** {@inheritDoc} */
 	@Override
-	public void setServletContext(ServletContext context) {
-		super.setServletContext(context);
-		this.context = context;
-	}
-
-	/** {@inheritDoc} */
-	@Override
 	public void start() throws Exception {
 		super.start();
+
+		// get the servletContext in Jenkins instead of overriding Plugin.setServletContext
+		this.context = Jenkins.getInstance().servletContext;
 
 		// on active les actions systemes (gc, heap dump, histogramme memoire,
 		// processus...), sauf si l'administrateur a dit differemment
