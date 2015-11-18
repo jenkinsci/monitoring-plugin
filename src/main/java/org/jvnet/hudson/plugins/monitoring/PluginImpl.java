@@ -19,7 +19,6 @@
 package org.jvnet.hudson.plugins.monitoring;
 
 import hudson.Plugin;
-import hudson.model.Hudson;
 import hudson.util.PluginServletFilter;
 
 import java.io.File;
@@ -66,7 +65,7 @@ public class PluginImpl extends Plugin {
 		// ("/" initial necessaire sous windows pour javamelody v1.8.1)
 		if (isParameterUndefined("javamelody.storage-directory")) {
 			System.setProperty("javamelody.storage-directory", "/"
-					+ new File(Hudson.getInstance().getRootDir(), "monitoring").getAbsolutePath());
+					+ new File(Jenkins.getInstance().getRootDir(), "monitoring").getAbsolutePath());
 		}
 		// google-analytics pour connaitre le nombre d'installations actives et
 		// pour connaitre les fonctions les plus utilisees
@@ -101,7 +100,7 @@ public class PluginImpl extends Plugin {
 		}
 
 		// we could set "javamelody.admin-emails" with
-		// ((Mailer.DescriptorImpl) Hudson.getInstance().getDescriptorByType(
+		// ((Mailer.DescriptorImpl) Jenkins.getInstance().getDescriptorByType(
 		// hudson.tasks.Mailer.DescriptorImpl.class)).getAdminAddress();
 		// but the admin-emails property is better next to the mail session
 
