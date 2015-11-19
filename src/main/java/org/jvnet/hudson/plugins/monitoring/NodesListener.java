@@ -22,6 +22,7 @@ import hudson.Extension;
 import hudson.model.TaskListener;
 import hudson.model.Computer;
 import hudson.slaves.ComputerListener;
+import hudson.slaves.OfflineCause;
 
 import java.io.IOException;
 
@@ -60,13 +61,13 @@ public class NodesListener extends ComputerListener {
 
 	/** {@inheritDoc} */
 	@Override
-	public void onOffline(Computer c) {
+	public void onOffline(Computer c, OfflineCause cause) {
 		try {
 			getNodesCollector().scheduleCollectNow();
 		} catch (final IllegalStateException e) {
 			// if timer already canceled, do nothing
 		}
-		super.onOffline(c);
+		super.onOffline(c, cause);
 	}
 
 	private NodesCollector getNodesCollector() {

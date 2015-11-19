@@ -33,9 +33,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import jenkins.model.Jenkins;
+import jenkins.security.MasterToSlaveCallable;
 
 final class RemoteCallHelper {
-	private static final Callable<JavaInformations, Throwable> JAVA_INFORMATIONS_TASK = new Callable<JavaInformations, Throwable>() {
+	private static final MasterToSlaveCallable<JavaInformations, Throwable> JAVA_INFORMATIONS_TASK = new MasterToSlaveCallable<JavaInformations, Throwable>() {
 		private static final long serialVersionUID = 4778731836785411552L;
 
 		@Override
@@ -46,7 +47,7 @@ final class RemoteCallHelper {
 			return new JavaInformations(null, true);
 		}
 	};
-	private static final Callable<HeapHistogram, Throwable> HEAP_HISTOGRAM_TASK = new Callable<HeapHistogram, Throwable>() {
+	private static final MasterToSlaveCallable<HeapHistogram, Throwable> HEAP_HISTOGRAM_TASK = new MasterToSlaveCallable<HeapHistogram, Throwable>() {
 		private static final long serialVersionUID = -3978979765596110525L;
 
 		@Override
@@ -57,7 +58,7 @@ final class RemoteCallHelper {
 			return null;
 		}
 	};
-	private static final Callable<List<ProcessInformations>, Throwable> PROCESS_INFORMATIONS_TASK = new Callable<List<ProcessInformations>, Throwable>() {
+	private static final MasterToSlaveCallable<List<ProcessInformations>, Throwable> PROCESS_INFORMATIONS_TASK = new MasterToSlaveCallable<List<ProcessInformations>, Throwable>() {
 		private static final long serialVersionUID = -4653173833541398792L;
 
 		@Override
@@ -65,7 +66,7 @@ final class RemoteCallHelper {
 			return ProcessInformations.buildProcessInformations();
 		}
 	};
-	private static final Callable<List<MBeanNode>, Throwable> MBEANS_TASK = new Callable<List<MBeanNode>, Throwable>() {
+	private static final MasterToSlaveCallable<List<MBeanNode>, Throwable> MBEANS_TASK = new MasterToSlaveCallable<List<MBeanNode>, Throwable>() {
 		private static final long serialVersionUID = 7010512609895185019L;
 
 		@Override
@@ -74,7 +75,7 @@ final class RemoteCallHelper {
 		}
 	};
 
-	private static final class ActionTask implements Callable<String, Throwable> {
+	private static final class ActionTask extends MasterToSlaveCallable<String, Throwable> {
 		private static final long serialVersionUID = -3978979765596110525L;
 		private final String actionName;
 		private final String sessionId;
@@ -99,7 +100,7 @@ final class RemoteCallHelper {
 		}
 	}
 
-	private static class JmxValueTask implements Callable<String, Throwable> {
+	private static class JmxValueTask extends MasterToSlaveCallable<String, Throwable> {
 		private static final long serialVersionUID = -4654080667819214726L;
 		private final String jmxValueParameter;
 
@@ -114,7 +115,7 @@ final class RemoteCallHelper {
 		}
 	}
 
-	private static class DelegatingTask<T> implements Callable<T, Throwable> {
+	private static class DelegatingTask<T> extends MasterToSlaveCallable<T, Throwable> {
 		private static final long serialVersionUID = -8596757920851396797L;
 		private final Callable<T, Throwable> delegate;
 		private final Locale locale;
