@@ -48,7 +48,10 @@ public class PluginImpl extends Plugin {
 		super.start();
 
 		// get the servletContext in Jenkins instead of overriding Plugin.setServletContext
-		this.context = Jenkins.getInstance().servletContext;
+		final Jenkins jenkins = Jenkins.getInstance();
+		if (jenkins != null) {
+			this.context = jenkins.servletContext;
+		}
 
 		// on active les actions systemes (gc, heap dump, histogramme memoire,
 		// processus...), sauf si l'administrateur a dit differemment
@@ -65,7 +68,7 @@ public class PluginImpl extends Plugin {
 		// ("/" initial necessaire sous windows pour javamelody v1.8.1)
 		if (isParameterUndefined("javamelody.storage-directory")) {
 			System.setProperty("javamelody.storage-directory", "/"
-					+ new File(Jenkins.getInstance().getRootDir(), "monitoring").getAbsolutePath());
+					+ new File(jenkins.getRootDir(), "monitoring").getAbsolutePath());
 		}
 		// google-analytics pour connaitre le nombre d'installations actives et
 		// pour connaitre les fonctions les plus utilisees

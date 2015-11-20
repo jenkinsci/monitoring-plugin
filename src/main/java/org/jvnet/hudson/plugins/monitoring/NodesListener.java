@@ -72,8 +72,11 @@ public class NodesListener extends ComputerListener {
 
 	private NodesCollector getNodesCollector() {
 		if (nodesCollector == null) {
-			final PluginImpl pluginImpl = Jenkins.getInstance().getPlugin(PluginImpl.class);
-			nodesCollector = pluginImpl.getFilter().getNodesCollector();
+			final Jenkins jenkins = Jenkins.getInstance();
+			if (jenkins != null) {
+				final PluginImpl pluginImpl = jenkins.getPlugin(PluginImpl.class);
+				nodesCollector = pluginImpl.getFilter().getNodesCollector();
+			}
 		}
 		return nodesCollector;
 	}

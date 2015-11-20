@@ -24,6 +24,7 @@ import hudson.remoting.Future;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -146,7 +147,11 @@ final class RemoteCallHelper {
 
 	private <T> Map<String, T> collectDataByNodeName(Callable<T, Throwable> task)
 			throws IOException, InterruptedException, ExecutionException {
-		final Computer[] computers = Jenkins.getInstance().getComputers();
+		final Jenkins jenkins = Jenkins.getInstance();
+		if (jenkins == null) {
+			return Collections.emptyMap();
+		}
+		final Computer[] computers = jenkins.getComputers();
 		final Map<String, Future<T>> futuresByNodeName = new LinkedHashMap<String, Future<T>>(
 				computers.length);
 		final DelegatingTask<T> delegatingTask = new DelegatingTask<T>(task);

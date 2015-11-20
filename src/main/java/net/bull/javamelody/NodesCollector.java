@@ -156,10 +156,13 @@ public class NodesCollector {
 
 			// inspired by https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/model/LoadStatistics.java#L197
 			// (note: jobs in quiet period are not counted)
-			final int queueLength = Jenkins.getInstance().getQueue().getBuildableItems().size();
-			// note: this BUILD_QUEUE_LENGTH needs at least javamelody-core 1.35.0-SNAPSHOT
-			// including values for buildQueueLength in translations*.properties
-			JdbcWrapper.BUILD_QUEUE_LENGTH.set(queueLength);
+			final Jenkins jenkins = Jenkins.getInstance();
+			if (jenkins != null) {
+				final int queueLength = jenkins.getQueue().getBuildableItems().size();
+				// note: this BUILD_QUEUE_LENGTH needs at least javamelody-core 1.35.0-SNAPSHOT
+				// including values for buildQueueLength in translations*.properties
+				JdbcWrapper.BUILD_QUEUE_LENGTH.set(queueLength);
+			}
 
 			final List<JavaInformations> javaInformations = new ArrayList<JavaInformations>(
 					getLastJavaInformationsList().values());
