@@ -54,6 +54,11 @@ import javax.servlet.http.HttpServletResponse;
  * @author Emeric Vernat
  */
 public class NodesController {
+	/**
+	 * For HudsonMonitoringFilter.
+	 */
+	public static final String SESSION_REMOTE_USER = SessionInformations.SESSION_REMOTE_USER;
+
 	private final Collector collector;
 	private final String nodeName;
 	private final List<JavaInformations> lastJavaInformationsList;

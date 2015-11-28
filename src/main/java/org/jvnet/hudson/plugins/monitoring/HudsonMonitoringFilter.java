@@ -29,6 +29,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import jenkins.model.Jenkins;
 import net.bull.javamelody.NodesCollector;
@@ -96,7 +97,11 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 			return;
 		}
 
-		super.doFilter(request, response, chain);
+		try {
+			super.doFilter(request, response, chain);
+		} finally {
+			putUserInfoInSession(httpRequest);
+		}
 	}
 
 	private boolean hasInvalidParameters(ServletRequest request) {
@@ -111,6 +116,22 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 			}
 		}
 		return false;
+	}
+
+	private void putUserInfoInSession(HttpServletRequest httpRequest) {
+		final HttpSession session = httpRequest.getSession(false);
+		if (session == null) {
+			// la session n'est pas encore créée (et ne le sera peut-être jamais)
+			return;
+		}
+		if (session.getAttribute(NodesController.SESSION_REMOTE_USER) == null) {
+			// login utilisateur, peut être null
+			// dans Jenkins, pas remoteUser = httpRequest.getRemoteUser();
+			final String remoteUser = Jenkins.getAuthentication().getName();
+			if (remoteUser != null) {
+				session.setAttribute(NodesController.SESSION_REMOTE_USER, remoteUser);
+			}
+		}
 	}
 
 	/**
