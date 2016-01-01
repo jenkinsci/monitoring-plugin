@@ -47,8 +47,8 @@ public class NodesListener extends ComputerListener {
 
 	/** {@inheritDoc} */
 	@Override
-	public void onOnline(Computer c, TaskListener listener) throws IOException,
-			InterruptedException {
+	public void onOnline(Computer c, TaskListener listener)
+			throws IOException, InterruptedException {
 		try {
 			getNodesCollector().scheduleCollectNow();
 		} catch (final IllegalStateException e) {

@@ -32,8 +32,8 @@ import hudson.tasks.BuildStep;
 @Extension
 public class CounterBuildStepListener extends BuildStepListener {
 	private static final Counter BUILD_COUNTER = CounterRunListener.getBuildCounter();
-	private static final boolean DISABLED = Boolean.parseBoolean(Parameters
-			.getParameter(Parameter.DISABLED));
+	private static final boolean DISABLED = Boolean
+			.parseBoolean(Parameters.getParameter(Parameter.DISABLED));
 
 	/**
 	 * Constructor.

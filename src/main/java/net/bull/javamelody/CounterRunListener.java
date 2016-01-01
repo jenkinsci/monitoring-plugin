@@ -34,10 +34,10 @@ import hudson.model.listeners.RunListener;
 public class CounterRunListener extends RunListener<AbstractBuild> {
 	private static final Counter BUILD_COUNTER = new Counter(Counter.BUILDS_COUNTER_NAME,
 			"jobs.png");
-	private static final boolean COUNTER_HIDDEN = Parameters.isCounterHidden(BUILD_COUNTER
-			.getName());
-	private static final boolean DISABLED = Boolean.parseBoolean(Parameters
-			.getParameter(Parameter.DISABLED));
+	private static final boolean COUNTER_HIDDEN = Parameters
+			.isCounterHidden(BUILD_COUNTER.getName());
+	private static final boolean DISABLED = Boolean
+			.parseBoolean(Parameters.getParameter(Parameter.DISABLED));
 
 	/**
 	 * Constructor.

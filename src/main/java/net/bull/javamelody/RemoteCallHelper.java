@@ -179,19 +179,19 @@ final class RemoteCallHelper {
 		return result;
 	}
 
-	Map<String, JavaInformations> collectJavaInformationsListByName() throws IOException,
-			InterruptedException, ExecutionException {
+	Map<String, JavaInformations> collectJavaInformationsListByName()
+			throws IOException, InterruptedException, ExecutionException {
 		return collectDataByNodeName(JAVA_INFORMATIONS_TASK);
 	}
 
-	List<String> collectJmxValues(String jmxValueParameter) throws IOException,
-			InterruptedException, ExecutionException {
-		return new ArrayList<String>(collectDataByNodeName(new JmxValueTask(jmxValueParameter))
-				.values());
+	List<String> collectJmxValues(String jmxValueParameter)
+			throws IOException, InterruptedException, ExecutionException {
+		return new ArrayList<String>(
+				collectDataByNodeName(new JmxValueTask(jmxValueParameter)).values());
 	}
 
-	Map<String, List<MBeanNode>> collectMBeanNodesByNodeName() throws IOException,
-			InterruptedException, ExecutionException {
+	Map<String, List<MBeanNode>> collectMBeanNodesByNodeName()
+			throws IOException, InterruptedException, ExecutionException {
 		return collectDataByNodeName(MBEANS_TASK);
 	}
 
@@ -200,9 +200,10 @@ final class RemoteCallHelper {
 		return collectDataByNodeName(PROCESS_INFORMATIONS_TASK);
 	}
 
-	HeapHistogram collectGlobalHeapHistogram() throws IOException, InterruptedException,
-			ExecutionException {
-		final Map<String, HeapHistogram> heapHistograms = collectDataByNodeName(HEAP_HISTOGRAM_TASK);
+	HeapHistogram collectGlobalHeapHistogram()
+			throws IOException, InterruptedException, ExecutionException {
+		final Map<String, HeapHistogram> heapHistograms = collectDataByNodeName(
+				HEAP_HISTOGRAM_TASK);
 		HeapHistogram heapHistoTotal = null;
 		for (final HeapHistogram heapHisto : heapHistograms.values()) {
 			if (heapHistoTotal == null) {

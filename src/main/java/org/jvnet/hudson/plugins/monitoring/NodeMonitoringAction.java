@@ -76,8 +76,8 @@ public class NodeMonitoringAction implements Action {
 	 * @return String
 	 */
 	public String getMonitoringUrl() {
-		final String urlSuffix = computer instanceof Jenkins.MasterComputer ? "" : "/nodes/"
-				+ computer.getName();
+		final String urlSuffix = computer instanceof Jenkins.MasterComputer ? ""
+				: "/nodes/" + computer.getName();
 		return "../../../monitoring" + urlSuffix;
 	}
 

@@ -66,8 +66,8 @@ public class PluginImpl extends Plugin {
 		// d'etre dans le repertoire temporaire
 		// ("/" initial necessaire sous windows pour javamelody v1.8.1)
 		if (isParameterUndefined("javamelody.storage-directory")) {
-			System.setProperty("javamelody.storage-directory", "/"
-					+ new File(jenkins.getRootDir(), "monitoring").getAbsolutePath());
+			System.setProperty("javamelody.storage-directory",
+					"/" + new File(jenkins.getRootDir(), "monitoring").getAbsolutePath());
 		}
 		// google-analytics pour connaitre le nombre d'installations actives et
 		// pour connaitre les fonctions les plus utilisees
@@ -83,8 +83,7 @@ public class PluginImpl extends Plugin {
 		// ou les fichiers dans /static/abcdef123/ et dans /adjuncts/abcdef123/
 		// ou les renders ajax lors de l'ajout de build step dans /$stapler/bound/c285ac3d-39c1-4515-86aa-0b42d75212b3/render
 		if (isParameterUndefined("javamelody.http-transform-pattern")) {
-			System.setProperty(
-					"javamelody.http-transform-pattern",
+			System.setProperty("javamelody.http-transform-pattern",
 					"/\\d+/|/site/.+|avadoc/.+|/ws/.+|obertura/.+|estReport/.+|iolations/file/.+|/user/.+|/static/\\w+/|/adjuncts/\\w+/|/bound/[\\w\\-]+");
 		}
 
@@ -128,9 +127,8 @@ public class PluginImpl extends Plugin {
 	public void postInitialize() throws Exception {
 		super.postInitialize();
 		if (filter == null) {
-			throw new Exception(
-					"Post-initialization hook has been called before the plugin start. "
-							+ "Filters are not available");
+			throw new Exception("Post-initialization hook has been called before the plugin start. "
+					+ "Filters are not available");
 		}
 		filter.getNodesCollector().init();
 

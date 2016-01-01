@@ -42,8 +42,8 @@ import net.bull.javamelody.PluginMonitoringFilter;
  * @author Emeric Vernat
  */
 public class HudsonMonitoringFilter extends PluginMonitoringFilter {
-	private static final boolean PLUGIN_AUTHENTICATION_DISABLED = Boolean.parseBoolean(System
-			.getProperty("javamelody.plugin-authentication-disabled"));
+	private static final boolean PLUGIN_AUTHENTICATION_DISABLED = Boolean
+			.parseBoolean(System.getProperty("javamelody.plugin-authentication-disabled"));
 
 	private NodesCollector nodesCollector;
 
@@ -71,8 +71,8 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 		final String requestURI = httpRequest.getRequestURI();
 		final String monitoringUrl = getMonitoringUrl(httpRequest);
 		final String monitoringSlavesUrl = monitoringUrl + "/nodes";
-		if (!PLUGIN_AUTHENTICATION_DISABLED
-				&& (requestURI.equals(monitoringUrl) || requestURI.startsWith(monitoringSlavesUrl))) {
+		if (!PLUGIN_AUTHENTICATION_DISABLED && (requestURI.equals(monitoringUrl)
+				|| requestURI.startsWith(monitoringSlavesUrl))) {
 			// only the Hudson/Jenkins administrator can view the monitoring report
 			Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
 
@@ -89,8 +89,9 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 			if (requestURI.equals(monitoringSlavesUrl)) {
 				nodeName = null;
 			} else {
-				nodeName = URLDecoder.decode(requestURI.substring(monitoringSlavesUrl.length())
-						.replace("/", ""), "UTF-8");
+				nodeName = URLDecoder.decode(
+						requestURI.substring(monitoringSlavesUrl.length()).replace("/", ""),
+						"UTF-8");
 			}
 			final HttpServletResponse httpResponse = (HttpServletResponse) response;
 			doMonitoring(httpRequest, httpResponse, nodeName);

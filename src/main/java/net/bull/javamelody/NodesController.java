@@ -74,11 +74,11 @@ public class NodesController {
 		this.collector = nodesCollector.getCollector();
 		this.nodeName = nodeName;
 		if (nodeName == null) {
-			this.lastJavaInformationsList = new ArrayList<JavaInformations>(nodesCollector
-					.getLastJavaInformationsList().values());
+			this.lastJavaInformationsList = new ArrayList<JavaInformations>(
+					nodesCollector.getLastJavaInformationsList().values());
 		} else {
-			this.lastJavaInformationsList = Collections.singletonList(nodesCollector
-					.getLastJavaInformationsList().get(nodeName));
+			this.lastJavaInformationsList = Collections
+					.singletonList(nodesCollector.getLastJavaInformationsList().get(nodeName));
 		}
 	}
 
@@ -135,8 +135,8 @@ public class NodesController {
 
 				final String formatParameter = req.getParameter(FORMAT_PARAMETER);
 				if (req.getParameter(JMX_VALUE) != null) {
-					final List<String> jmxValues = getRemoteCallHelper().collectJmxValues(
-							req.getParameter(JMX_VALUE));
+					final List<String> jmxValues = getRemoteCallHelper()
+							.collectJmxValues(req.getParameter(JMX_VALUE));
 					doJmxValue(resp, jmxValues);
 				} else if (TransportFormat.isATransportFormat(req.getParameter(FORMAT_PARAMETER))) {
 					doCompressedSerializable(req, resp, monitoringController);
@@ -176,8 +176,8 @@ public class NodesController {
 	}
 
 	private void doPdf(HttpServletRequest req, HttpServletResponse resp,
-			MonitoringController monitoringController) throws IOException, InterruptedException,
-			ExecutionException, ServletException {
+			MonitoringController monitoringController)
+					throws IOException, InterruptedException, ExecutionException, ServletException {
 		final String partParameter = req.getParameter(PART_PARAMETER);
 		if (PROCESSES_PART.equalsIgnoreCase(partParameter)) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
@@ -204,7 +204,7 @@ public class NodesController {
 
 	private void doPdfProcesses(HttpServletResponse resp,
 			Map<String, List<ProcessInformations>> processInformationsByNodeName)
-			throws IOException {
+					throws IOException {
 		final String title = I18N.getString("Processus");
 		final Map<String, List<ProcessInformations>> processInformationsByTitle = convertMapByNodeToMapByTitle(
 				processInformationsByNodeName, title);
@@ -239,8 +239,8 @@ public class NodesController {
 	}
 
 	private void doPart(HttpServletRequest req, HttpServletResponse resp,
-			MonitoringController monitoringController, String partParameter) throws IOException,
-			InterruptedException, ExecutionException, ServletException {
+			MonitoringController monitoringController, String partParameter)
+					throws IOException, InterruptedException, ExecutionException, ServletException {
 		// ici, ni web.xml ni pom.xml
 		if (MBEANS_PART.equalsIgnoreCase(partParameter)) {
 			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = getRemoteCallHelper()
@@ -296,12 +296,12 @@ public class NodesController {
 
 	private void doHeapHisto(HttpServletRequest req, HttpServletResponse resp,
 			HeapHistogram heapHistogram, MonitoringController monitoringController)
-			throws IOException {
+					throws IOException {
 		if ("pdf".equalsIgnoreCase(req.getParameter(FORMAT_PARAMETER))) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
 			try {
-				final PdfOtherReport pdfOtherReport = new PdfOtherReport(
-						collector.getApplication(), resp.getOutputStream());
+				final PdfOtherReport pdfOtherReport = new PdfOtherReport(collector.getApplication(),
+						resp.getOutputStream());
 				pdfOtherReport.writeHeapHistogram(heapHistogram);
 			} finally {
 				resp.getOutputStream().flush();
@@ -318,7 +318,7 @@ public class NodesController {
 
 	private void doCompressedSerializable(HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse, MonitoringController monitoringController)
-			throws IOException {
+					throws IOException {
 		Serializable serializable;
 		try {
 			serializable = createSerializable(httpRequest);
@@ -331,11 +331,11 @@ public class NodesController {
 	private Serializable createSerializable(HttpServletRequest httpRequest) throws Exception { // NOPMD
 		final String part = httpRequest.getParameter(PART_PARAMETER);
 		if (MBEANS_PART.equalsIgnoreCase(part)) {
-			return new LinkedHashMap<String, List<MBeanNode>>(getRemoteCallHelper()
-					.collectMBeanNodesByNodeName());
+			return new LinkedHashMap<String, List<MBeanNode>>(
+					getRemoteCallHelper().collectMBeanNodesByNodeName());
 		} else if (PROCESSES_PART.equalsIgnoreCase(part)) {
-			return new LinkedHashMap<String, List<ProcessInformations>>(getRemoteCallHelper()
-					.collectProcessInformationsByNodeName());
+			return new LinkedHashMap<String, List<ProcessInformations>>(
+					getRemoteCallHelper().collectProcessInformationsByNodeName());
 		} else if (HEAP_HISTO_PART.equalsIgnoreCase(part)) {
 			return getRemoteCallHelper().collectGlobalHeapHistogram();
 		} else if (JVM_PART.equalsIgnoreCase(part)) {
@@ -343,8 +343,8 @@ public class NodesController {
 		} else if (THREADS_PART.equalsIgnoreCase(part)) {
 			final ArrayList<List<ThreadInformations>> result = new ArrayList<List<ThreadInformations>>();
 			for (final JavaInformations javaInformations : lastJavaInformationsList) {
-				result.add(new ArrayList<ThreadInformations>(javaInformations
-						.getThreadInformationsList()));
+				result.add(new ArrayList<ThreadInformations>(
+						javaInformations.getThreadInformationsList()));
 			}
 			return result;
 		}

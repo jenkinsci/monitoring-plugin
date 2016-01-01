@@ -60,8 +60,8 @@ public class NodesCollector {
 		this.monitoringDisabled = Boolean.parseBoolean(Parameters.getParameter(Parameter.DISABLED));
 		if (!monitoringDisabled) {
 			this.timer = filter.getFilterContext().getTimer();
-			final List<Counter> counters = Collections.singletonList(CounterRunListener
-					.getBuildCounter());
+			final List<Counter> counters = Collections
+					.singletonList(CounterRunListener.getBuildCounter());
 			this.collector = new RemoteCollector("nodes", counters);
 		} else {
 			this.timer = null;
