@@ -18,10 +18,6 @@
  */
 package net.bull.javamelody;
 
-import hudson.model.Computer;
-import hudson.remoting.Callable;
-import hudson.remoting.Future;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,6 +29,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import hudson.model.Computer;
+import hudson.remoting.Callable;
+import hudson.remoting.Future;
 import jenkins.model.Jenkins;
 import jenkins.security.MasterToSlaveCallable;
 

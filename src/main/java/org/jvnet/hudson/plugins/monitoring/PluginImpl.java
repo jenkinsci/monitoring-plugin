@@ -18,15 +18,14 @@
  */
 package org.jvnet.hudson.plugins.monitoring;
 
-import hudson.Plugin;
-import hudson.util.PluginServletFilter;
-
 import java.io.File;
 import java.util.Arrays;
 import java.util.logging.LogRecord;
 
 import javax.servlet.ServletContext;
 
+import hudson.Plugin;
+import hudson.util.PluginServletFilter;
 import jenkins.model.Jenkins;
 
 /**

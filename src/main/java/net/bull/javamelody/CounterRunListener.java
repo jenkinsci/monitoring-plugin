@@ -19,9 +19,9 @@
 package net.bull.javamelody;
 
 import hudson.Extension;
+import hudson.model.AbstractBuild;
 import hudson.model.Result;
 import hudson.model.TaskListener;
-import hudson.model.AbstractBuild;
 import hudson.model.listeners.RunListener;
 
 /**

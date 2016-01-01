@@ -18,11 +18,11 @@
  */
 package org.jvnet.hudson.plugins.monitoring;
 
-import hudson.Extension;
-import hudson.model.ManagementLink;
-
 import org.kohsuke.stapler.Stapler;
 import org.kohsuke.stapler.StaplerRequest;
+
+import hudson.Extension;
+import hudson.model.ManagementLink;
 
 /**
  * ManagementLink of the plugin to add a link in the "/manage" page.

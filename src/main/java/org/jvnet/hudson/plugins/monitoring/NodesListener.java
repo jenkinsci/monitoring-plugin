@@ -18,14 +18,13 @@
  */
 package org.jvnet.hudson.plugins.monitoring;
 
-import hudson.Extension;
-import hudson.model.TaskListener;
-import hudson.model.Computer;
-import hudson.slaves.ComputerListener;
-import hudson.slaves.OfflineCause;
-
 import java.io.IOException;
 
+import hudson.Extension;
+import hudson.model.Computer;
+import hudson.model.TaskListener;
+import hudson.slaves.ComputerListener;
+import hudson.slaves.OfflineCause;
 import jenkins.model.Jenkins;
 import net.bull.javamelody.NodesCollector;
 

@@ -18,14 +18,14 @@
  */
 package org.jvnet.hudson.plugins.monitoring;
 
-import hudson.Extension;
-import hudson.model.Action;
-import hudson.model.TransientComputerActionFactory;
-import hudson.model.Computer;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import hudson.Extension;
+import hudson.model.Action;
+import hudson.model.Computer;
+import hudson.model.TransientComputerActionFactory;
 
 /**
  * Generates a {@link NodeMonitoringAction} for the each slave computer.
