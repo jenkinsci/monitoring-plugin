@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>net.bull.javamelody</groupId>
 			<artifactId>javamelody-core</artifactId>
-			<version>1.58.0</version>
+			<version>1.59.0</version>
 		</dependency>
 		<!-- jrobin dependency is included in javamelody-core
 		<dependency>
