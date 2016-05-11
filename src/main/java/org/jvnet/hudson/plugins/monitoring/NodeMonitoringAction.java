@@ -25,7 +25,7 @@ import jenkins.model.Jenkins;
 /**
  * Implements a "Monitoring" button for slaves.
  * This button will be available for everybody with ADMINISTER permission.
- * @author Oleg Nenashev <o.v.nenashev@gmail.com>, Emeric Vernat
+ * @author Oleg Nenashev (o.v.nenashev@gmail.com), Emeric Vernat
  * @since 1.49
  */
 public class NodeMonitoringAction implements Action {
