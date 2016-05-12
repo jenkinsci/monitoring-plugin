@@ -16,10 +16,10 @@
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Monitoring</url>
 	<inceptionYear>2009</inceptionYear>
 
-    <properties>
-        <jenkins.version>1.580.1</jenkins.version>
-        <java.level>6</java.level>
-    </properties>
+	<properties>
+		<jenkins.version>2.0</jenkins.version>
+		<java.level>7</java.level>
+	</properties>
 
 	<developers>
 		<developer>
@@ -49,14 +49,33 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.3</version>
 		</dependency>
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>bcmail-jdk14</artifactId>
+					<groupId>bouncycastle</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>bcprov-jdk14</artifactId>
+					<groupId>bouncycastle</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>bctsp-jdk14</artifactId>
+					<groupId>bouncycastle</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 
 	<scm>
 		<connection>scm:git:ssh://github.com/jenkinsci/monitoring-plugin.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/jenkinsci/monitoring-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/monitoring-plugin</url>
-	    <tag>HEAD</tag>
-    </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<repositories>
 		<repository>
