@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>1.580.1</version>
+		<version>2.9</version>
 		<relativePath />
 	</parent>
 	<groupId>org.jvnet.hudson.plugins</groupId>
@@ -17,9 +17,8 @@
 	<inceptionYear>2009</inceptionYear>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<findbugs-maven-plugin.version>3.0.0</findbugs-maven-plugin.version>
-		<maven.findbugs.failure.strict>true</maven.findbugs.failure.strict>
+		<jenkins.version>2.0</jenkins.version>
+		<java.level>7</java.level>
 	</properties>
 
 	<developers>
@@ -42,12 +41,6 @@
 			<artifactId>javamelody-core</artifactId>
 			<version>1.59.0</version>
 		</dependency>
-		<!-- jrobin dependency is included in javamelody-core
-		<dependency>
-			<groupId>org.jrobin</groupId>
-			<artifactId>jrobin</artifactId>
-			<version>1.5.9</version>
-		</dependency> -->
 		<!-- slf4j-api for Jenkins issue https://issues.jenkins-ci.org/browse/JENKINS-11293
 		NoClassDefFoundError: org.slf4j.ILoggerFactory on IBM J9 JVM,
 		(this may not be needed anymore since with JENKINS-12650, slf4j-api and slf4j-jdk14 are now bundled in core) -->
@@ -55,12 +48,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.3</version>
-		</dependency>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>6.0</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.lowagie</groupId>
@@ -81,62 +68,14 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.5</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.findbugs</groupId>
-			<artifactId>annotations</artifactId>
-			<version>3.0.0</version>
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.jenkins-ci.tools</groupId>
-				<artifactId>maven-hpi-plugin</artifactId>
-  				<configuration>
-					<disabledTestInjection>true</disabledTestInjection>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>${findbugs-maven-plugin.version}</version>
-				<configuration>
-					<failOnError>${maven.findbugs.failure.strict}</failOnError>
-					<xmlOutput>true</xmlOutput>
-				</configuration>
-				<executions>
-					<execution>
-						<id>run-findbugs</id>
-						<phase>verify</phase> 
-						<goals>
-							<goal>check</goal> 
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 
 	<scm>
 		<connection>scm:git:ssh://github.com/jenkinsci/monitoring-plugin.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/jenkinsci/monitoring-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/monitoring-plugin</url>
-	  <tag>HEAD</tag>
-  </scm>
-
-	<distributionManagement>
-		<repository>
-			<id>maven.jenkins-ci.org</id>
-			<url>https://repo.jenkins-ci.org/releases/</url>
-		</repository>
-	</distributionManagement>
+		<tag>HEAD</tag>
+	</scm>
 
 	<repositories>
 		<repository>

@@ -29,7 +29,7 @@ import hudson.model.TransientComputerActionFactory;
 
 /**
  * Generates a {@link NodeMonitoringAction} for the each slave computer.
- * @author Oleg Nenashev <o.v.nenashev@gmail.com>, Emeric Vernat
+ * @author Oleg Nenashev (o.v.nenashev@gmail.com), Emeric Vernat
  */
 @Extension
 public class NodesMonitoringActionFactory extends TransientComputerActionFactory {
