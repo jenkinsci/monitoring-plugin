@@ -49,27 +49,27 @@ public class NodesListener extends ComputerListener {
 	@Override
 	public void onOnline(Computer c, TaskListener listener)
 			throws IOException, InterruptedException {
-		try {
-			NodesCollector nodesCollector = getNodesCollector();
-			if (nodesCollector != null) {
-				nodesCollector.scheduleCollectNow();
-			}
-		} catch (final IllegalStateException e) {
-			// if timer already canceled, do nothing
-			// [JENKINS-17757] IllegalStateException: Timer already cancelled from NodesCollector.scheduleCollectNow
-		}
+		scheduleCollectNow();
 		super.onOnline(c, listener);
 	}
 
 	/** {@inheritDoc} */
 	@Override
 	public void onOffline(Computer c, OfflineCause cause) {
+		scheduleCollectNow();
+		super.onOffline(c, cause);
+	}
+
+	private void scheduleCollectNow() {
 		try {
-			getNodesCollector().scheduleCollectNow();
+			NodesCollector collector = getNodesCollector();
+			if (collector != null) {
+				collector.scheduleCollectNow();
+			}
 		} catch (final IllegalStateException e) {
 			// if timer already canceled, do nothing
+			// [JENKINS-17757] IllegalStateException: Timer already cancelled from NodesCollector.scheduleCollectNow
 		}
-		super.onOffline(c, cause);
 	}
 
 	private NodesCollector getNodesCollector() {
@@ -78,9 +78,9 @@ public class NodesListener extends ComputerListener {
 			if (jenkins != null) {
 				final PluginImpl pluginImpl = jenkins.getPlugin(PluginImpl.class);
 				if (pluginImpl != null) {
-					HudsonMonitoringFilter hMonitoringFilter = pluginImpl.getFilter();
-					if (hMonitoringFilter != null) {
-						nodesCollector = hMonitoringFilter.getNodesCollector();
+					final HudsonMonitoringFilter monitoringFilter = pluginImpl.getFilter();
+					if (monitoringFilter != null) {
+						nodesCollector = monitoringFilter.getNodesCollector();
 					}
 				}
 			}
