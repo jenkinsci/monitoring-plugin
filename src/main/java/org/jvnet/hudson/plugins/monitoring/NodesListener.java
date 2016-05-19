@@ -50,7 +50,10 @@ public class NodesListener extends ComputerListener {
 	public void onOnline(Computer c, TaskListener listener)
 			throws IOException, InterruptedException {
 		try {
-			getNodesCollector().scheduleCollectNow();
+			NodesCollector nodesCollector = getNodesCollector();
+			if (nodesCollector != null) {
+				nodesCollector.scheduleCollectNow();
+			}
 		} catch (final IllegalStateException e) {
 			// if timer already canceled, do nothing
 			// [JENKINS-17757] IllegalStateException: Timer already cancelled from NodesCollector.scheduleCollectNow
@@ -74,7 +77,12 @@ public class NodesListener extends ComputerListener {
 			final Jenkins jenkins = Jenkins.getInstance();
 			if (jenkins != null) {
 				final PluginImpl pluginImpl = jenkins.getPlugin(PluginImpl.class);
-				nodesCollector = pluginImpl.getFilter().getNodesCollector();
+				if (pluginImpl != null) {
+					HudsonMonitoringFilter hMonitoringFilter = pluginImpl.getFilter();
+					if (hMonitoringFilter != null) {
+						nodesCollector = hMonitoringFilter.getNodesCollector();
+					}
+				}
 			}
 		}
 		return nodesCollector;
