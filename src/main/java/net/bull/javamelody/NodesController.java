@@ -177,7 +177,7 @@ public class NodesController {
 
 	private void doPdf(HttpServletRequest req, HttpServletResponse resp,
 			MonitoringController monitoringController)
-					throws IOException, InterruptedException, ExecutionException, ServletException {
+			throws IOException, InterruptedException, ExecutionException, ServletException {
 		final String partParameter = req.getParameter(PART_PARAMETER);
 		if (PROCESSES_PART.equalsIgnoreCase(partParameter)) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
@@ -204,7 +204,7 @@ public class NodesController {
 
 	private void doPdfProcesses(HttpServletResponse resp,
 			Map<String, List<ProcessInformations>> processInformationsByNodeName)
-					throws IOException {
+			throws IOException {
 		final String title = I18N.getString("Processus");
 		final Map<String, List<ProcessInformations>> processInformationsByTitle = convertMapByNodeToMapByTitle(
 				processInformationsByNodeName, title);
@@ -240,7 +240,7 @@ public class NodesController {
 
 	private void doPart(HttpServletRequest req, HttpServletResponse resp,
 			MonitoringController monitoringController, String partParameter)
-					throws IOException, InterruptedException, ExecutionException, ServletException {
+			throws IOException, InterruptedException, ExecutionException, ServletException {
 		// ici, ni web.xml ni pom.xml
 		if (MBEANS_PART.equalsIgnoreCase(partParameter)) {
 			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = getRemoteCallHelper()
@@ -296,7 +296,7 @@ public class NodesController {
 
 	private void doHeapHisto(HttpServletRequest req, HttpServletResponse resp,
 			HeapHistogram heapHistogram, MonitoringController monitoringController)
-					throws IOException {
+			throws IOException {
 		if ("pdf".equalsIgnoreCase(req.getParameter(FORMAT_PARAMETER))) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
 			try {
@@ -318,7 +318,7 @@ public class NodesController {
 
 	private void doCompressedSerializable(HttpServletRequest httpRequest,
 			HttpServletResponse httpResponse, MonitoringController monitoringController)
-					throws IOException {
+			throws IOException {
 		Serializable serializable;
 		try {
 			serializable = createSerializable(httpRequest);
