@@ -77,6 +77,18 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>findbugs-maven-plugin</artifactId>
+					<version>3.0.4</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
 	<repositories>
 		<repository>
 			<id>repo.jenkins-ci.org</id>
