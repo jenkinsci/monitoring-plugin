@@ -37,6 +37,7 @@ import jenkins.model.Jenkins;
  * 
  * @author Emeric Vernat
  */
+@SuppressWarnings("deprecation")
 public class PluginImpl extends Plugin {
 	private ServletContext context;
 	private HudsonMonitoringFilter filter;
