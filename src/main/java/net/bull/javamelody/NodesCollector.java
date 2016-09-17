@@ -164,7 +164,7 @@ public class NodesCollector {
 				JdbcWrapper.BUILD_QUEUE_LENGTH.set(queueLength);
 			}
 
-			final List<JavaInformations> javaInformations = new ArrayList<JavaInformations>(
+			final List<JavaInformations> javaInformations = new ArrayList<>(
 					getLastJavaInformationsList().values());
 			collector.collectWithoutErrors(javaInformations);
 		} catch (final Throwable t) { // NOPMD
@@ -186,7 +186,7 @@ public class NodesCollector {
 			public void run() {
 				try {
 					// send the report
-					final List<JavaInformations> javaInformations = new ArrayList<JavaInformations>(
+					final List<JavaInformations> javaInformations = new ArrayList<>(
 							getLastJavaInformationsList().values());
 					new MailReport().sendReportMail(getCollector(), true, javaInformations, period);
 				} catch (final Throwable t) { // NOPMD

@@ -74,7 +74,7 @@ public class NodesController {
 		this.collector = nodesCollector.getCollector();
 		this.nodeName = nodeName;
 		if (nodeName == null) {
-			this.lastJavaInformationsList = new ArrayList<JavaInformations>(
+			this.lastJavaInformationsList = new ArrayList<>(
 					nodesCollector.getLastJavaInformationsList().values());
 		} else {
 			this.lastJavaInformationsList = Collections
@@ -121,7 +121,7 @@ public class NodesController {
 						final SerializableController serializableController = new SerializableController(
 								collector);
 						final Range range = serializableController.getRangeForSerializable(req);
-						final List<JavaInformations> javaInformationsList = new ArrayList<JavaInformations>(
+						final List<JavaInformations> javaInformationsList = new ArrayList<>(
 								getRemoteCallHelper().collectJavaInformationsListByName().values());
 						final Serializable serializable = serializableController
 								.createDefaultSerializable(javaInformationsList, range,
@@ -282,7 +282,7 @@ public class NodesController {
 
 	private <T> Map<String, T> convertMapByNodeToMapByTitle(Map<String, T> mapByNodeName,
 			final String title) {
-		final Map<String, T> mapByTitle = new LinkedHashMap<String, T>(mapByNodeName.size());
+		final Map<String, T> mapByTitle = new LinkedHashMap<>(mapByNodeName.size());
 		for (final Map.Entry<String, T> entry : mapByNodeName.entrySet()) {
 			final String name = entry.getKey();
 			if (name != null && name.length() != 0) {
@@ -331,20 +331,18 @@ public class NodesController {
 	private Serializable createSerializable(HttpServletRequest httpRequest) throws Exception { // NOPMD
 		final String part = httpRequest.getParameter(PART_PARAMETER);
 		if (MBEANS_PART.equalsIgnoreCase(part)) {
-			return new LinkedHashMap<String, List<MBeanNode>>(
-					getRemoteCallHelper().collectMBeanNodesByNodeName());
+			return new LinkedHashMap<>(getRemoteCallHelper().collectMBeanNodesByNodeName());
 		} else if (PROCESSES_PART.equalsIgnoreCase(part)) {
-			return new LinkedHashMap<String, List<ProcessInformations>>(
+			return new LinkedHashMap<>(
 					getRemoteCallHelper().collectProcessInformationsByNodeName());
 		} else if (HEAP_HISTO_PART.equalsIgnoreCase(part)) {
 			return getRemoteCallHelper().collectGlobalHeapHistogram();
 		} else if (JVM_PART.equalsIgnoreCase(part)) {
-			return new ArrayList<JavaInformations>(lastJavaInformationsList);
+			return new ArrayList<>(lastJavaInformationsList);
 		} else if (THREADS_PART.equalsIgnoreCase(part)) {
-			final ArrayList<List<ThreadInformations>> result = new ArrayList<List<ThreadInformations>>();
+			final ArrayList<List<ThreadInformations>> result = new ArrayList<>();
 			for (final JavaInformations javaInformations : lastJavaInformationsList) {
-				result.add(new ArrayList<ThreadInformations>(
-						javaInformations.getThreadInformationsList()));
+				result.add(new ArrayList<>(javaInformations.getThreadInformationsList()));
 			}
 			return result;
 		}

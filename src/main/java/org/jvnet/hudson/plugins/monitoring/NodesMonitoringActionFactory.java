@@ -36,7 +36,7 @@ public class NodesMonitoringActionFactory extends TransientComputerActionFactory
 	/** {@inheritDoc} */
 	@Override
 	public Collection<? extends Action> createFor(Computer computer) {
-		final List<NodeMonitoringAction> result = new ArrayList<NodeMonitoringAction>();
+		final List<NodeMonitoringAction> result = new ArrayList<>();
 		// Add a single monitoring action, which will handle all monitoring features
 		result.add(new NodeMonitoringAction(computer, "Monitoring", "monitor.gif"));
 		return result;

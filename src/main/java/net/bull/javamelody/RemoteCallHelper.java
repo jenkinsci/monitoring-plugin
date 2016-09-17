@@ -151,9 +151,8 @@ final class RemoteCallHelper {
 			return Collections.emptyMap();
 		}
 		final Computer[] computers = jenkins.getComputers();
-		final Map<String, Future<T>> futuresByNodeName = new LinkedHashMap<String, Future<T>>(
-				computers.length);
-		final DelegatingTask<T> delegatingTask = new DelegatingTask<T>(task);
+		final Map<String, Future<T>> futuresByNodeName = new LinkedHashMap<>(computers.length);
+		final DelegatingTask<T> delegatingTask = new DelegatingTask<>(task);
 		for (final Computer c : computers) {
 			if (c.isOnline()) {
 				if (nodeName == null || nodeName.equals(c.getName())) {
@@ -165,7 +164,7 @@ final class RemoteCallHelper {
 		// timeout dans 59 secondes
 		final long end = now + TimeUnit.SECONDS.toMillis(59);
 
-		final Map<String, T> result = new LinkedHashMap<String, T>(futuresByNodeName.size());
+		final Map<String, T> result = new LinkedHashMap<>(futuresByNodeName.size());
 		for (final Map.Entry<String, Future<T>> entry : futuresByNodeName.entrySet()) {
 			final String node = entry.getKey();
 			final Future<T> future = entry.getValue();
@@ -186,8 +185,7 @@ final class RemoteCallHelper {
 
 	List<String> collectJmxValues(String jmxValueParameter)
 			throws IOException, InterruptedException, ExecutionException {
-		return new ArrayList<String>(
-				collectDataByNodeName(new JmxValueTask(jmxValueParameter)).values());
+		return new ArrayList<>(collectDataByNodeName(new JmxValueTask(jmxValueParameter)).values());
 	}
 
 	Map<String, List<MBeanNode>> collectMBeanNodesByNodeName()
