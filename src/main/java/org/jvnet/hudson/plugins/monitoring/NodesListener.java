@@ -62,7 +62,7 @@ public class NodesListener extends ComputerListener {
 
 	private void scheduleCollectNow() {
 		try {
-			NodesCollector collector = getNodesCollector();
+			final NodesCollector collector = getNodesCollector();
 			if (collector != null) {
 				collector.scheduleCollectNow();
 			}
