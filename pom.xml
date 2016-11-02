@@ -49,6 +49,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.3</version>
 		</dependency>
+		<!-- TODO add a dependency on bouncycastle-api-plugin once baseline is above 2.16 -->
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
