@@ -51,6 +51,12 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 
 	/** {@inheritDoc} */
 	@Override
+	public String getApplicationType() {
+		return "Jenkins";
+	}
+
+	/** {@inheritDoc} */
+	@Override
 	public void init(FilterConfig config) throws ServletException {
 		super.init(config);
 
