@@ -137,7 +137,8 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 			// login utilisateur, peut être null
 			// dans Jenkins, pas remoteUser = httpRequest.getRemoteUser();
 			final String remoteUser = Jenkins.getAuthentication().getName();
-			if (remoteUser != null) {
+			// !anonymous for https://issues.jenkins-ci.org/browse/JENKINS-42112
+			if (remoteUser != null && !"anonymous".equals(remoteUser)) {
 				session.setAttribute(NodesController.SESSION_REMOTE_USER, remoteUser);
 			}
 		}
