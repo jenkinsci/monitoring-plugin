@@ -101,6 +101,13 @@ public class PluginImpl extends Plugin {
 			System.setProperty("javamelody.gzip-compression-disabled", "true");
 		}
 
+		if (isParameterUndefined("javamelody.maven-repositories")) {
+			// add jenkins maven public repository for jenkins and plugins sources
+			final String mavenRepositories = System.getProperty("user.home")
+					+ "/.m2/repository,http://repo1.maven.org/maven2,http://repo.jenkins-ci.org/public";
+			System.setProperty("javamelody.maven-repositories", mavenRepositories);
+		}
+
 		// we could set "javamelody.admin-emails" with
 		// ((Mailer.DescriptorImpl) Jenkins.getInstance().getDescriptorByType(
 		// hudson.tasks.Mailer.DescriptorImpl.class)).getAdminAddress();
