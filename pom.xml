@@ -10,7 +10,7 @@
 	<groupId>org.jvnet.hudson.plugins</groupId>
 	<artifactId>monitoring</artifactId>
 	<packaging>hpi</packaging>
-	<version>1.65.1</version>
+	<version>1.66.0-SNAPSHOT</version>
 	<name>Monitoring</name>
 	<description>Monitoring of Jenkins</description>
 	<url>http://wiki.jenkins-ci.org/display/JENKINS/Monitoring</url>
@@ -74,7 +74,7 @@
 		<connection>scm:git:ssh://github.com/jenkinsci/monitoring-plugin.git</connection>
 		<developerConnection>scm:git:ssh://git@github.com/jenkinsci/monitoring-plugin.git</developerConnection>
 		<url>https://github.com/jenkinsci/monitoring-plugin</url>
-		<tag>monitoring-1.65.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<build>
