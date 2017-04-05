@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>2.9</version>
+		<version>2.26-beta-1</version>
 		<relativePath />
 	</parent>
 	<groupId>org.jvnet.hudson.plugins</groupId>
@@ -20,6 +20,9 @@
 		<jenkins.version>2.0</jenkins.version>
 		<java.level>7</java.level>
 	</properties>
+	<prerequisites>
+		<maven>3.0.4</maven>
+	</prerequisites>
 
 	<developers>
 		<developer>
