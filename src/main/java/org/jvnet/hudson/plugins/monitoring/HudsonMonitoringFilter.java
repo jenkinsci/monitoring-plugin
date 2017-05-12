@@ -74,19 +74,23 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 			return;
 		}
 		final HttpServletRequest httpRequest = (HttpServletRequest) request;
+		final HttpServletResponse httpResponse = (HttpServletResponse) response;
 
 		final String requestURI = httpRequest.getRequestURI();
 		final String monitoringUrl = getMonitoringUrl(httpRequest);
 		final String monitoringSlavesUrl = monitoringUrl + "/nodes";
 		if (!PLUGIN_AUTHENTICATION_DISABLED && (requestURI.equals(monitoringUrl)
 				|| requestURI.startsWith(monitoringSlavesUrl))) {
+			if (isRumMonitoring(httpRequest, httpResponse)) {
+				return;
+			}
 			// only the Hudson/Jenkins administrator can view the monitoring report
 			Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
 
 			// this check of parameters is not supposed to be needed,
 			// but just in case we can check parameters here
 			if (hasInvalidParameters(request)) {
-				((HttpServletResponse) response).sendError(HttpServletResponse.SC_BAD_REQUEST);
+				httpResponse.sendError(HttpServletResponse.SC_BAD_REQUEST);
 				return;
 			}
 		}
@@ -100,7 +104,6 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 						requestURI.substring(monitoringSlavesUrl.length()).replace("/", ""),
 						"UTF-8");
 			}
-			final HttpServletResponse httpResponse = (HttpServletResponse) response;
 			doMonitoring(httpRequest, httpResponse, nodeName);
 			return;
 		}
