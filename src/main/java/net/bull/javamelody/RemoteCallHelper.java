@@ -153,10 +153,8 @@ final class RemoteCallHelper {
 		final Map<String, Future<T>> futuresByNodeName = new LinkedHashMap<>(computers.length);
 		final DelegatingTask<T> delegatingTask = new DelegatingTask<>(task);
 		for (final Computer c : computers) {
-			if (c.isOnline()) {
-				if (nodeName == null || nodeName.equals(c.getName())) {
-					futuresByNodeName.put(c.getName(), c.getChannel().callAsync(delegatingTask));
-				}
+			if (c.isOnline() && (nodeName == null || nodeName.equals(c.getName()))) {
+				futuresByNodeName.put(c.getName(), c.getChannel().callAsync(delegatingTask));
 			}
 		}
 		final long now = System.currentTimeMillis();
