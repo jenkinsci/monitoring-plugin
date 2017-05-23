@@ -32,6 +32,11 @@ import jenkins.model.Jenkins;
  * @author Emeric Vernat
  */
 public class NodesCollector {
+	private final boolean monitoringDisabled;
+	private final Timer timer;
+	private final Collector collector;
+	private Map<String, JavaInformations> lastJavaInformationsList;
+
 	private static class RemoteCollector extends Collector {
 		RemoteCollector(String application, List<Counter> counters) {
 			super(application, counters);
@@ -43,11 +48,6 @@ public class NodesCollector {
 			// no local collect
 		}
 	}
-
-	private final boolean monitoringDisabled;
-	private final Timer timer;
-	private final Collector collector;
-	private Map<String, JavaInformations> lastJavaInformationsList;
 
 	/**
 	 * Constructor.
