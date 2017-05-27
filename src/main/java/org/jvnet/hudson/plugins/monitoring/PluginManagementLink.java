@@ -24,7 +24,7 @@ import hudson.Extension;
 import hudson.model.ManagementLink;
 
 /**
- * ManagementLink of the plugin to add a link in the "/manage" page.
+ * {@link ManagementLink} of the plugin to add a link in the "/manage" page.
  * 
  * @author Emeric Vernat
  */
