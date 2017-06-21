@@ -33,6 +33,14 @@ import hudson.remoting.Callable;
 import hudson.remoting.Future;
 import jenkins.model.Jenkins;
 import jenkins.security.MasterToSlaveCallable;
+import net.bull.javamelody.internal.common.I18N;
+import net.bull.javamelody.internal.model.Action;
+import net.bull.javamelody.internal.model.HeapHistogram;
+import net.bull.javamelody.internal.model.JavaInformations;
+import net.bull.javamelody.internal.model.MBeanNode;
+import net.bull.javamelody.internal.model.MBeans;
+import net.bull.javamelody.internal.model.ProcessInformations;
+import net.bull.javamelody.internal.model.VirtualMachine;
 
 final class RemoteCallHelper {
 	private static final MasterToSlaveCallable<JavaInformations, Throwable> JAVA_INFORMATIONS_TASK = new MasterToSlaveCallable<JavaInformations, Throwable>() {

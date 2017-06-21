@@ -17,21 +17,6 @@
  */
 package net.bull.javamelody;
 
-import static net.bull.javamelody.HttpParameters.ACTION_PARAMETER;
-import static net.bull.javamelody.HttpParameters.CACHE_ID_PARAMETER;
-import static net.bull.javamelody.HttpParameters.FORMAT_PARAMETER;
-import static net.bull.javamelody.HttpParameters.HEAP_HISTO_PART;
-import static net.bull.javamelody.HttpParameters.HTML_CONTENT_TYPE;
-import static net.bull.javamelody.HttpParameters.JMX_VALUE;
-import static net.bull.javamelody.HttpParameters.JOB_ID_PARAMETER;
-import static net.bull.javamelody.HttpParameters.JVM_PART;
-import static net.bull.javamelody.HttpParameters.MBEANS_PART;
-import static net.bull.javamelody.HttpParameters.PART_PARAMETER;
-import static net.bull.javamelody.HttpParameters.PROCESSES_PART;
-import static net.bull.javamelody.HttpParameters.SESSION_ID_PARAMETER;
-import static net.bull.javamelody.HttpParameters.THREADS_PART;
-import static net.bull.javamelody.HttpParameters.THREAD_ID_PARAMETER;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Serializable;
@@ -46,6 +31,26 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.bull.javamelody.internal.common.HttpParameter;
+import net.bull.javamelody.internal.common.HttpPart;
+import net.bull.javamelody.internal.common.I18N;
+import net.bull.javamelody.internal.model.Action;
+import net.bull.javamelody.internal.model.Collector;
+import net.bull.javamelody.internal.model.HeapHistogram;
+import net.bull.javamelody.internal.model.JavaInformations;
+import net.bull.javamelody.internal.model.MBeanNode;
+import net.bull.javamelody.internal.model.Period;
+import net.bull.javamelody.internal.model.ProcessInformations;
+import net.bull.javamelody.internal.model.Range;
+import net.bull.javamelody.internal.model.ThreadInformations;
+import net.bull.javamelody.internal.model.TransportFormat;
+import net.bull.javamelody.internal.web.HtmlController;
+import net.bull.javamelody.internal.web.HttpCookieManager;
+import net.bull.javamelody.internal.web.MonitoringController;
+import net.bull.javamelody.internal.web.SerializableController;
+import net.bull.javamelody.internal.web.html.HtmlReport;
+import net.bull.javamelody.internal.web.pdf.PdfOtherReport;
+
 /**
  * Controller between data and presentation for Hudson/Jenkins' nodes (slaves in
  * general)
@@ -56,7 +61,7 @@ public class NodesController {
 	/**
 	 * For HudsonMonitoringFilter.
 	 */
-	public static final String SESSION_REMOTE_USER = SessionInformations.SESSION_REMOTE_USER;
+	public static final String SESSION_REMOTE_USER = SessionListener.SESSION_REMOTE_USER;
 
 	private final Collector collector;
 	private final String nodeName;
@@ -96,8 +101,8 @@ public class NodesController {
 
 				final MonitoringController monitoringController = new MonitoringController(
 						collector, null);
-				final String partParameter = req.getParameter(PART_PARAMETER);
-				final String actionParameter = req.getParameter(ACTION_PARAMETER);
+				final String partParameter = HttpParameter.PART.getParameterFrom(req);
+				final String actionParameter = HttpParameter.ACTION.getParameterFrom(req);
 				if (actionParameter != null) {
 					final Action action = Action.valueOfIgnoreCase(actionParameter);
 					final String messageForReport;
@@ -105,18 +110,19 @@ public class NodesController {
 							&& action != Action.LOGOUT) {
 						// on forwarde l'action (gc ou heap dump) sur le(s) node(s)
 						// et on recupere les informations a jour (notamment memoire)
-						final String actionName = req.getParameter(ACTION_PARAMETER);
-						final String sessionId = req.getParameter(SESSION_ID_PARAMETER);
-						final String threadId = req.getParameter(THREAD_ID_PARAMETER);
-						final String jobId = req.getParameter(JOB_ID_PARAMETER);
-						final String cacheId = req.getParameter(CACHE_ID_PARAMETER);
+						final String actionName = HttpParameter.ACTION.getParameterFrom(req);
+						final String sessionId = HttpParameter.SESSION_ID.getParameterFrom(req);
+						final String threadId = HttpParameter.THREAD_ID.getParameterFrom(req);
+						final String jobId = HttpParameter.JOB_ID.getParameterFrom(req);
+						final String cacheId = HttpParameter.CACHE_ID.getParameterFrom(req);
 						messageForReport = getRemoteCallHelper().forwardAction(actionName,
 								sessionId, threadId, jobId, cacheId);
 					} else {
 						// necessaire si action clear_counter
 						messageForReport = monitoringController.executeActionIfNeeded(req);
 					}
-					if (TransportFormat.isATransportFormat(req.getParameter(FORMAT_PARAMETER))) {
+					if (TransportFormat
+							.isATransportFormat(HttpParameter.FORMAT.getParameterFrom(req))) {
 						final SerializableController serializableController = new SerializableController(
 								collector);
 						final Range range = serializableController.getRangeForSerializable(req);
@@ -132,19 +138,20 @@ public class NodesController {
 					return;
 				}
 
-				final String formatParameter = req.getParameter(FORMAT_PARAMETER);
-				if (req.getParameter(JMX_VALUE) != null) {
+				final String formatParameter = HttpParameter.FORMAT.getParameterFrom(req);
+				if (HttpParameter.JMX_VALUE.getParameterFrom(req) != null) {
 					final List<String> jmxValues = getRemoteCallHelper()
-							.collectJmxValues(req.getParameter(JMX_VALUE));
+							.collectJmxValues(HttpParameter.JMX_VALUE.getParameterFrom(req));
 					doJmxValue(resp, jmxValues);
-				} else if (TransportFormat.isATransportFormat(req.getParameter(FORMAT_PARAMETER))) {
+				} else if (TransportFormat
+						.isATransportFormat(HttpParameter.FORMAT.getParameterFrom(req))) {
 					doCompressedSerializable(req, resp, monitoringController);
 				} else if ("pdf".equalsIgnoreCase(formatParameter)) {
 					doPdf(req, resp, monitoringController);
 				} else if (partParameter == null) {
 					monitoringController.doReport(req, resp, lastJavaInformationsList);
 				} else {
-					doPart(req, resp, monitoringController, partParameter);
+					doPart(req, resp, monitoringController);
 				}
 			} catch (final Throwable e) { // NOPMD
 				writeMessage(resp, e.getMessage(), null);
@@ -177,8 +184,7 @@ public class NodesController {
 	private void doPdf(HttpServletRequest req, HttpServletResponse resp,
 			MonitoringController monitoringController)
 			throws IOException, InterruptedException, ExecutionException, ServletException {
-		final String partParameter = req.getParameter(PART_PARAMETER);
-		if (PROCESSES_PART.equalsIgnoreCase(partParameter)) {
+		if (HttpPart.PROCESSES.isPart(req)) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
 			final Map<String, List<ProcessInformations>> processInformationsByNodeName = getRemoteCallHelper()
 					.collectProcessInformationsByNodeName();
@@ -187,7 +193,7 @@ public class NodesController {
 			} finally {
 				resp.getOutputStream().flush();
 			}
-		} else if (MBEANS_PART.equalsIgnoreCase(partParameter)) {
+		} else if (HttpPart.MBEANS.isPart(req)) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
 			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = getRemoteCallHelper()
 					.collectMBeanNodesByNodeName();
@@ -238,18 +244,18 @@ public class NodesController {
 	}
 
 	private void doPart(HttpServletRequest req, HttpServletResponse resp,
-			MonitoringController monitoringController, String partParameter)
+			MonitoringController monitoringController)
 			throws IOException, InterruptedException, ExecutionException, ServletException {
 		// ici, ni web.xml ni pom.xml
-		if (MBEANS_PART.equalsIgnoreCase(partParameter)) {
+		if (HttpPart.MBEANS.isPart(req)) {
 			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = getRemoteCallHelper()
 					.collectMBeanNodesByNodeName();
 			doMBeans(req, resp, mbeanNodesByNodeName);
-		} else if (PROCESSES_PART.equalsIgnoreCase(partParameter)) {
+		} else if (HttpPart.PROCESSES.isPart(req)) {
 			final Map<String, List<ProcessInformations>> processInformationsByNodeName = getRemoteCallHelper()
 					.collectProcessInformationsByNodeName();
 			doProcesses(req, resp, processInformationsByNodeName);
-		} else if (HEAP_HISTO_PART.equalsIgnoreCase(partParameter)) {
+		} else if (HttpPart.HEAP_HISTO.isPart(req)) {
 			final HeapHistogram heapHistoTotal = getRemoteCallHelper().collectGlobalHeapHistogram();
 			doHeapHisto(req, resp, heapHistoTotal, monitoringController);
 		} else {
@@ -296,7 +302,7 @@ public class NodesController {
 	private void doHeapHisto(HttpServletRequest req, HttpServletResponse resp,
 			HeapHistogram heapHistogram, MonitoringController monitoringController)
 			throws IOException {
-		if ("pdf".equalsIgnoreCase(req.getParameter(FORMAT_PARAMETER))) {
+		if ("pdf".equalsIgnoreCase(HttpParameter.FORMAT.getParameterFrom(req))) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
 			try {
 				final PdfOtherReport pdfOtherReport = new PdfOtherReport(collector.getApplication(),
@@ -309,7 +315,7 @@ public class NodesController {
 			final PrintWriter writer = createWriterFromOutputStream(resp);
 			final HtmlReport htmlReport = createHtmlReport(req, resp, writer);
 			htmlReport.writeHtmlHeader();
-			htmlReport.writeHeapHistogram(heapHistogram, null, HEAP_HISTO_PART);
+			htmlReport.writeHeapHistogram(heapHistogram, null, HttpPart.HEAP_HISTO.getName());
 			htmlReport.writeHtmlFooter();
 			writer.close();
 		}
@@ -328,17 +334,16 @@ public class NodesController {
 	}
 
 	private Serializable createSerializable(HttpServletRequest httpRequest) throws Exception { // NOPMD
-		final String part = httpRequest.getParameter(PART_PARAMETER);
-		if (MBEANS_PART.equalsIgnoreCase(part)) {
+		if (HttpPart.MBEANS.isPart(httpRequest)) {
 			return new LinkedHashMap<>(getRemoteCallHelper().collectMBeanNodesByNodeName());
-		} else if (PROCESSES_PART.equalsIgnoreCase(part)) {
+		} else if (HttpPart.PROCESSES.isPart(httpRequest)) {
 			return new LinkedHashMap<>(
 					getRemoteCallHelper().collectProcessInformationsByNodeName());
-		} else if (HEAP_HISTO_PART.equalsIgnoreCase(part)) {
+		} else if (HttpPart.HEAP_HISTO.isPart(httpRequest)) {
 			return getRemoteCallHelper().collectGlobalHeapHistogram();
-		} else if (JVM_PART.equalsIgnoreCase(part)) {
+		} else if (HttpPart.JVM.isPart(httpRequest)) {
 			return new ArrayList<>(lastJavaInformationsList);
-		} else if (THREADS_PART.equalsIgnoreCase(part)) {
+		} else if (HttpPart.THREADS.isPart(httpRequest)) {
 			final ArrayList<List<ThreadInformations>> result = new ArrayList<>();
 			for (final JavaInformations javaInformations : lastJavaInformationsList) {
 				result.add(new ArrayList<>(javaInformations.getThreadInformationsList()));
@@ -362,8 +367,8 @@ public class NodesController {
 	private static PrintWriter createWriterFromOutputStream(HttpServletResponse httpResponse)
 			throws IOException {
 		MonitoringController.noCache(httpResponse);
-		httpResponse.setContentType(HTML_CONTENT_TYPE);
-		return new PrintWriter(MonitoringController.getWriter(httpResponse));
+		httpResponse.setContentType("text/html; charset=UTF-8");
+		return new PrintWriter(HtmlController.getWriter(httpResponse));
 	}
 
 	private RemoteCallHelper getRemoteCallHelper() {

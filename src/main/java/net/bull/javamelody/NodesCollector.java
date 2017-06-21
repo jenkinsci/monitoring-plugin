@@ -25,6 +25,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import jenkins.model.Jenkins;
+import net.bull.javamelody.internal.common.LOG;
+import net.bull.javamelody.internal.common.Parameters;
+import net.bull.javamelody.internal.model.Collector;
+import net.bull.javamelody.internal.model.Counter;
+import net.bull.javamelody.internal.model.JavaInformations;
+import net.bull.javamelody.internal.model.Period;
+import net.bull.javamelody.internal.web.MailReport;
 
 /**
  * Collector of data for Hudson/Jenkins' nodes (slaves in general)
@@ -44,7 +51,7 @@ public class NodesCollector {
 
 		/** {@inheritDoc} */
 		@Override
-		void collectLocalContextWithoutErrors() {
+		public void collectLocalContextWithoutErrors() {
 			// no local collect
 		}
 	}
@@ -56,7 +63,7 @@ public class NodesCollector {
 	 */
 	public NodesCollector(MonitoringFilter filter) {
 		super();
-		this.monitoringDisabled = Boolean.parseBoolean(Parameters.getParameter(Parameter.DISABLED));
+		this.monitoringDisabled = Parameter.DISABLED.getValueAsBoolean();
 		if (!monitoringDisabled) {
 			this.timer = filter.getFilterContext().getTimer();
 			final List<Counter> counters = Collections
@@ -89,8 +96,8 @@ public class NodesCollector {
 		timer.schedule(collectTask, 5000, periodMillis);
 
 		// schedule to send reports by email
-		if (Parameters.getParameter(Parameter.MAIL_SESSION) != null
-				&& Parameters.getParameter(Parameter.ADMIN_EMAILS) != null) {
+		if (Parameter.MAIL_SESSION.getValue() != null
+				&& Parameter.ADMIN_EMAILS.getValue() != null) {
 			scheduleReportMailForSlaves();
 		}
 	}

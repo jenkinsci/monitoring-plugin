@@ -22,6 +22,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.BuildStepListener;
 import hudson.tasks.BuildStep;
+import net.bull.javamelody.internal.model.Counter;
 
 /**
  * Listener de debut et de fin de build-steps pour alimenter les tableaux des builds en cours,
@@ -31,8 +32,7 @@ import hudson.tasks.BuildStep;
 @Extension
 public class CounterBuildStepListener extends BuildStepListener {
 	private static final Counter BUILD_COUNTER = CounterRunListener.getBuildCounter();
-	private static final boolean DISABLED = Boolean
-			.parseBoolean(Parameters.getParameter(Parameter.DISABLED));
+	private static final boolean DISABLED = Parameter.DISABLED.getValueAsBoolean();
 
 	/**
 	 * Constructor.

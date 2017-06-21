@@ -22,6 +22,8 @@ import hudson.model.AbstractBuild;
 import hudson.model.Result;
 import hudson.model.TaskListener;
 import hudson.model.listeners.RunListener;
+import net.bull.javamelody.internal.common.Parameters;
+import net.bull.javamelody.internal.model.Counter;
 
 /**
  * Listener de debut et de fin de builds pour alimenter les tableaux des builds en cours,
@@ -35,8 +37,7 @@ public class CounterRunListener extends RunListener<AbstractBuild> {
 			"jobs.png");
 	private static final boolean COUNTER_HIDDEN = Parameters
 			.isCounterHidden(BUILD_COUNTER.getName());
-	private static final boolean DISABLED = Boolean
-			.parseBoolean(Parameters.getParameter(Parameter.DISABLED));
+	private static final boolean DISABLED = Parameter.DISABLED.getValueAsBoolean();
 
 	/**
 	 * Constructor.

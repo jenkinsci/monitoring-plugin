@@ -33,6 +33,7 @@ import javax.servlet.http.HttpSession;
 import jenkins.model.Jenkins;
 import net.bull.javamelody.NodesCollector;
 import net.bull.javamelody.NodesController;
+import net.bull.javamelody.Parameter;
 import net.bull.javamelody.PluginMonitoringFilter;
 
 /**
@@ -43,8 +44,8 @@ import net.bull.javamelody.PluginMonitoringFilter;
 public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 	// TODO since Jenkins 2.2, we could almost extend MonitoringFilter instead of PluginMonitoringFilter
 	// by using extension point: https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/jenkins/util/HttpSessionListener.java
-	private static final boolean PLUGIN_AUTHENTICATION_DISABLED = Boolean
-			.parseBoolean(System.getProperty("javamelody.plugin-authentication-disabled"));
+	private static final boolean PLUGIN_AUTHENTICATION_DISABLED = Parameter.PLUGIN_AUTHENTICATION_DISABLED
+			.getValueAsBoolean();
 
 	private NodesCollector nodesCollector;
 
