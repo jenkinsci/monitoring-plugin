@@ -54,7 +54,6 @@ import net.bull.javamelody.internal.web.pdf.PdfOtherReport;
 /**
  * Controller between data and presentation for Hudson/Jenkins' nodes (slaves in
  * general)
- * 
  * @author Emeric Vernat
  */
 public class NodesController {
@@ -88,7 +87,6 @@ public class NodesController {
 
 	/**
 	 * Generate a report
-	 * 
 	 * @param req Http request
 	 * @param resp Http response
 	 * @throws IOException e

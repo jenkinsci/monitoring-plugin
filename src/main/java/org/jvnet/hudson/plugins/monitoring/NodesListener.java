@@ -30,7 +30,6 @@ import net.bull.javamelody.NodesCollector;
 /**
  * Listener of nodes to update data when nodes become online or offline without
  * waiting 1 minute.
- * 
  * @author Emeric Vernat
  */
 @Extension

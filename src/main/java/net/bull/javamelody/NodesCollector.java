@@ -35,7 +35,6 @@ import net.bull.javamelody.internal.web.MailReport;
 
 /**
  * Collector of data for Hudson/Jenkins' nodes (slaves in general)
- * 
  * @author Emeric Vernat
  */
 public class NodesCollector {
@@ -58,7 +57,6 @@ public class NodesCollector {
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param filter Http filter to get the scheduling timer
 	 */
 	public NodesCollector(MonitoringFilter filter) {

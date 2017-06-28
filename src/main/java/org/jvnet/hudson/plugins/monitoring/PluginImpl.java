@@ -29,11 +29,9 @@ import jenkins.model.Jenkins;
 
 /**
  * Entry point of the plugin.
- * 
  * <p>
  * There must be one {@link Plugin} class in each plugin. See javadoc of
  * {@link Plugin} for more about what can be done on this class.
- * 
  * @author Emeric Vernat
  */
 @SuppressWarnings("deprecation")
