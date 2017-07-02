@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>net.bull.javamelody</groupId>
 			<artifactId>javamelody-core</artifactId>
-			<version>1.68.0-SNAPSHOT</version>
+			<version>1.68.0</version>
 		</dependency>
 		<!-- slf4j-api for Jenkins issue https://issues.jenkins-ci.org/browse/JENKINS-11293
 		NoClassDefFoundError: org.slf4j.ILoggerFactory on IBM J9 JVM,
