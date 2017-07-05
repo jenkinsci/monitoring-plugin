@@ -73,7 +73,7 @@
 		</dependency>
 		<dependency>
 			<!-- https://github.com/javamelody/aws-cloudwatch-library -->
-			<groupId>org.jenkins-ci.plugins</groupId>
+			<groupId>net.bull.javamelody</groupId>
 			<artifactId>aws-cloudwatch-library</artifactId>
 			<version>1.11.136</version>
 			<optional>true</optional>
