@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -180,8 +179,7 @@ public class NodesController {
 	}
 
 	private void doPdf(HttpServletRequest req, HttpServletResponse resp,
-			MonitoringController monitoringController)
-			throws IOException, InterruptedException, ExecutionException, ServletException {
+			MonitoringController monitoringController) throws IOException, ServletException {
 		if (HttpPart.PROCESSES.isPart(req)) {
 			monitoringController.addPdfContentTypeAndDisposition(req, resp);
 			final Map<String, List<ProcessInformations>> processInformationsByNodeName = getRemoteCallHelper()
@@ -242,8 +240,7 @@ public class NodesController {
 	}
 
 	private void doPart(HttpServletRequest req, HttpServletResponse resp,
-			MonitoringController monitoringController)
-			throws IOException, InterruptedException, ExecutionException, ServletException {
+			MonitoringController monitoringController) throws IOException, ServletException {
 		// ici, ni web.xml ni pom.xml
 		if (HttpPart.MBEANS.isPart(req)) {
 			final Map<String, List<MBeanNode>> mbeanNodesByNodeName = getRemoteCallHelper()

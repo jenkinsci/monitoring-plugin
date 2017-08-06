@@ -24,7 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -152,7 +151,7 @@ final class RemoteCallHelper {
 	}
 
 	private <T> Map<String, T> collectDataByNodeName(Callable<T, Throwable> task)
-			throws IOException, InterruptedException, ExecutionException {
+			throws IOException {
 		final Jenkins jenkins = Jenkins.getInstance();
 		if (jenkins == null) {
 			return Collections.emptyMap();
@@ -178,33 +177,32 @@ final class RemoteCallHelper {
 				result.put(node, future.get(timeout, TimeUnit.MILLISECONDS));
 			} catch (final TimeoutException e) {
 				continue;
+			} catch (final Throwable e) {
+				// JENKINS-45963 (FreeBSD): if collect fails for one node, continue with others
+				continue;
 			}
 		}
 		return result;
 	}
 
-	Map<String, JavaInformations> collectJavaInformationsListByName()
-			throws IOException, InterruptedException, ExecutionException {
+	Map<String, JavaInformations> collectJavaInformationsListByName() throws IOException {
 		return collectDataByNodeName(JAVA_INFORMATIONS_TASK);
 	}
 
-	List<String> collectJmxValues(String jmxValueParameter)
-			throws IOException, InterruptedException, ExecutionException {
+	List<String> collectJmxValues(String jmxValueParameter) throws IOException {
 		return new ArrayList<>(collectDataByNodeName(new JmxValueTask(jmxValueParameter)).values());
 	}
 
-	Map<String, List<MBeanNode>> collectMBeanNodesByNodeName()
-			throws IOException, InterruptedException, ExecutionException {
+	Map<String, List<MBeanNode>> collectMBeanNodesByNodeName() throws IOException {
 		return collectDataByNodeName(MBEANS_TASK);
 	}
 
 	Map<String, List<ProcessInformations>> collectProcessInformationsByNodeName()
-			throws IOException, InterruptedException, ExecutionException {
+			throws IOException {
 		return collectDataByNodeName(PROCESS_INFORMATIONS_TASK);
 	}
 
-	HeapHistogram collectGlobalHeapHistogram()
-			throws IOException, InterruptedException, ExecutionException {
+	HeapHistogram collectGlobalHeapHistogram() throws IOException {
 		final Map<String, HeapHistogram> heapHistograms = collectDataByNodeName(
 				HEAP_HISTOGRAM_TASK);
 		HeapHistogram heapHistoTotal = null;
@@ -222,7 +220,7 @@ final class RemoteCallHelper {
 	}
 
 	String forwardAction(String actionName, String sessionId, String threadId, String jobId,
-			String cacheId) throws IOException, InterruptedException, ExecutionException {
+			String cacheId) throws IOException {
 		final ActionTask task = new ActionTask(actionName, sessionId, threadId, jobId, cacheId);
 		final Map<String, String> messagesByNodeName = collectDataByNodeName(task);
 		final StringBuilder sb = new StringBuilder();
