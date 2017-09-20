@@ -46,12 +46,14 @@
 		</dependency>
 		<!-- slf4j-api for Jenkins issue https://issues.jenkins-ci.org/browse/JENKINS-11293
 		NoClassDefFoundError: org.slf4j.ILoggerFactory on IBM J9 JVM,
-		(this may not be needed anymore since with JENKINS-12650, slf4j-api and slf4j-jdk14 are now bundled in core) -->
+		(this is not be needed anymore since with JENKINS-12650, slf4j-api and slf4j-jdk14 are now bundled in core),
+		removed for https://issues.jenkins-ci.org/browse/JENKINS-46966
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>1.6.3</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
