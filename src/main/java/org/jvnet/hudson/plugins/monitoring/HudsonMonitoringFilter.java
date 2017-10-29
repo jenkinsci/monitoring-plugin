@@ -80,13 +80,14 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 		final String requestURI = httpRequest.getRequestURI();
 		final String monitoringUrl = getMonitoringUrl(httpRequest);
 		final String monitoringSlavesUrl = monitoringUrl + "/nodes";
-		if (!PLUGIN_AUTHENTICATION_DISABLED && (requestURI.equals(monitoringUrl)
-				|| requestURI.startsWith(monitoringSlavesUrl))) {
+		if (requestURI.equals(monitoringUrl) || requestURI.startsWith(monitoringSlavesUrl)) {
 			if (isRumMonitoring(httpRequest, httpResponse)) {
 				return;
 			}
-			// only the Hudson/Jenkins administrator can view the monitoring report
-			Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
+			if (!PLUGIN_AUTHENTICATION_DISABLED) {
+				// only the Hudson/Jenkins administrator can view the monitoring report
+				Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
+			}
 
 			// this check of parameters is not supposed to be needed,
 			// but just in case we can check parameters here
