@@ -1,0 +1,11 @@
+net.bull.javamelody.internal.model.CacheInformations
+net.bull.javamelody.internal.model.HeapHistogram
+net.bull.javamelody.internal.model.HeapHistogram$ClassInfo
+net.bull.javamelody.internal.model.JavaInformations
+net.bull.javamelody.internal.model.JobInformations
+net.bull.javamelody.internal.model.MBeanNode
+net.bull.javamelody.internal.model.MBeanNode$MBeanAttribute
+net.bull.javamelody.internal.model.MemoryInformations
+net.bull.javamelody.internal.model.ProcessInformations
+net.bull.javamelody.internal.model.ThreadInformations
+net.bull.javamelody.internal.model.TomcatInformations
