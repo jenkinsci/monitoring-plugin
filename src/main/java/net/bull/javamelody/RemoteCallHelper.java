@@ -42,19 +42,46 @@ import net.bull.javamelody.internal.model.ProcessInformations;
 import net.bull.javamelody.internal.model.VirtualMachine;
 
 final class RemoteCallHelper {
-	private static final MasterToSlaveCallable<JavaInformations, Throwable> JAVA_INFORMATIONS_TASK = new MasterToSlaveCallable<JavaInformations, Throwable>() {
-		private static final long serialVersionUID = 4778731836785411552L;
+	private static final MasterToSlaveCallable<JavaInformations, Throwable> JAVA_INFORMATIONS_TASK = new JavaInformationsTask();
+	private static final MasterToSlaveCallable<HeapHistogram, Throwable> HEAP_HISTOGRAM_TASK = new HeapHistogramTask();
+	private static final MasterToSlaveCallable<List<ProcessInformations>, Throwable> PROCESS_INFORMATIONS_TASK = new ProcessInformationsTask();
+	private static final MasterToSlaveCallable<List<MBeanNode>, Throwable> MBEANS_TASK = new MBeansTask();
+
+	private static final class MBeansTask
+			extends MasterToSlaveCallable<List<MBeanNode>, Throwable> {
+		private static final long serialVersionUID = 7010512609895185019L;
+
+		MBeansTask() {
+			super();
+		}
 
 		@Override
-		public JavaInformations call() throws Throwable {
-			// otherwise static values of the Hudson/Jenkins master are used, but web.xml does not exist
-			// on the slaves (pom.xml exists and will not be displayed without dependencies)
-			JavaInformations.setWebXmlExistsAndPomXmlExists(false, true);
-			return new JavaInformations(null, true);
+		public List<MBeanNode> call() throws Throwable {
+			return MBeans.getAllMBeanNodes();
 		}
-	};
-	private static final MasterToSlaveCallable<HeapHistogram, Throwable> HEAP_HISTOGRAM_TASK = new MasterToSlaveCallable<HeapHistogram, Throwable>() {
+	}
+
+	private static final class ProcessInformationsTask
+			extends MasterToSlaveCallable<List<ProcessInformations>, Throwable> {
+		private static final long serialVersionUID = -4653173833541398792L;
+
+		ProcessInformationsTask() {
+			super();
+		}
+
+		@Override
+		public List<ProcessInformations> call() throws Throwable {
+			return ProcessInformations.buildProcessInformations();
+		}
+	}
+
+	private static final class HeapHistogramTask
+			extends MasterToSlaveCallable<HeapHistogram, Throwable> {
 		private static final long serialVersionUID = -3978979765596110525L;
+
+		HeapHistogramTask() {
+			super();
+		}
 
 		@Override
 		public HeapHistogram call() throws Throwable {
@@ -63,23 +90,24 @@ final class RemoteCallHelper {
 			}
 			return null;
 		}
-	};
-	private static final MasterToSlaveCallable<List<ProcessInformations>, Throwable> PROCESS_INFORMATIONS_TASK = new MasterToSlaveCallable<List<ProcessInformations>, Throwable>() {
-		private static final long serialVersionUID = -4653173833541398792L;
+	}
+
+	private static final class JavaInformationsTask
+			extends MasterToSlaveCallable<JavaInformations, Throwable> {
+		private static final long serialVersionUID = 4778731836785411552L;
+
+		JavaInformationsTask() {
+			super();
+		}
 
 		@Override
-		public List<ProcessInformations> call() throws Throwable {
-			return ProcessInformations.buildProcessInformations();
+		public JavaInformations call() throws Throwable {
+			// otherwise static values of the Hudson/Jenkins master are used, but web.xml does not exist
+			// on the slaves (pom.xml exists and will not be displayed without dependencies)
+			JavaInformations.setWebXmlExistsAndPomXmlExists(false, true);
+			return new JavaInformations(null, true);
 		}
-	};
-	private static final MasterToSlaveCallable<List<MBeanNode>, Throwable> MBEANS_TASK = new MasterToSlaveCallable<List<MBeanNode>, Throwable>() {
-		private static final long serialVersionUID = 7010512609895185019L;
-
-		@Override
-		public List<MBeanNode> call() throws Throwable {
-			return MBeans.getAllMBeanNodes();
-		}
-	};
+	}
 
 	private static final class ActionTask extends MasterToSlaveCallable<String, Throwable> {
 		private static final long serialVersionUID = -3978979765596110525L;
