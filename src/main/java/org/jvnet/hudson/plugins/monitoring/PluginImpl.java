@@ -26,6 +26,8 @@ import javax.servlet.ServletContext;
 import hudson.Plugin;
 import hudson.util.PluginServletFilter;
 import jenkins.model.Jenkins;
+import net.bull.javamelody.Parameter;
+import net.bull.javamelody.internal.common.Parameters;
 
 /**
  * Entry point of the plugin.
@@ -52,26 +54,26 @@ public class PluginImpl extends Plugin {
 
 		// on active les actions systemes (gc, heap dump, histogramme memoire,
 		// processus...), sauf si l'administrateur a dit differemment
-		if (isParameterUndefined("javamelody.system-actions-enabled")) {
-			System.setProperty("javamelody.system-actions-enabled", "true");
+		if (isParameterUndefined(Parameter.SYSTEM_ACTIONS_ENABLED)) {
+			Parameter.SYSTEM_ACTIONS_ENABLED.setValue("true");
 		}
 		// on desactive les graphiques jdbc et statistiques sql puisqu'il n'y en
 		// aura pas
-		if (isParameterUndefined("javamelody.no-database")) {
-			System.setProperty("javamelody.no-database", "true");
+		if (isParameterUndefined(Parameter.NO_DATABASE)) {
+			Parameter.NO_DATABASE.setValue("true");
 		}
 		// le repertoire de stockage est dans le repertoire de Hudson/Jenkins au lieu
 		// d'etre dans le repertoire temporaire
 		// ("/" initial necessaire sous windows pour javamelody v1.8.1)
-		if (isParameterUndefined("javamelody.storage-directory")) {
-			System.setProperty("javamelody.storage-directory",
-					"/" + new File(jenkins.getRootDir(), "monitoring").getAbsolutePath());
+		if (isParameterUndefined(Parameter.STORAGE_DIRECTORY)) {
+			Parameter.STORAGE_DIRECTORY
+					.setValue("/" + new File(jenkins.getRootDir(), "monitoring").getAbsolutePath());
 		}
 		// google-analytics pour connaitre le nombre d'installations actives et
 		// pour connaitre les fonctions les plus utilisees
 		if (isParameterUndefined("javamelody.analytics-disabled")
-				&& isParameterUndefined("javamelody.analytics-id")) {
-			System.setProperty("javamelody.analytics-id", "UA-1335263-7");
+				&& isParameterUndefined(Parameter.ANALYTICS_ID)) {
+			Parameter.ANALYTICS_ID.setValue("UA-1335263-7");
 		}
 		// http-transform-pattern pour agreger les requetes contenant des
 		// parties "dynamiques" comme des numeros des builds,
@@ -80,29 +82,29 @@ public class PluginImpl extends Plugin {
 		// ou les utilisateurs dans user/
 		// ou les fichiers dans /static/abcdef123/ et dans /adjuncts/abcdef123/
 		// ou les renders ajax lors de l'ajout de build step dans /$stapler/bound/c285ac3d-39c1-4515-86aa-0b42d75212b3/render
-		if (isParameterUndefined("javamelody.http-transform-pattern")) {
-			System.setProperty("javamelody.http-transform-pattern",
+		if (isParameterUndefined(Parameter.HTTP_TRANSFORM_PATTERN)) {
+			Parameter.HTTP_TRANSFORM_PATTERN.setValue(
 					"/\\d+/|/site/.+|avadoc/.+|/ws/.+|obertura/.+|estReport/.+|iolations/file/.+|/user/.+|/static/\\w+/|/adjuncts/\\w+/|/bound/[\\w\\-]+");
 		}
 
 		// custom reports (v1.50+)
-		if (isParameterUndefined("javamelody.custom-reports")) {
-			System.setProperty("javamelody.custom-reports", "Jenkins Info,About Monitoring");
+		if (isParameterUndefined(Parameter.CUSTOM_REPORTS)) {
+			Parameter.CUSTOM_REPORTS.setValue("Jenkins Info,About Monitoring");
 			System.setProperty("javamelody.Jenkins Info", "/systemInfo");
 			System.setProperty("javamelody.About Monitoring",
 					"https://wiki.jenkins-ci.org/display/JENKINS/Monitoring");
 		}
 
 		// fix for JENKINS-14050: Unreadable HTML response for the monitoring reports
-		if (isParameterUndefined("javamelody.gzip-compression-disabled")) {
-			System.setProperty("javamelody.gzip-compression-disabled", "true");
+		if (isParameterUndefined(Parameter.GZIP_COMPRESSION_DISABLED)) {
+			Parameter.GZIP_COMPRESSION_DISABLED.setValue("true");
 		}
 
-		if (isParameterUndefined("javamelody.maven-repositories")) {
+		if (isParameterUndefined(Parameter.MAVEN_REPOSITORIES)) {
 			// add jenkins maven public repository for jenkins and plugins sources
 			final String mavenRepositories = System.getProperty("user.home")
 					+ "/.m2/repository,http://repo1.maven.org/maven2,http://repo.jenkins-ci.org/public";
-			System.setProperty("javamelody.maven-repositories", mavenRepositories);
+			Parameter.MAVEN_REPOSITORIES.setValue(mavenRepositories);
 		}
 
 		// we could set "javamelody.admin-emails" with
@@ -116,6 +118,11 @@ public class PluginImpl extends Plugin {
 
 		this.filter = new HudsonMonitoringFilter();
 		PluginServletFilter.addFilter(filter);
+	}
+
+	private boolean isParameterUndefined(Parameter parameter) {
+		final String key = Parameters.PARAMETER_SYSTEM_PREFIX + parameter.getCode();
+		return isParameterUndefined(key);
 	}
 
 	private boolean isParameterUndefined(String key) {
