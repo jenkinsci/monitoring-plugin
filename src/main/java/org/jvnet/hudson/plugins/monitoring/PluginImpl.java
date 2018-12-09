@@ -65,7 +65,6 @@ public class PluginImpl extends Plugin {
 						} catch (final InterruptedException e) {
 							// RAS
 						}
-						continue;
 					}
 					if (jenkins.isUseCrumbs()) {
 						Parameter.CSRF_PROTECTION_ENABLED.setValue("true");
