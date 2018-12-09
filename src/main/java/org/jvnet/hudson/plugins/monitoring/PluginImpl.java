@@ -24,6 +24,7 @@ import java.util.logging.LogRecord;
 import javax.servlet.ServletContext;
 
 import hudson.Plugin;
+import hudson.init.InitMilestone;
 import hudson.util.PluginServletFilter;
 import jenkins.model.Jenkins;
 import net.bull.javamelody.Parameter;
@@ -50,6 +51,29 @@ public class PluginImpl extends Plugin {
 		final Jenkins jenkins = Jenkins.getInstance();
 		if (jenkins != null) {
 			this.context = jenkins.servletContext;
+
+			// jenkins.isUseCrumbs() is always false here because it's too early
+			// and we can't use @Initializer(after = InitMilestone.COMPLETED) 
+			// because of https://issues.jenkins-ci.org/browse/JENKINS-37807
+			// so check when jenkins is initialized
+			final Thread thread = new Thread("javamelody-initializer") {
+				@Override
+				public void run() {
+					while (jenkins.getInitLevel() != InitMilestone.COMPLETED) {
+						try {
+							Thread.sleep(1000);
+						} catch (final InterruptedException e) {
+							// RAS
+						}
+						continue;
+					}
+					if (jenkins.isUseCrumbs()) {
+						Parameter.CSRF_PROTECTION_ENABLED.setValue("true");
+					}
+				}
+			};
+			thread.setDaemon(true);
+			thread.start();
 		}
 
 		// on active les actions systemes (gc, heap dump, histogramme memoire,
