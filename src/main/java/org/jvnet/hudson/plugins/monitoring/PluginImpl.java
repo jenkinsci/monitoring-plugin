@@ -107,7 +107,7 @@ public class PluginImpl extends Plugin {
 		// ou les renders ajax lors de l'ajout de build step dans /$stapler/bound/c285ac3d-39c1-4515-86aa-0b42d75212b3/render
 		if (isParameterUndefined(Parameter.HTTP_TRANSFORM_PATTERN)) {
 			Parameter.HTTP_TRANSFORM_PATTERN.setValue(
-					"/\\d+/|(?<=/static/|/adjuncts/|/bound/)[\\w\\-]+|(?<=/ws/|/user/|/testReport/|/javadoc/|/site/|/violations/file/|/cobertura/).+");
+					"/\\d+/|(?<=/static/|/adjuncts/|/bound/)[\\w\\-]+|(?<=/ws/|/user/|/testReport/|/javadoc/|/site/|/violations/file/|/cobertura/).+|(?<=/job/).+(?=/descriptorByName/)");
 		}
 
 		// custom reports (v1.50+)
