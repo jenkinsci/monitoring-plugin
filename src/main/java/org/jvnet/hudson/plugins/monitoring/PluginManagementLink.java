@@ -51,8 +51,9 @@ public class PluginManagementLink extends ManagementLink {
 	 */
 	@Override
 	public String getDescription() {
+		// <a></a> for better rendering of the management link in the Administer page
 		return "Monitoring of memory, cpu, http requests and more in Jenkins master."
-				+ "<br/>You can also view the monitoring of <a href='./monitoring/nodes'>Jenkins nodes</a>.";
+				+ "<a href='./monitoring/nodes'>You can also view the monitoring of builds, build queue and Jenkins nodes.</a>";
 	}
 
 	/**
