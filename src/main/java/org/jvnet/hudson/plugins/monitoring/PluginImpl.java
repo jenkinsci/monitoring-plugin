@@ -53,7 +53,7 @@ public class PluginImpl extends Plugin {
 			this.context = jenkins.servletContext;
 
 			// jenkins.isUseCrumbs() is always false here because it's too early
-			// and we can't use @Initializer(after = InitMilestone.COMPLETED) 
+			// and we can't use @Initializer(after = InitMilestone.COMPLETED)
 			// because of https://issues.jenkins-ci.org/browse/JENKINS-37807
 			// so check when jenkins is initialized
 			final Thread thread = new Thread("javamelody-initializer") {
