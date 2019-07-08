@@ -6,5 +6,5 @@
 <?jelly escape-by-default='true'?>
 <div>
   Jenkins' monitoring with <a href='https://github.com/javamelody/javamelody/wiki' target='_blank'>JavaMelody</a>.
-  Open <a href='${request.contextPath}/monitoring'>report</a> after installation.
+  Open <a href='../monitoring'>report</a> after installation.
 </div>
