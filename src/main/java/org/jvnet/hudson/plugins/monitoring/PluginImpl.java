@@ -49,31 +49,29 @@ public class PluginImpl extends Plugin {
 
 		// get the servletContext in Jenkins instead of overriding Plugin.setServletContext
 		final Jenkins jenkins = Jenkins.getInstance();
-		if (jenkins != null) {
-			this.context = jenkins.servletContext;
+		this.context = jenkins.servletContext;
 
-			// jenkins.isUseCrumbs() is always false here because it's too early
-			// and we can't use @Initializer(after = InitMilestone.COMPLETED)
-			// because of https://issues.jenkins-ci.org/browse/JENKINS-37807
-			// so check when jenkins is initialized
-			final Thread thread = new Thread("javamelody-initializer") {
-				@Override
-				public void run() {
-					while (jenkins.getInitLevel() != InitMilestone.COMPLETED) {
-						try {
-							Thread.sleep(1000);
-						} catch (final InterruptedException e) {
-							// RAS
-						}
-					}
-					if (jenkins.isUseCrumbs()) {
-						Parameter.CSRF_PROTECTION_ENABLED.setValue("true");
+		// jenkins.isUseCrumbs() is always false here because it's too early
+		// and we can't use @Initializer(after = InitMilestone.COMPLETED)
+		// because of https://issues.jenkins-ci.org/browse/JENKINS-37807
+		// so check when jenkins is initialized
+		final Thread thread = new Thread("javamelody-initializer") {
+			@Override
+			public void run() {
+				while (jenkins.getInitLevel() != InitMilestone.COMPLETED) {
+					try {
+						Thread.sleep(1000);
+					} catch (final InterruptedException e) {
+						// RAS
 					}
 				}
-			};
-			thread.setDaemon(true);
-			thread.start();
-		}
+				if (jenkins.isUseCrumbs()) {
+					Parameter.CSRF_PROTECTION_ENABLED.setValue("true");
+				}
+			}
+		};
+		thread.setDaemon(true);
+		thread.start();
 
 		// on active les actions systemes (gc, heap dump, histogramme memoire,
 		// processus...), sauf si l'administrateur a dit differemment

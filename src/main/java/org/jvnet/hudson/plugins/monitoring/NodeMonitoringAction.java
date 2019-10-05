@@ -87,6 +87,6 @@ public class NodeMonitoringAction implements Action {
 	 */
 	protected boolean hasMonitoringPermissions() {
 		final Jenkins jenkins = Jenkins.getInstance();
-		return jenkins != null && jenkins.hasPermission(Jenkins.ADMINISTER);
+		return jenkins.hasPermission(Jenkins.ADMINISTER);
 	}
 }
