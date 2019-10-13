@@ -165,6 +165,8 @@ public class NodesCollector {
 			// note: this BUILD_QUEUE_LENGTH needs at least javamelody-core 1.35.0-SNAPSHOT
 			// including values for buildQueueLength in translations*.properties
 			JdbcWrapper.BUILD_QUEUE_LENGTH.set(queueLength);
+			final long waitingDurationsSum = WaitingDurationQueueListener.getWaitingDurationsSum();
+			JdbcWrapper.BUILD_QUEUE_WAITING_DURATIONS_SUM.set(waitingDurationsSum);
 
 			final List<JavaInformations> javaInformations = new ArrayList<>(
 					getLastJavaInformationsList().values());
