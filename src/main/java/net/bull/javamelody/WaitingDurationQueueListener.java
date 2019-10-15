@@ -37,7 +37,7 @@ public class WaitingDurationQueueListener extends QueueListener {
 	/** {@inheritDoc} */
 	@Override
 	public void onEnterWaiting(WaitingItem wi) {
-		START_TIMES_BY_ID.put(wi.getId(), new Date());
+		START_TIMES_BY_ID.put(wi.getId(), new Date(wi.getInQueueSince()));
 	}
 
 	/** {@inheritDoc} */
