@@ -56,12 +56,12 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 
 ### Release notes
 
-**Next release (master)**
+#### Next release (master)
 
 * added a graph in /monitoring/nodes of the sum of waiting durations in seconds of the builds in the build queue
     ([efa4d03](https://github.com/jenkinsci/monitoring-plugin/commit/efa4d0317122ed629190d7206a32a462a0228b5f))
 
-**1.79.0 (Jul 26, 2019)**
+#### 1.79.0 (Jul 26, 2019)
 
 * fix [JENKINS-58419](https://issues.jenkins-ci.org/browse/JENKINS-58419):
     No redirect after login in the CAS plugin since 1.78.0.
@@ -72,7 +72,7 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 * fix [\#847](https://github.com/javamelody/javamelody/issues/847):
     When downloading more than 2GB, assertionError may occur.
 
-**1.78.0 (Jul 2, 2019)**
+#### 1.78.0 (Jul 2, 2019)
 
 * Improved the rendering of the management links in the Administer page
     ([JENKINS-57373](https://issues.jenkins-ci.org/browse/JENKINS-57373)).  
@@ -97,11 +97,9 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 * To contribute in your own language, join the translation project at
     <https://poeditor.com/join/project/QIaCp4bThS>.
 
-**1.77.0 (Apr 21, 2019)**
+#### 1.77.0 (Apr 21, 2019)
 
-* improved: better
-    aggregation of http requests. The javamelody parameter used by
-    default in this plugin is now
+* improved: better aggregation of http requests. The javamelody parameter used by default in this plugin is now
     `-Djavamelody.http-transform-pattern=/\d+/|(?<=/static/|/adjuncts/|/bound/)[\w\-]+|(?<=/ws/|/user/|/testReport/|/javadoc/|/site/|/violations/file/|/cobertura/).+|(?<=/job/).+(?=/descriptorByName/)`.
 * added: Italian translations
     ([ffc028f](https://github.com/javamelody/javamelody/commit/ffc028f),
@@ -132,9 +130,7 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
         (scroll down if the target page does not scroll to the right
         chapter).
 
-  
-
-********1.76.0 (Jan 27, 2019)********
+#### 1.76.0 (Jan 27, 2019)
 
 * You can now contribute translations for javamelody by using a
     dedicated website at POEditor. You may contribute some
@@ -152,7 +148,7 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
     Prometheus integration again: it was printed '\<?\>' instead of NaN,
     for 'lastValue' on Java 8 and before.
 
-****1.75.0 (Dec 9, 2018)****
+#### 1.75.0 (Dec 9, 2018)
 
 * Fix [\#794](https://github.com/javamelody/javamelody/issues/794) Compatibility with Google App Engine using Java 8.
 * Fix [\#779](https://github.com/javamelody/javamelody/issues/779) When using JSVC to launch Tomcat, InternalError: errno: 13 error: Unable to open directory /proc/self/fd
@@ -165,8 +161,7 @@ Added the Offline viewer tool for some degraded cases:
 * or if you want to view the reports but the server is no longer running,
 * then the offline viewer may be for you. See [doc](https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced#offline-viewer)
 
-****1.74.0 (Sep 4, 2018)**  
-**
+#### 1.74.0 (Sep 4, 2018)
 
 * It is a **recommended upgrade for security** to fix a [XML External Entity (XXE) processing](https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing) vulnerability. CVE-ID is
     [CVE-2018-15531](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-15531).
@@ -178,13 +173,13 @@ Added the Offline viewer tool for some degraded cases:
     ([84a1d63](https://github.com/javamelody/javamelody/commit/84a1d63321449f71dec6069d3e712ee67e3ef5d6),
     with help from my colleague Fabien at [KleeGroup](http://www.kleegroup.com))
 
-**1.73.1 (Jun 27, 2018)**
+#### 1.73.1 (Jun 27, 2018)
 
 * Compatibility with JDK 9: `-Djdk.attach.allowAttachSelf=true` is no
     longer required to have heap histogram and fix the display of source
     for a JDK class.
 
-**1.73.0 (Jun 20, 2018)**
+#### 1.73.0 (Jun 20, 2018)
 
 * Compatibility with JDK 9: fix heap dump and heap histogram, display
     again the graphs of cpu, opened files and physical memory. ~~Note:
@@ -226,7 +221,7 @@ Added the Offline viewer tool for some degraded cases:
           format: ['prometheus']
           includeLastValue: ['true']
 
-**1.72.0 (Apr 4, 2018)**
+#### 1.72.0 (Apr 4, 2018)
 
 * Fix [\#735](https://github.com/javamelody/javamelody/issues/735): NPE when there are no executors.
 * Fix [\#737](https://github.com/javamelody/javamelody/issues/737) for StatsD integration.
@@ -236,7 +231,7 @@ Added the Offline viewer tool for some degraded cases:
 * Fix [\#668](https://github.com/javamelody/javamelody/issues/668):
     `RrdException: Invalid timestamps specified` in some particular case when using custom period.
 
-**1.71.0 (Feb 5, 2018)**
+#### 1.71.0 (Feb 5, 2018)
 
 * Added JEP-200 exclusions when using monitoring with slaves (PR
     [\#6](https://github.com/jenkinsci/monitoring-plugin/pull/6) thanks to Jesse Glick)
@@ -275,7 +270,7 @@ Added the Offline viewer tool for some degraded cases:
     `monitoring?part=lastValue&graph=usedMemory` already returns the
     last value of a single graph by name.)
 
-**1.70.0 (Oct 29, 2017)**
+#### 1.70.0 (Oct 29, 2017)
 
 * added: integration with **Prometheus**: Metrics are already
     displayed in the monitoring reports. You can also scrape the same
@@ -305,12 +300,12 @@ Added the Offline viewer tool for some degraded cases:
 * fix [\#681](https://github.com/javamelody/javamelody/issues/681):
     upgrade prototype.js, effects.js and slider.js
 
-**1.69.1 (Sep 20, 2017)**
+#### 1.69.1 (Sep 20, 2017)
 
 * remove the slf4j-api dependency from the plugin to avoid potential
     conflicts with the same dependency in jenkins core.
 
-**1.69.0 (Aug 27, 2017)**
+#### 1.69.0 (Aug 27, 2017)
 
 * In the [Jenkins
     plugin](https://wiki.jenkins-ci.org/display/JENKINS/Monitoring), fix
@@ -341,7 +336,7 @@ Added the Offline viewer tool for some degraded cases:
     [doc](https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced#sending-metrics-to-datadog).
     ([239aa4e](https://github.com/javamelody/javamelody/commit/239aa4e4cdf3c2943caff779a2f5492772f1500f))
 
-**1.68.0 (Jul 1, 2017)**
+#### 1.68.0 (Jul 1, 2017)
 
 * improved (Brazilian) Portuguese translation (PR
     [\#642](https://github.com/javamelody/javamelody/pull/642), thanks
@@ -411,7 +406,7 @@ Added the Offline viewer tool for some degraded cases:
         or config files or Amazon services, see
         [doc](https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced#sending-metrics-to-aws-cloudwatch).
 
-**1.67.0 (May 12, 2017)**
+#### 1.67.0 (May 12, 2017)
 
 * fix
     [JENKINS-44241](https://issues.jenkins-ci.org/browse/JENKINS-44241):
@@ -419,7 +414,7 @@ Added the Offline viewer tool for some degraded cases:
     (RUM)](https://en.wikipedia.org/wiki/Real_user_monitoring)** in
     v1.66.0 does not work when enabled, for URLs ending with '/'.
 
-**1.66.0 (May 12, 2017)**
+#### 1.66.0 (May 12, 2017)
 
 * fix [\#617](https://github.com/javamelody/javamelody/issues/617):
     Charts of http/sql stats can not be viewed after restarting the
@@ -464,13 +459,13 @@ Added the Offline viewer tool for some degraded cases:
     it, add the system property "-Djavamelody.rum-enabled=true" in your
     jenkins.xml file.
 
-**1.65.1 (Mar 13, 2017)**
+#### 1.65.1 (Mar 13, 2017)
 
 * added: configuration to list Jenkins maven public repository next to
     \~/.m2/repository and Maven central, to be able to display Jenkins
     and plugins sources from stack-traces.
 
-**1.65.0 (Mar 12, 2017)**
+#### 1.65.0 (Mar 12, 2017)
 
 * fix
     [JENKINS-42112](https://issues.jenkins-ci.org/browse/JENKINS-42112),
@@ -515,9 +510,9 @@ Added the Offline viewer tool for some degraded cases:
     to extend the [javamelody user's
     guide](https://github.com/javamelody/javamelody/wiki/UserGuide).
 
-**1.64.0**
+~~1.64.0~~
 
-**1.63.0 (Jan 16, 2017)**
+#### 1.63.0 (Jan 16, 2017)
 
 * added: check for updated version of javamelody. If a new version is
     available, a message is now displayed at the top of the report to
@@ -540,15 +535,15 @@ Added the Offline viewer tool for some degraded cases:
     and sql statistics, then open the [monitoring
     page](http://javamelody.org/demo/monitoring) to explore the reports.
 
-**1.62.0 (Oct 1, 2016)**
+#### 1.62.0 (Oct 1, 2016)
 
 * fix XSS (reported by *Omar El Mandour*)
 
-**1.61.0 (Sep 12, 2016)**
+#### 1.61.0 (Sep 12, 2016)
 
 * fix XSS (reported by *Dallas Kaman, Praetorian Group*)
 
-**1.60.0 (Jun 14, 2016)**
+#### 1.60.0 (Jun 14, 2016)
 
 * Fix XSS in graph page ([PR
     555](https://github.com/javamelody/javamelody/pull/555), thanks to
@@ -577,7 +572,7 @@ Added the Offline viewer tool for some degraded cases:
     550](https://github.com/javamelody/javamelody/pull/550), thanks to
     *Zdenek Henek*)
 
-**1.59.0 (Feb 25, 2016)**
+#### 1.59.0 (Feb 25, 2016)
 
 * fix username in the list of http sessions
     ([d111126](https://github.com/jenkinsci/monitoring-plugin/commit/d1111261b03f7762e903724599fbf84eaa3a2d48))
@@ -599,7 +594,7 @@ Added the Offline viewer tool for some degraded cases:
 * added: Show used memory in dialog after manual GC ([issue
     522](https://github.com/javamelody/javamelody/issues/522))
 
-**1.58.0 (Nov 26, 2015)**
+#### 1.58.0 (Nov 26, 2015)
 
 * fix
     [JENKINS-23442](https://issues.jenkins-ci.org/browse/JENKINS-23442),
@@ -626,7 +621,7 @@ Added the Offline viewer tool for some degraded cases:
         into memory, using
         [FileChannel.map](http://docs.oracle.com/javase/7/docs/api/java/nio/channels/FileChannel.html#map%28java.nio.channels.FileChannel.MapMode,%20long,%20long%29).
 
-**1.57.0 (Aug 31, 2015)**
+#### 1.57.0 (Aug 31, 2015)
 
 * fix: check if async before flushing the response
     ([ee87b4b](https://github.com/javamelody/javamelody/commit/ee87b4b0be7fb11fd0d81a27923732d674b932d7)
@@ -648,7 +643,7 @@ Added the Offline viewer tool for some degraded cases:
     Jenkins for Continuous Monitoring. See the
     [documentation](https://github.com/javamelody/javamelody/wiki/ScriptsAndAlerts).
 
-**JavaMelody migration to Github**
+#### JavaMelody migration to Github
 
 * The JavaMelody project is migrated from GoogleCode
     (<https://code.google.com/p/javamelody>) to GitHub. The new project
@@ -656,7 +651,7 @@ Added the Offline viewer tool for some degraded cases:
 * The monitoring plugin for Jenkins does not move and is at
     <https://github.com/jenkinsci/monitoring-plugin>
 
-**1.56.0 (May 2, 2015)**
+#### 1.56.0 (May 2, 2015)
 
 * fix [issue
     477](https://github.com/javamelody/javamelody/issues/477): In the
@@ -665,7 +660,7 @@ Added the Offline viewer tool for some degraded cases:
     ([issue 474](https://github.com/javamelody/javamelody/issues/474),
     thanks to *Michal Bergmann*).
 
-**1.55.0 (Jan 30, 2015)**
+#### 1.55.0 (Jan 30, 2015)
 
 * fix [issue
     453](https://github.com/javamelody/javamelody/issues/453): Chinese
@@ -678,7 +673,7 @@ Added the Offline viewer tool for some degraded cases:
     455](https://github.com/javamelody/javamelody/issues/455): HTTP-401
     / WWW-Authenticate wrongly reported as HTTP error
 
-**1.54.0 (Now 30, 2014)**
+#### 1.54.0 (Now 30, 2014)
 
 * fix: Monitoring reports of a slave didn't work if its name contains
     a space.
@@ -686,7 +681,7 @@ Added the Offline viewer tool for some degraded cases:
     440](https://github.com/javamelody/javamelody/issues/440): Not able
     to start Desktop version.
 
-**1.53.1 (Oct 3, 2014)**
+#### 1.53.1 (Oct 3, 2014)
 
 * fix: in v1.52.0 with Tomcat, graphs of bytes received/sent and of
     Tomcat active threads were not displayed anymore in "Other charts"
@@ -706,12 +701,12 @@ Added the Offline viewer tool for some degraded cases:
     424](https://github.com/javamelody/javamelody/issues/424), thanks to
     *alf.hogemark*)
 
-**1.53.0 (Oct 1, 2014)**
+#### 1.53.0 (Oct 1, 2014)
 
 * fix security issues. See [Jenkins security
     advisory](https://wiki.jenkins-ci.org/display/SECURITY/Jenkins+Security+Advisory+2014-10-01).
 
-**1.52.1 (Aug 6, 2014)**
+#### 1.52.1 (Aug 6, 2014)
 
 * fix: for Maven type jobs on recent Jenkins versions, builds of Maven
     modules are displayed as always running in the /monitoring/nodes
@@ -719,7 +714,7 @@ Added the Offline viewer tool for some degraded cases:
 * fix: the logout action in the menu did not work in the
     /monitoring/nodes page
 
-**1.52.0 (Aug 3, 2014)**
+#### 1.52.0 (Aug 3, 2014)
 
 * **Upgraded mininum Jenkins** version to 1.509.3
 * added: display of **build steps** and their durations, in the detail
@@ -757,7 +752,7 @@ Added the Offline viewer tool for some degraded cases:
     sidepanel may be broken because of
     [JENKINS-23963](https://issues.jenkins-ci.org/browse/JENKINS-23963).
 
-**1.51.0 (Jun 5, 2014)**
+#### 1.51.0 (Jun 5, 2014)
 
 * fix: when using java 8, cpu graph was not displayed
 * Drop Java 5 support ([revision
@@ -772,7 +767,7 @@ Added the Offline viewer tool for some degraded cases:
 * added: PID in the heap dump file name ([revision
     3773](https://code.google.com/p/javamelody/source/detail?r=3773))
 
-**1.50.0 (Mar 27, 2014)**
+#### 1.50.0 (Mar 27, 2014)
 
 * Fix icons and links on some Jenkins servers in the new Monitoring
     page of individual nodes
@@ -809,7 +804,7 @@ Added the Offline viewer tool for some degraded cases:
     -Djavamelody.JenkinsInfo=/systemInfo  
     -Djavamelody.AboutMonitoring=<https://wiki.jenkins-ci.org/display/JENKINS/Monitoring>
 
-**1.49.0 (Jan 12, 2014)**
+#### 1.49.0 (Jan 12, 2014)
 
 * added: For each individual node (each slave in
     <http://yourhost/computer>), reports and actions are available from
@@ -831,7 +826,7 @@ Added the Offline viewer tool for some degraded cases:
     ([revision
     3614](https://code.google.com/p/javamelody/source/detail?r=3614))
 
-**1.48.0 (Nov 20, 2013)**
+#### 1.48.0 (Nov 20, 2013)
 
 * fix
     [JENKINS-20352](https://issues.jenkins-ci.org/browse/JENKINS-20532):
@@ -841,7 +836,7 @@ Added the Offline viewer tool for some degraded cases:
     354](https://github.com/javamelody/javamelody/issues/354): With the
     java update 1.7\_u45, the Desktop app does not start
 
-**1.47.0 (Sep 29, 2013)**
+#### 1.47.0 (Sep 29, 2013)
 
 * fix [issue
     339](https://github.com/javamelody/javamelody/issues/339): "One day"
@@ -877,7 +872,7 @@ Added the Offline viewer tool for some degraded cases:
         ("java,sun,com.sun,javax,org.apache,org.hibernate,oracle,org.postgresql,org.eclipse"
         by default)
 
-**1.46.0 (Aug 4, 2013)**
+#### 1.46.0 (Aug 4, 2013)
 
 * fix
     [JENKINS-17757](https://issues.jenkins-ci.org/browse/JENKINS-17757)
@@ -888,14 +883,14 @@ Added the Offline viewer tool for some degraded cases:
 * fix NPE when manually purging the obsolete monitoring files of
     slaves
 
-**1.45.0 (Jun 6, 2013)**
+#### 1.45.0 (Jun 6, 2013)
 
 * added: button to kill a thread from the current requests (issue
     [issue 302](https://github.com/javamelody/javamelody/issues/302))
 * added: button to donate in the html reports, to better inform users
     of this possibility
 
-**1.44.0 (Mar 30, 2013)**
+#### 1.44.0 (Mar 30, 2013)
 
 * fix: it is currently useless to display the sql hits for the current
     requests
@@ -909,7 +904,7 @@ Added the Offline viewer tool for some degraded cases:
     JBoss AS 7 without configuration of modules
 * page added: Some can be executed using the Jenkins Script Console.
 
-**1.43.0 (Jan 27, 2013)**
+#### 1.43.0 (Jan 27, 2013)
 
 * fix [issue
     270](https://github.com/javamelody/javamelody/issues/270): French
@@ -923,7 +918,7 @@ Added the Offline viewer tool for some degraded cases:
     *xiukongtiao*). You can add, for example, the system property
     -Djavamelody.locale=en\_US
 
-**1.42.0 (Dec 2, 2012)**
+#### 1.42.0 (Dec 2, 2012)
 
 * fix [issue 262](https://github.com/javamelody/javamelody/issues/262)
     NullPointerException in MonitoringFilter.doFilter(), when the webapp
@@ -947,7 +942,7 @@ Added the Offline viewer tool for some degraded cases:
     * This new UI may be an alternative to the web UI for advanced
         users or for exports
 
-**1.41.0 (Sep 30, 2012)**
+#### 1.41.0 (Sep 30, 2012)
 
 * fix [issue 252](https://github.com/javamelody/javamelody/issues/252)
     Add XSS protection
@@ -955,7 +950,7 @@ Added the Offline viewer tool for some degraded cases:
     exception while collecting data java.io.FileNotFoundException: Could
     not open ....rrd existent
 
-**1.40.0 (Aug 26, 2012)**
+#### 1.40.0 (Aug 26, 2012)
 
 * fix [issue
     14050](http://issues.jenkins-ci.org/browse/JENKINS-14050), also for
@@ -968,7 +963,7 @@ Added the Offline viewer tool for some degraded cases:
     and
     [JNDI](http://demo.javamelody.cloudbees.net/monitoring?format=json&part=jndi&path=comp).
 
-**1.39.0 (Jun 21, 2012)**
+#### 1.39.0 (Jun 21, 2012)
 
 * fix [issue
     14050](http://issues.jenkins-ci.org/browse/JENKINS-14050), also when
@@ -977,14 +972,14 @@ Added the Offline viewer tool for some degraded cases:
     disabled in the plugin and the reports will be compressed by Jenkins
     starting with v1.470.
 
-**1.38.0 (Jun 17, 2012)**
+#### 1.38.0 (Jun 17, 2012)
 
 * fix [issue
     14050](http://issues.jenkins-ci.org/browse/JENKINS-14050), but only
     when security is not enabled in Jenkins: Unreadable HTML response
     for the monitoring reports
 
-**1.37.0 (Apr 29, 2012)**
+#### 1.37.0 (Apr 29, 2012)
 
 * fix issue 207: Incompatibility with servlet api 2.4 (Tomcat 5.5) in
     Monitoring plugin 1.36.0
@@ -996,7 +991,7 @@ Added the Offline viewer tool for some degraded cases:
 * added: Display the disk usage of the storage at the bottom of the
     report
 
-**1.36.0 (Mar 30, 2012)**
+#### 1.36.0 (Mar 30, 2012)
 
 * [JavaMelody](https://github.com/javamelody/javamelody/wiki) is used
     inside the Monitoring plugin. Thanks to
@@ -1030,7 +1025,7 @@ Added the Offline viewer tool for some degraded cases:
         (revision 2678)
     * This version requires a Servlet 2.5 container (fixed in 1.37.0)
 
-**1.35.0 (Feb 28, 2012)**
+#### 1.35.0 (Feb 28, 2012)
 
 * fix issue 178: Since v1.32, "Nb of http sessions" is 0 and "View
     http sessions" is always empty.
@@ -1042,24 +1037,24 @@ Added the Offline viewer tool for some degraded cases:
     prevent long hangs on startup/shutdown in some particular
     environments (issue 181, thanks to r6squeegee)
 
-**1.34.0 (Jan 28, 2012)**
+#### 1.34.0 (Jan 28, 2012)
 
 * Minor bugfixes such as fonts in the PDF reports for Chinese people,
     when the first PDF report was made for non Chinese people
 
-**1.33.0 (Nov 29, 2011)**
+#### 1.33.0 (Nov 29, 2011)
 
 * fix [issue 11293](http://issues.jenkins-ci.org/browse/JENKINS-11293)
     Monitoring plugin not installed because of NoClassDefFoundError:
     org.slf4j.ILoggerFactory on IBM J9 JVM ([rev
     40073](https://svn.jenkins-ci.org/trunk/hudson/plugins/monitoring/pom.xml))
 
-**1.32.1 (Oct 14, 2011)**
+#### 1.32.1 (Oct 14, 2011)
 
 * fix issue 151: a Java 1.6 dependency was introduced in 1.32.0
     (NoSuchFieldError: ROOT)
 
-**1.32.0 (Oct 13, 2011)**
+#### 1.32.0 (Oct 13, 2011)
 
 * fix issue 141: exception while collecting data java.io.IOException:
     Read failed, file xyz not mapped for I/O (after out of disk space)
@@ -1071,13 +1066,13 @@ Added the Offline viewer tool for some degraded cases:
 * added: Provide an url (monitoring?action=mail\_test) to test sending
     a pdf report by mail (issue 145).
 
-**1.31.0 (Aug 14, 2011)**
+#### 1.31.0 (Aug 14, 2011)
 
 * fix issue 128: Clean the shutdown process
 * To display the username in the list of http sessions, look at
     ACEGI\_SECURITY\_LAST\_USERNAME if getRemoteUser() was null.
 
-**1.30.0 (Jul 15, 2011)**
+#### 1.30.0 (Jul 15, 2011)
 
 * fix issue 116: MBeans overview does not work with java 1.5
 * fix issue 117: Sorting of numbers is based on String comparison in
@@ -1087,22 +1082,22 @@ Added the Offline viewer tool for some degraded cases:
 * fix issue 124: Start date removed from the text at the top of the
     monitoring page, except if the "All" period is selected.
 
-**1.29.0**
+#### 1.29.0
 
 * fix issue 106: a few HTTP hits are lost in the statistics for the
     first hit(s) on new requests (no impact on statistics once requests
     are known)
 
-**1.28.0**
+#### 1.28.0
 
 * fix issue 99: NullPointerException when displaying the list of
     process on AIX
 
-**1.27.0**
+#### 1.27.0
 
 * added: pdf report of MBeans
 
-**1.26.0**
+#### 1.26.0
 
 * fix [issue 8344](http://issues.jenkins-ci.org/browse/JENKINS-8344)
     (ClassNotFoundException: net.bull.javamelody.SessionListener)
@@ -1116,7 +1111,7 @@ Added the Offline viewer tool for some degraded cases:
 * added: in the nodes report, chart of the number of the running
     builds by period
 
-**1.25.0**
+#### 1.25.0
 
 * fix some issues in the monitoring of Jenkins nodes when the
     operating systems of the nodes are heterogeneous
@@ -1124,7 +1119,7 @@ Added the Offline viewer tool for some degraded cases:
 * added: if JRockit, display the JRockit specific MBeans
 * added: pdf reports of http sessions and of heap histogram
 
-**1.24.0**
+#### 1.24.0
 
 * fix issue 74: "View OS Processes" does not work on MAC OS X Server
 
@@ -1174,7 +1169,7 @@ Added the Offline viewer tool for some degraded cases:
     in java.net](https://maven2-repository.dev.java.net/), the
     "Monitoring" plugin 1.24.0 was not in the plugin manager.
 
-**1.23.0**
+#### 1.23.0
 
 * fix [issue
     66](http://code.google.com/p/javamelody/issues/detail?id=66): Since
@@ -1186,7 +1181,7 @@ Added the Offline viewer tool for some degraded cases:
     To tomcat experts: Isn't an http session supposed to die first
     before being able to born a second time?
 
-**1.22.0**
+#### 1.22.0
 
 * fix: Maximum values in statistics could be incorrect
 * added major feature: graphic of the number of sessions and details
@@ -1201,7 +1196,7 @@ Added the Offline viewer tool for some degraded cases:
     -Djavamelody.allowed-addr-pattern=127\\.0\\.0\\.1 can also be added
     with the ip address of the collect server)
 
-**1.21.0**
+#### 1.21.0
 
 * fix to display the list of http sessions when Tomcat throws an
     exception "Session already invalidated"
@@ -1211,7 +1206,7 @@ Added the Offline viewer tool for some degraded cases:
     bytes received per minute and the number of bytes sent per minute by
     the server.
 
-**1.20.0**
+#### 1.20.0
 
 * added: German translation thanks to Ewald Arnold. We would like to
     have [feedback
@@ -1220,21 +1215,21 @@ Added the Offline viewer tool for some degraded cases:
     complete http request with query parameters and values, like it was
     displayed before v1.17.0
 
-**1.19.0**
+#### 1.19.0
 
 * fix NumberFormatException requesting process information.
 * fix (removed) jndi link in Winstone.
 * added debugging logs.
 
-**1.18.0**
+#### 1.18.0
 
 * other minor bugs fixed.
 
-**1.17.0**
+#### 1.17.0
 
 * some minor bugs fixed.
 
-**1.15.1**
+#### 1.15.1
 
 * change to **reduce disk usage**: Some common http requests are now
     aggregated in statistics, for example on build numbers.
@@ -1249,24 +1244,24 @@ possible on each Jenkins server to change the value of this parameter
 with a system property `-Djavamelody.http-transform-pattern=xxx` in the
 java command line.
 
-**1.15.0**
+#### 1.15.0
 
 * change to reduce disk usage: Graphics in http errors and in errors
     logs are no longer displayed
 
-**1.14.0**
+#### 1.14.0
 
 * fix: There was an InternalError on ubuntu or debian using the tomcat
     package with jsvc
 
-**1.13.0**
+#### 1.13.0
 
 * added: remember the last selected period (with a persistent cookie
     in the browser)
 * added: UI option to display graphs and statistics for **custom
     periods**, via fields of start and end dates of period to display
 
-**1.12.0**
+#### 1.12.0
 
 * added: **New charts** "Threads count", "Loaded classes count", "Used
     non heap memory", "Used physical memory", "Used swap space"
@@ -1283,12 +1278,12 @@ java command line.
 * added: display of "ajax GET" or "ajax POST" in http requests names
     for ajax requests
 
-**1.10.0**
+#### 1.10.0
 
 * English: For people outside US, UK and France, default language is
     now the default locale of the server or English.
 
-**1.9.0**
+#### 1.9.0
 
 * Fix: The "Monitoring" link in "/manage" page did not work when
     Jenkins was in a servlet context (not in the root context of the
@@ -1296,7 +1291,7 @@ java command line.
 * JavaMelody fix: someone had an exception in report on Solaris 10
     (getPID)
 
-**1.8.2**
+#### 1.8.2
 
 * Removed jdbc graphs as there is no database in Jenkins,
 * Removed sessions graph, values and links as the javamelody
@@ -1304,7 +1299,7 @@ java command line.
 * Added a link in "/manage" page
 * Added checkPermission to check authentication if configured
 
-**1.8.1**
+#### 1.8.1
 
 * Initial
 
