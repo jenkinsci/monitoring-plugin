@@ -49,7 +49,7 @@ Author : Emeric Vernat (evernat at free.fr)
 
 [Online help of JavaMelody](https://github.com/javamelody/javamelody/wiki/resources/Online_help_of_the_monitoring.pdf)
 
-Some [Monitoring scripts] can be executed using the Jenkins Script Console.  
+Some [Monitoring scripts](https://github.com/jenkinsci/monitoring-plugin/blob/master/docs/MonitoringScripts.md) can be executed using the Jenkins Script Console.
 The "Monitoring" plugin can be installed by point and click in the plugin manager of a Jenkins server, or it can be downloaded from <http://mirrors.jenkins-ci.org/plugins/monitoring/>.
 
 You can contribute translations on [this website](https://poeditor.com/join/project/QIaCp4bThS).
@@ -343,7 +343,7 @@ Added the Offline viewer tool for some degraded cases:
     to *Sandro Giacomozzi*).
 * added a **monitoring script** to display stats of builds and build
     steps having a mean time greater than the severe threshold. See [the
-    script](https://wiki.jenkins.io/display/JENKINS/Monitoring+Scripts#MonitoringScripts-DisplaysomeMBeanattributevalue).
+    script](https://github.com/jenkinsci/monitoring-plugin/blob/master/docs/MonitoringScripts.md#display-some-mbean-attribute-value).
 * fix [\#638](https://github.com/javamelody/javamelody/issues/638):
     When using [scripts and
     alerts](https://github.com/javamelody/javamelody/wiki/ScriptsAndAlerts)
@@ -631,7 +631,7 @@ Added the Offline viewer tool for some degraded cases:
     ([c04ef79](https://github.com/javamelody/javamelody/commit/c04ef7925977f17566581b81909bb62780b947e9)
     thanks to *Colin Ingarfield*)
 * Jenkins plugin: scripts examples updated to get data from slaves in
-    Jenkins Monitoring Scripts, below the scripts for Jenkins master.
+    [Jenkins Monitoring Scripts](https://github.com/jenkinsci/monitoring-plugin/blob/master/docs/MonitoringScripts.md), below the scripts for Jenkins master.
 * improved: An [api
     page](https://github.com/javamelody/javamelody/blob/master/javamelody-core/src/main/resources/net/bull/javamelody/resource/help/api.html)
     is now available in the monitoring with links to the
