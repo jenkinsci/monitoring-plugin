@@ -241,7 +241,7 @@ Or any script with monitoring values in this page.
 
 In the following scripts, `new RemoteCallHelper(null)` can be used to get data for all online slaves, or `new RemoteCallHelper("my-slave")` for a particular slave named "my-slave".
 
-#### Display jvm data, memory data, deadlocked threads by node
+#### Display jvm data, memory data, deadlocked threads by node, stack-traces of threads
 
 ```groovy
 import net.bull.javamelody.*;
