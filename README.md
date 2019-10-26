@@ -5,7 +5,7 @@
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/monitoring.svg?color=blue)](https://plugins.jenkins.io/monitoring)
 
 
-Monitoring plugin: Monitoring of the performance of Jenkins itself with [JavaMelody](https://github.com/javamelody/javamelody/wiki).
+[Monitoring plugin](https://plugins.jenkins.io/monitoring): Monitoring of the performance of Jenkins itself with [JavaMelody](https://github.com/javamelody/javamelody/wiki).
 
 Open the [report](http://localhost:8080/monitoring) (or <http://yourhost/monitoring>) after installation.
 
