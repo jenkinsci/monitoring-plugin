@@ -5,8 +5,6 @@ Monitoring plugin
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/monitoring.svg?color=blue)](https://plugins.jenkins.io/monitoring)
 
 
-### Summary
-
 Monitoring plugin: Monitoring of the performance of Jenkins itself with [JavaMelody](https://github.com/javamelody/javamelody/wiki).
 
 Open the [report](http://localhost:8080/monitoring) (or <http://yourhost/monitoring>) after installation.
@@ -15,7 +13,7 @@ Author : Emeric Vernat (evernat at free.fr)
 
 [License ASL](http://www.apache.org/licenses/LICENSE-2.0)
 
-### Features summarized
+## Features summarized
 
 * Charts of memory, cpu, system load average, http response times by day, week, month, year or custom period
 * Statistics of http requests with mean response times, mean cpu times, mean response size by request and by day, week, month, year or custom period
@@ -54,7 +52,7 @@ The "Monitoring" plugin can be installed by point and click in the plugin manage
 
 You can contribute translations on [this website](https://poeditor.com/join/project/QIaCp4bThS).
 
-### Release notes
+## Release notes
 
 #### Next release (master)
 
@@ -1303,7 +1301,7 @@ java command line.
 
 * Initial
 
-### Translations
+## Translations
 
 Translations for other languages such as Spanish are welcomed.
 
@@ -1317,7 +1315,7 @@ the same in French:
 
   
 
-### Compiling and testing the plugin:
+## Compiling and testing the plugin:
 
 Use maven commands "mvn hpi:run" or "mvn package" like for all Jenkins plugins
 
