@@ -1,4 +1,4 @@
-Monitoring plugin
+![Logo](/docs/images/systemmonitor32.png) Monitoring plugin
 =================
 
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/monitoring.svg)](https://plugins.jenkins.io/monitoring)
@@ -44,6 +44,10 @@ Author : Emeric Vernat (evernat at free.fr)
     * Heap histogram of that node
     * Actions for GC, heap dump
 * And more...
+
+![Graphics](/docs/images/graphics.png)
+![Statistics](/docs/images/statistics.png)
+![System infos and threads](/docs/images/system_infos_and_threads.png)
 
 [Online help of JavaMelody](https://github.com/javamelody/javamelody/wiki/resources/Online_help_of_the_monitoring.pdf)
 
