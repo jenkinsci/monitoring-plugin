@@ -60,7 +60,7 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 
 #### Next release (master)
 
-* added a graph in /monitoring/nodes of the sum of waiting durations in seconds of the builds in the build queue
+* added a graph in /monitoring/nodes of the sum of waiting durations in seconds of the builds in the build queue, next to the graph of the build queue length
     ([efa4d03](https://github.com/jenkinsci/monitoring-plugin/commit/efa4d0317122ed629190d7206a32a462a0228b5f))
 * moved documentation from [wiki](https://wiki.jenkins.io/display/JENKINS/Monitoring) to [github](https://github.com/jenkinsci/monitoring-plugin/blob/master/README.md)
 
