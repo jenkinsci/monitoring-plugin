@@ -60,9 +60,13 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 
 #### Next release (master)
 
+#### 1.80.0 (Nov 3, 2019)
+
+* After the [JavaMelody real case 1](RealCase1), the [real case 2](RealCase2) is an the investigation of a Java application with some very slow screens, with detailed explanation on monitoring metrics, statistics and found issues. And the [real case 3](RealCase3) on the investigation of why dozen of users are working extra-hours and of other issues. [#JavaMelodyRealCase](https://twitter.com/search?q=%23JavaMelodyRealCase)
 * added a graph in /monitoring/nodes of the sum of waiting durations in seconds of the builds in the build queue, next to the graph of the build queue length
     ([efa4d03](https://github.com/jenkinsci/monitoring-plugin/commit/efa4d0317122ed629190d7206a32a462a0228b5f))
 * moved documentation from [wiki](https://wiki.jenkins.io/display/JENKINS/Monitoring) to [github](https://github.com/jenkinsci/monitoring-plugin/blob/master/README.md)
+* added new Prometheus metrics in .../monitoring?format=prometheus: used non-heap memory, used buffered memory, used physical memory, used swap space, loaded classes count (a704562).
 
 #### 1.79.0 (Jul 26, 2019)
 
