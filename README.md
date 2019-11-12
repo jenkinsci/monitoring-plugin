@@ -3,7 +3,8 @@
 
 [![Jenkins Plugin](https://img.shields.io/jenkins/plugin/v/monitoring.svg)](https://plugins.jenkins.io/monitoring)
 [![Jenkins Plugin Installs](https://img.shields.io/jenkins/plugin/i/monitoring.svg?color=blue)](https://plugins.jenkins.io/monitoring)
-
+[![Build Status](https://ci.jenkins.io/buildStatus/icon?job=Plugins/monitoring-plugin/master)](https://ci.jenkins.io/job/Plugins/job/monitoring-plugin)
+[![JIRA](https://img.shields.io/badge/issue_tracker-JIRA-red.svg)](https://issues.jenkins-ci.org/issues/?jql=component%20%3D%20monitoring-plugin)
 
 [Monitoring plugin](https://plugins.jenkins.io/monitoring): Monitoring of the performance of Jenkins itself with [JavaMelody](https://github.com/javamelody/javamelody/wiki).
 
