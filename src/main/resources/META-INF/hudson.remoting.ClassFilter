@@ -1,4 +1,5 @@
 net.bull.javamelody.internal.model.CacheInformations
+net.bull.javamelody.internal.model.JCacheInformations
 net.bull.javamelody.internal.model.HeapHistogram
 net.bull.javamelody.internal.model.HeapHistogram$ClassInfo
 net.bull.javamelody.internal.model.JavaInformations
@@ -9,3 +10,4 @@ net.bull.javamelody.internal.model.MemoryInformations
 net.bull.javamelody.internal.model.ProcessInformations
 net.bull.javamelody.internal.model.ThreadInformations
 net.bull.javamelody.internal.model.TomcatInformations
+net.bull.javamelody.internal.model.HsErrPid
