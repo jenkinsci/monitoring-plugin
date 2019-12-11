@@ -61,6 +61,8 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 
 #### Next release (master)
 
+* fix [JENKINS-60433](https://issues.jenkins-ci.org/browse/JENKINS-60433): JEP-200 error on HsErrPid.
+
 #### 1.80.0 (Nov 3, 2019)
 
 * After the [JavaMelody real case 1](RealCase1), the [real case 2](RealCase2) is an the investigation of a Java application with some very slow screens, with detailed explanation on monitoring metrics, statistics and found issues. And the [real case 3](RealCase3) on the investigation of why dozen of users are working extra-hours and of other issues. [#JavaMelodyRealCase](https://twitter.com/search?q=%23JavaMelodyRealCase)
