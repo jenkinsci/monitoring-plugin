@@ -90,12 +90,6 @@ public class PluginImpl extends Plugin {
 			Parameter.STORAGE_DIRECTORY
 					.setValue("/" + new File(jenkins.getRootDir(), "monitoring").getAbsolutePath());
 		}
-		// google-analytics pour connaitre le nombre d'installations actives et
-		// pour connaitre les fonctions les plus utilisees
-		if (isParameterUndefined("javamelody.analytics-disabled")
-				&& isParameterUndefined(Parameter.ANALYTICS_ID)) {
-			Parameter.ANALYTICS_ID.setValue("UA-1335263-7");
-		}
 		// http-transform-pattern pour agreger les requetes contenant des
 		// parties "dynamiques" comme des numeros des builds,
 		// les fichiers dans job/<name>/site/, javadoc/, ws/, cobertura/,
