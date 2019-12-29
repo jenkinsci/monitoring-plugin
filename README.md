@@ -61,9 +61,14 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 
 #### Next release (master)
 
+*
+
+#### 1.81.0 (Dec 29, 2019)
+
 * fix [JENKINS-60433](https://issues.jenkins-ci.org/browse/JENKINS-60433): JEP-200 error on HsErrPid.
 * fix [#871](https://github.com/javamelody/javamelody/issues/871), thanks to Vicente Rossello Jaume: In the [optional collect server](https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced#optional-centralization-server-setup), each current request already displayed once is not displayed anymore after refresh.
 * Look further to display the remote user in the current requests. And add sessionId attribute in the current requests for the [External API](https://github.com/javamelody/javamelody/wiki/ExternalAPI). ([PR 873](https://github.com/javamelody/javamelody/pull/873), thanks to Eugene Kortov)
+* fix [#884](../issues/884), CircularReferenceException in [External API](ExternalAPI) with JSON for current requests.
 * added: graph of Usable disk space next to Free disk space in "Other charts" (the usable disk space may be lower than the free disk space, [#875](https://github.com/javamelody/javamelody/issues/875)).
 * added: if the monitoring of a Jenkins server is added in the [optional collect server](https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced#optional-centralization-server-setup), the monitoring of Jenkins nodes including builds are automatically added at the same time ([ee06c01](https://github.com/javamelody/javamelody/commit/ee06c01)).
 
