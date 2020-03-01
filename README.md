@@ -62,6 +62,11 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 #### Next release (master)
 
 *
+#### 1.82.0 (Mar 1, 2020)
+
+ * improved: in the http sessions, identify the new MS Edge browser as Edg instead of Chrome ([304819f](https://github.com/javamelody/javamelody/commit/304819f)).
+ * optimized: when displaying the report, lazy load images in "Other charts" ([cb18db5](https://github.com/javamelody/javamelody/commit/cb18db5)).
+ * clarify that statistics in reports starts at midnight (in the server's time zone), for example "1 day since midnight" ([#891](https://github.com/javamelody/javamelody/issues/891)).
 
 #### 1.81.0 (Dec 29, 2019)
 
