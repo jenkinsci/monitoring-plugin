@@ -42,6 +42,27 @@ public class PluginImpl extends Plugin {
 	private ServletContext context;
 	private HudsonMonitoringFilter filter;
 
+	private static class CsrfThread extends Thread {
+		CsrfThread() {
+			super();
+		}
+
+		@Override
+		public void run() {
+			final Jenkins jenkins = Jenkins.getInstance();
+			while (jenkins.getInitLevel() != InitMilestone.COMPLETED) {
+				try {
+					Thread.sleep(1000);
+				} catch (final InterruptedException e) {
+					// RAS
+				}
+			}
+			if (jenkins.isUseCrumbs()) {
+				Parameter.CSRF_PROTECTION_ENABLED.setValue("true");
+			}
+		}
+	}
+
 	/** {@inheritDoc} */
 	@Override
 	public void start() throws Exception {
@@ -55,21 +76,8 @@ public class PluginImpl extends Plugin {
 		// and we can't use @Initializer(after = InitMilestone.COMPLETED)
 		// because of https://issues.jenkins-ci.org/browse/JENKINS-37807
 		// so check when jenkins is initialized
-		final Thread thread = new Thread("javamelody-initializer") {
-			@Override
-			public void run() {
-				while (jenkins.getInitLevel() != InitMilestone.COMPLETED) {
-					try {
-						Thread.sleep(1000);
-					} catch (final InterruptedException e) {
-						// RAS
-					}
-				}
-				if (jenkins.isUseCrumbs()) {
-					Parameter.CSRF_PROTECTION_ENABLED.setValue("true");
-				}
-			}
-		};
+		final Thread thread = new CsrfThread();
+		thread.setName("javamelody-initializer");
 		thread.setDaemon(true);
 		thread.start();
 
