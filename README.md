@@ -59,9 +59,13 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 
 ## Release notes
 
-#### Next release (master)
+#### 1.83.0 (May 5, 2020)
 
-*
+ * improved: The javamelody parameter `http-transform-pattern` is already used in the plugin, in order to limit disk IO and disk space usage for the statistics and RRD graphs of http requests. If that's not enough, some RRD files of graphs for http requests will now be automatically deleted everyday at midnight to limit the disk space used by RRD files under 20 MB. You may configure that limit with the javamelody parameter `max-rrd-disk-usage-mb` (20 by default). And old statistics and graphs are automatically deleted like before. ([553b323](https://github.com/javamelody/javamelody/commit/553b323))
+ * added: As an external API, dump of graphs values as XML or as TXT, for the choosen period or for all periods ([d11e6a8](https://github.com/javamelody/javamelody/commit/d11e6a8)). See [doc](https://github.com/javamelody/javamelody/wiki/ExternalAPI#dump-graph-as-xml-or-txt).
+ * added: Links to Last value, Dump XML, Dump TXT below the zoomed graphics ([3967ea2](https://github.com/javamelody/javamelody/commit/3967ea2)).
+ * added: if using Tomcat, display sources of Tomcat's classes from stack-traces like for the webapp's dependencies ([9907e93](https://github.com/javamelody/javamelody/commit/9907e93)).
+
 #### 1.82.0 (Mar 1, 2020)
 
  * improved: in the http sessions, identify the new MS Edge browser as Edg instead of Chrome ([304819f](https://github.com/javamelody/javamelody/commit/304819f)).
