@@ -24,11 +24,11 @@ import hudson.Extension;
 import hudson.model.ManagementLink;
 
 /**
- * {@link ManagementLink} of the plugin to add a link in the "/manage" page.
+ * {@link ManagementLink} of the plugin to add a link in the "/manage" page, for the agents next to the one for the master.
  * @author Emeric Vernat
  */
-@Extension(ordinal = Integer.MAX_VALUE - 490)
-public class PluginManagementLink extends ManagementLink {
+@Extension(ordinal = Integer.MAX_VALUE - 491)
+public class NodesManagementLink extends ManagementLink {
 	/**
 	 * Mostly works like {@link hudson.model.Action#getIconFileName()}, except
 	 * that the expected icon size is 48x48, not 24x24. So if you give just a
@@ -51,7 +51,7 @@ public class PluginManagementLink extends ManagementLink {
 	 */
 	@Override
 	public String getDescription() {
-		return "Monitoring of memory, cpu, http requests and more in Jenkins master.";
+		return "Monitoring of builds, build queue and Jenkins agents.";
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class PluginManagementLink extends ManagementLink {
 	 */
 	@Override
 	public String getDisplayName() {
-		return "Monitoring of Jenkins master";
+		return "Monitoring of Jenkins agents";
 	}
 
 	/** {@inheritDoc} */
@@ -69,8 +69,8 @@ public class PluginManagementLink extends ManagementLink {
 	public String getUrlName() {
 		final StaplerRequest req = Stapler.getCurrentRequest();
 		if (req != null) {
-			return req.getContextPath() + "/monitoring";
+			return req.getContextPath() + "/monitoring/nodes";
 		}
-		return "/monitoring";
+		return "/monitoring/nodes";
 	}
 }
