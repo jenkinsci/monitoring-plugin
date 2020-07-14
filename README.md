@@ -59,9 +59,13 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 
 ## Release notes
 
-#### Since 1.84.0
+#### Since 1.85.0
 
 See [Releases](https://plugins.jenkins.io/monitoring/#releases)
+
+#### 1.84.0
+
+Canceled
 
 #### 1.83.0 (May 5, 2020)
 
