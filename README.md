@@ -59,6 +59,10 @@ You can contribute translations on [this website](https://poeditor.com/join/proj
 
 ## Release notes
 
+#### Since 1.84.0
+
+See [Releases](https://plugins.jenkins.io/monitoring/#releases)
+
 #### 1.83.0 (May 5, 2020)
 
  * improved: The javamelody parameter `http-transform-pattern` is already used in the plugin, in order to limit disk IO and disk space usage for the statistics and RRD graphs of http requests. If that's not enough, some RRD files of graphs for http requests will now be automatically deleted everyday at midnight to limit the disk space used by RRD files under 20 MB. You may configure that limit with the javamelody parameter `max-rrd-disk-usage-mb` (20 by default). And old statistics and graphs are automatically deleted like before. ([553b323](https://github.com/javamelody/javamelody/commit/553b323))
