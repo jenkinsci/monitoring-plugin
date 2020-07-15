@@ -115,7 +115,7 @@ public class PluginImpl extends Plugin {
 			Parameter.CUSTOM_REPORTS.setValue("Jenkins Info,About Monitoring");
 			System.setProperty("javamelody.Jenkins Info", "/systemInfo");
 			System.setProperty("javamelody.About Monitoring",
-					"https://wiki.jenkins-ci.org/display/JENKINS/Monitoring");
+					"https://plugins.jenkins.io/monitoring/");
 		}
 
 		// fix for JENKINS-14050: Unreadable HTML response for the monitoring reports
