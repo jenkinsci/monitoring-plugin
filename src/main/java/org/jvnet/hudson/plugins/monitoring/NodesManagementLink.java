@@ -73,4 +73,17 @@ public class NodesManagementLink extends ManagementLink {
 		}
 		return "/monitoring/nodes";
 	}
+
+	/**
+	 * Name of the category for this management link. Exists so that plugins with core dependency pre-dating the version
+	 * when this was introduced can define a category.
+	 *
+	 * TODO when the core version is &gt;2.226 change this to override {@code getCategory()} instead
+	 *
+	 * @return name of the desired category, one of the enum values of Category, e.g. {@code STATUS}.
+	 * @since 2.226
+	 */
+	public String getCategoryName() {
+		return "STATUS";
+	}
 }
