@@ -23,7 +23,7 @@ import jenkins.model.Jenkins;
 
 /**
  * Implements a "Monitoring" button for slaves.
- * This button will be available for everybody with ADMINISTER permission.
+ * This button will be available for everybody with Administer or SystemRead permissions.
  * @author Oleg Nenashev (o.v.nenashev@gmail.com), Emeric Vernat
  * @since 1.49
  */
@@ -82,11 +82,12 @@ public class NodeMonitoringAction implements Action {
 
 	/**
 	 * Checks that user has access permissions to the monitoring page.
-	 * By default, requires global Administer permission.
+	 * By default, requires global Administer or SystemRead permissions.
 	 * @return boolean
 	 */
 	protected boolean hasMonitoringPermissions() {
 		final Jenkins jenkins = Jenkins.getInstance();
-		return jenkins.hasPermission(Jenkins.ADMINISTER);
+		return jenkins.hasPermission(Jenkins.ADMINISTER)
+				|| jenkins.hasPermission(SystemReadPermission.SYSTEM_READ);
 	}
 }

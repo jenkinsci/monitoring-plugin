@@ -85,8 +85,15 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 				return;
 			}
 			if (!PLUGIN_AUTHENTICATION_DISABLED) {
-				// only the Hudson/Jenkins administrator can view the monitoring report
-				Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
+				final boolean hasSystemReadPermission = SystemReadPermission.SYSTEM_READ != null
+						&& Jenkins.getInstance().hasPermission(SystemReadPermission.SYSTEM_READ);
+				if (!hasSystemReadPermission) {
+					// only the Jenkins administrators and users with SystemRead permission can view the monitoring report
+					Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
+				} else if (hasSystemReadPermission && request.getParameter("action") != null) {
+					// only the Jenkins administrators can run actions such as GC, heap dump, etc
+					Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
+				}
 			}
 
 			// this check of parameters is not supposed to be needed,
