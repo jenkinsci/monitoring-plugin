@@ -22,6 +22,8 @@ import org.kohsuke.stapler.StaplerRequest;
 
 import hudson.Extension;
 import hudson.model.ManagementLink;
+import hudson.security.Permission;
+import jenkins.model.Jenkins;
 
 /**
  * {@link ManagementLink} of the plugin to add a link in the "/manage" page, for the agents next to the one for the master.
@@ -62,6 +64,13 @@ public class NodesManagementLink extends ManagementLink {
 	@Override
 	public String getDisplayName() {
 		return "Monitoring of Jenkins agents";
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public Permission getRequiredPermission() {
+		//This link is displayed to any user with permission to access the management menu
+		return Jenkins.READ;
 	}
 
 	/** {@inheritDoc} */

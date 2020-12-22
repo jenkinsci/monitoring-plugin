@@ -24,7 +24,7 @@
 <?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define"
          xmlns:l="/lib/layout" xmlns:t="/lib/hudson" xmlns:f="/lib/form">
-    <l:layout permission="${app.ADMINISTER}" xmlns:local="local" norefresh="true">
+    <l:layout xmlns:local="local" norefresh="true">
         <st:include it="${it.computer}" page="sidepanel.jelly"/>
         <l:main-panel>
             <h1>
@@ -85,19 +85,21 @@
                 </local:feature>
             </table>
               
-            <h2>${%System actions}</h2>
-            <table style="padding-left: 2em;" id="management-actions">
-                <local:feature icon="../${it.monitoringUrl}?resource=broom.png" 
-                               href="${it.monitoringUrl}?action=gc" 
-                               title="${%Execute the garbage collector}">
-                    ${%Runs the garbage collector on the node}
-                </local:feature>
-                <local:feature icon="../${it.monitoringUrl}?resource=heapdump.png" 
-                             href="${it.monitoringUrl}?action=heap_dump" 
-                             title="${%Generate a heap dump}">
-                    <b style="color:orange">${%Warning!}</b> ${%This operation may affect performance of the node}
-                </local:feature>
-            </table>
+            <l:isAdmin>
+	            <h2>${%System actions}</h2>
+	            <table style="padding-left: 2em;" id="management-actions">
+	                <local:feature icon="../${it.monitoringUrl}?resource=broom.png" 
+	                               href="${it.monitoringUrl}?action=gc" 
+	                               title="${%Execute the garbage collector}">
+	                    ${%Runs the garbage collector on the node}
+	                </local:feature>
+	                <local:feature icon="../${it.monitoringUrl}?resource=heapdump.png" 
+	                             href="${it.monitoringUrl}?action=heap_dump" 
+	                             title="${%Generate a heap dump}">
+	                    <b style="color:orange">${%Warning!}</b> ${%This operation may affect performance of the node}
+	                </local:feature>
+	            </table>
+            </l:isAdmin>
         </l:main-panel>
     </l:layout>
          
