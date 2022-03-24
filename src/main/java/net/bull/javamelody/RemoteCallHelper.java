@@ -104,6 +104,7 @@ final class RemoteCallHelper {
 			// otherwise static values of the Hudson/Jenkins master are used, but web.xml does not exist
 			// on the slaves (pom.xml exists and will not be displayed without dependencies)
 			JavaInformations.setWebXmlExistsAndPomXmlExists(false, true);
+			Parameter.NO_DATABASE.setValue("true");
 			return new JavaInformations(null, true);
 		}
 	}
