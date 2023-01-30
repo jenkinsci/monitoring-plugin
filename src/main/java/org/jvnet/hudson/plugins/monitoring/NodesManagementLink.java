@@ -26,7 +26,7 @@ import hudson.security.Permission;
 import jenkins.model.Jenkins;
 
 /**
- * {@link ManagementLink} of the plugin to add a link in the "/manage" page, for the agents next to the one for the master.
+ * {@link ManagementLink} of the plugin to add a link in the "/manage" page, for the agents next to the one for the instance.
  * @author Emeric Vernat
  */
 @Extension(ordinal = Integer.MAX_VALUE - 491)
