@@ -17,9 +17,13 @@
  */
 package org.jvnet.hudson.plugins.monitoring;
 
+import org.kohsuke.stapler.Stapler;
+
 import hudson.model.Action;
 import hudson.model.Computer;
 import jenkins.model.Jenkins;
+import net.bull.javamelody.SessionListener;
+import net.bull.javamelody.internal.web.html.HtmlAbstractReport;
 
 /**
  * Implements a "Monitoring" button for slaves.
@@ -78,6 +82,20 @@ public class NodeMonitoringAction implements Action {
 		final String urlSuffix = computer instanceof Jenkins.MasterComputer ? ""
 				: "/nodes/" + computer.getName();
 		return "../../../../monitoring" + urlSuffix;
+	}
+
+	/**
+	 * Si la protection csrf est activée dans Jenkins (ce qui est le cas par défaut),
+	 * retourne la partie de l'url avec le token csrf de javamelody.
+	 * @return String
+	 */
+	public String getCsrfTokenUrlPart() {
+		try {
+			SessionListener.bindSession(Stapler.getCurrentRequest().getSession(false));
+			return HtmlAbstractReport.getCsrfTokenUrlPart().replace("&amp;", "&");
+		} finally {
+			SessionListener.unbindSession();
+		}
 	}
 
 	/**
