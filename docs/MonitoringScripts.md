@@ -11,13 +11,13 @@ arbitrary scripts on the Jenkins server (or on slave nodes). This
 feature can be accessed from the "manage Jenkins" link, typically at
 your <http://server/jenkins/script>. See [more information and scripts](https://wiki.jenkins.io/display/JENKINS/Jenkins+Script+Console).
 
-# Monitoring Scripts and Alerts for Jenkins master
+# Monitoring Scripts and Alerts for the Jenkins instance
 
 If the [Monitoring plugin](https://plugins.jenkins.io/monitoring) is installed, you can also use the following
 monitoring scripts in the **Jenkins script console**. To run a script
 periodically, you could also create and schedule a job to execute a
 **system groovy script** with the [groovy plugin](https://wiki.jenkins.io/display/JENKINS/Groovy+plugin). (A system Groovy script
-executes insides Jenkins master's JVM, but see below for specific
+executes insides Jenkins instance's JVM, but see below for specific
 scripts for Jenkins slaves.)
 
 The data printed by the scripts below can be displayed by the reports of
@@ -194,7 +194,7 @@ for (request in aggreg.getRequests()) {
 
 You can send alerts with a Jenkins job, using a **system groovy script** with the [groovy plugin](https://plugins.jenkins.io/groovy).
 
-Suppose that you want to check every 15 minutes on the Jenkins master, if the system load average is above 50 or if the active HTTP threads
+Suppose that you want to check every 15 minutes on the Jenkins instance, if the system load average is above 50 or if the active HTTP threads
 count is above 100 or if there are deadlocked threads or if there are less than 10 Gb free disk space left:
 
 * Create a freestyle job in Jenkins by clicking "New item".

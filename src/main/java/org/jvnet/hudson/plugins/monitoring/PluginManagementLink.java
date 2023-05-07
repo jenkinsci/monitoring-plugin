@@ -53,7 +53,7 @@ public class PluginManagementLink extends ManagementLink {
 	 */
 	@Override
 	public String getDescription() {
-		return "Monitoring of memory, cpu, http requests and more in Jenkins master.";
+		return "Monitoring of memory, cpu, http requests and more in the Jenkins instance.";
 	}
 
 	/**
@@ -63,7 +63,7 @@ public class PluginManagementLink extends ManagementLink {
 	 */
 	@Override
 	public String getDisplayName() {
-		return "Monitoring of Jenkins master";
+		return "Monitoring of Jenkins instance";
 	}
 
 	/** {@inheritDoc} */
