@@ -17,7 +17,7 @@
 	<inceptionYear>2009</inceptionYear>
 
 	<properties>
-		<revision>1.95.0</revision>
+		<revision>1.95.1</revision>
 		<changelist>-SNAPSHOT</changelist>
 		<jenkins.version>2.387.3</jenkins.version>
 		<gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
