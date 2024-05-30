@@ -10,14 +10,14 @@
 	<groupId>org.jvnet.hudson.plugins</groupId>
 	<artifactId>monitoring</artifactId>
 	<packaging>hpi</packaging>
-	<version>1.99.0</version>
+	<version>${revision}${changelist}</version>
 	<name>Monitoring</name>
 	<description>Monitoring of Jenkins</description>
 	<url>https://github.com/jenkinsci/${project.artifactId}-plugin</url>
 	<inceptionYear>2009</inceptionYear>
 
 	<properties>
-		<revision>1.99.0</revision>
+		<revision>1.100.0</revision>
 		<changelist>-SNAPSHOT</changelist>
 		<jenkins.version>2.387.3</jenkins.version>
 		<gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
