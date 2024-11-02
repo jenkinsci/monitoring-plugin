@@ -21,7 +21,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.logging.LogRecord;
 
-import javax.servlet.ServletContext;
+import jakarta.servlet.ServletContext;
 
 import hudson.Plugin;
 import hudson.init.InitMilestone;
@@ -70,7 +70,7 @@ public class PluginImpl extends Plugin {
 
 		// get the servletContext in Jenkins instead of overriding Plugin.setServletContext
 		final Jenkins jenkins = Jenkins.getInstance();
-		this.context = jenkins.servletContext;
+		this.context = jenkins.getServletContext();
 
 		// jenkins.isUseCrumbs() is always false here because it's too early
 		// and we can't use @Initializer(after = InitMilestone.COMPLETED)

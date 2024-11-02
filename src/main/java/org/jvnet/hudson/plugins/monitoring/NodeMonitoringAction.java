@@ -91,7 +91,7 @@ public class NodeMonitoringAction implements Action {
 	 */
 	public String getCsrfTokenUrlPart() {
 		try {
-			SessionListener.bindSession(Stapler.getCurrentRequest().getSession(false));
+			SessionListener.bindSession(Stapler.getCurrentRequest2().getSession(false));
 			return HtmlAbstractReport.getCsrfTokenUrlPart().replace("&amp;", "&");
 		} finally {
 			SessionListener.unbindSession();
