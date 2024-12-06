@@ -18,7 +18,7 @@
 package org.jvnet.hudson.plugins.monitoring;
 
 import org.kohsuke.stapler.Stapler;
-import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerRequest2;
 
 import hudson.Extension;
 import hudson.model.ManagementLink;
@@ -76,7 +76,7 @@ public class NodesManagementLink extends ManagementLink {
 	/** {@inheritDoc} */
 	@Override
 	public String getUrlName() {
-		final StaplerRequest req = Stapler.getCurrentRequest();
+		final StaplerRequest2 req = Stapler.getCurrentRequest2();
 		if (req != null) {
 			return req.getContextPath() + "/monitoring/nodes";
 		}

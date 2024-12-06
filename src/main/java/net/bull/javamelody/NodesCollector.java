@@ -161,7 +161,7 @@ public class NodesCollector {
 			// inspired by https://github.com/jenkinsci/jenkins/blob/master/core/src/main/java/hudson/model/LoadStatistics.java#L197
 			// but with blocked items added and so getItems() instead of getBuildableItems()
 			// (getBlockedItems() is protected and unaccessible, getItems() is about 5 times longer than getBuildableItems())
-			final Jenkins jenkins = Jenkins.getInstance();
+			final Jenkins jenkins = Jenkins.get();
 			final int queueLength = jenkins.getQueue().getItems().length;
 			// note: this BUILD_QUEUE_LENGTH needs values for buildQueueLength in translations*.properties of javamelody-core
 			JdbcWrapper.BUILD_QUEUE_LENGTH.set(queueLength);

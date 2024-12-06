@@ -85,14 +85,13 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 				return;
 			}
 			if (!PLUGIN_AUTHENTICATION_DISABLED) {
-				final boolean hasSystemReadPermission = SystemReadPermission.SYSTEM_READ != null
-						&& Jenkins.getInstance().hasPermission(SystemReadPermission.SYSTEM_READ);
+				final boolean hasSystemReadPermission = Jenkins.get().hasPermission(Jenkins.SYSTEM_READ);
 				if (!hasSystemReadPermission) {
 					// only the Jenkins administrators and users with SystemRead permission can view the monitoring report
-					Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
+					Jenkins.get().checkPermission(Jenkins.ADMINISTER);
 				} else if (hasSystemReadPermission && request.getParameter("action") != null) {
 					// only the Jenkins administrators can run actions such as GC, heap dump, etc
-					Jenkins.getInstance().checkPermission(Jenkins.ADMINISTER);
+					Jenkins.get().checkPermission(Jenkins.ADMINISTER);
 				}
 			}
 
@@ -147,7 +146,7 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 		if (session.getAttribute(NodesController.SESSION_REMOTE_USER) == null) {
 			// login utilisateur, peut être null
 			// dans Jenkins, pas remoteUser = httpRequest.getRemoteUser();
-			final String remoteUser = Jenkins.getAuthentication().getName();
+			final String remoteUser = Jenkins.getAuthentication2().getName();
 			// !anonymous for https://issues.jenkins-ci.org/browse/JENKINS-42112
 			if (remoteUser != null && !"anonymous".equals(remoteUser)) {
 				session.setAttribute(NodesController.SESSION_REMOTE_USER, remoteUser);

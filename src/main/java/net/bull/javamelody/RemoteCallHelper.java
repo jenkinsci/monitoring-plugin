@@ -180,7 +180,7 @@ final class RemoteCallHelper {
 
 	private <T> Map<String, T> collectDataByNodeName(Callable<T, Throwable> task)
 			throws IOException {
-		final Jenkins jenkins = Jenkins.getInstance();
+		final Jenkins jenkins = Jenkins.get();
 		final Computer[] computers = jenkins.getComputers();
 		final Map<String, Future<T>> futuresByNodeName = new LinkedHashMap<>(computers.length);
 		final DelegatingTask<T> delegatingTask = new DelegatingTask<>(task);
