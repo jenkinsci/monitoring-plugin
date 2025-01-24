@@ -433,11 +433,7 @@ Added the Offline viewer tool for some degraded cases:
         `-Djavamelody.cloudwatch-namespace=MyCompany/MyAppDomain` in
         your jenkins.xml file (the namespaces starting with `AWS/` are
         reserved for AWS products). And restart.
-    2.  Download this [aws-cloudwatch-library
-        plugin](https://github.com/javamelody/aws-cloudwatch-library/releases/download/1.11.136/aws-cloudwatch-library.hpi)
-        and install it with the Advanced tab of the Plugin manager in
-        Jenkins.
-    3.  You also need to provide AWS credentials and AWS region as AWS
+    2.  You also need to provide AWS credentials and AWS region as AWS
         as environnement variables or system properties or credentials
         or config files or Amazon services, see
         [doc](https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced#sending-metrics-to-aws-cloudwatch).
