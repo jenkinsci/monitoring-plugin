@@ -157,12 +157,13 @@ public class NodesController {
 			}
 		} else {
 			MonitoringController.noCache(resp);
+			resp.setContentType("text/html; charset=UTF-8");
 			final PrintWriter writer = resp.getWriter();
 			writer.write("<html><body>");
-			writer.write("<a href='javascript:history.back()'>Back</a>");
+			writer.write("<a href='" + req.getContextPath() + "/manage/'>Back to Manage Jenkins</a>");
 			writer.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 			writer.write("<a href='?'>Update</a>");
-			writer.write("<br/><br/>No slaves online, try again in a minute.");
+			writer.write("<br/><br/>No agents online, try again in a minute.");
 			writer.write("</body></html>");
 			writer.close();
 		}
