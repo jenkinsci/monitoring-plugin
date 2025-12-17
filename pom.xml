@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jenkins-ci.plugins</groupId>
 		<artifactId>plugin</artifactId>
-		<version>5.2</version>
+		<version>5.30</version>
 		<relativePath />
 	</parent>
 	<groupId>org.jvnet.hudson.plugins</groupId>
@@ -21,6 +21,7 @@
 		<changelist>-SNAPSHOT</changelist>
 		<jenkins.version>2.479.1</jenkins.version>
 		<gitHubRepo>jenkinsci/${project.artifactId}-plugin</gitHubRepo>
+		<ban-junit4-imports.skip>false</ban-junit4-imports.skip>
 	</properties>
 
 	<developers>
@@ -33,7 +34,7 @@
 	<licenses>
 		<license>
 			<name>ASL</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
