@@ -4,17 +4,23 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
 
 import org.htmlunit.html.HtmlPage;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.jvnet.hudson.test.JenkinsRule;
+import org.jvnet.hudson.test.junit.jupiter.WithJenkins;
 
-public class MonitoringFilterIntegrationTest {
+@WithJenkins
+class MonitoringFilterIntegrationTest {
 
-    @Rule
-    public JenkinsRule rule = new JenkinsRule();
+    private JenkinsRule rule;
 
-    @Test
-    public void test() throws Exception {
+    @BeforeEach
+    void beforeEach(JenkinsRule rule) {
+        this.rule = rule;
+    }
+
+	@Test
+	void test() throws Exception {
         try (JenkinsRule.WebClient wc = rule.createWebClient()) {
             HtmlPage page = wc.goTo("monitoring");
             assertThat(page.getTitleText(), startsWith("Monitoring JavaMelody"));
