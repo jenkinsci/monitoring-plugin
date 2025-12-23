@@ -66,13 +66,13 @@
 		<dependency>
 			<groupId>org.jenkins-ci.plugins.aws-java-sdk</groupId>
 			<artifactId>aws-java-sdk-cloudwatch</artifactId>
-			<version>1.12.772-477.v650d756dcf6d</version>
+			<version>1.12.780-480.v4a_0819121a_9e</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.jenkins-ci.plugins</groupId>
 			<artifactId>apache-httpcomponents-client-4-api</artifactId>
-			<version>4.5.14-208.v438351942757</version>
+			<version>4.5.14-269.vfa_2321039a_83</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
