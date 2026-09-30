@@ -78,21 +78,21 @@ public class PluginManagementLink extends ManagementLink {
 	public String getUrlName() {
 		final StaplerRequest2 req = Stapler.getCurrentRequest2();
 		if (req != null) {
-			return req.getContextPath() + "/monitoring";
+			if (!req.getRequestURI().endsWith("/manage/")) {
+				// for New Manage Jenkins UI experiment
+				return "../monitoring";
+			}
+			return req.getContextPath() + "../monitoring";
 		}
 		return "/monitoring";
 	}
 
 	/**
-	 * Name of the category for this management link. Exists so that plugins with core dependency pre-dating the version
-	 * when this was introduced can define a category.
+	 * Category for this management link.
 	 *
-	 * TODO when the core version is &gt;2.226 change this to override {@code getCategory()} instead
-	 *
-	 * @return name of the desired category, one of the enum values of Category, e.g. {@code STATUS}.
-	 * @since 2.226
+	 * @return the desired category, one of the enum values of Category, e.g. {@code STATUS}.
 	 */
-	public String getCategoryName() {
-		return "STATUS";
+	public Category getCategory() {
+		return Category.STATUS;
 	}
 }
