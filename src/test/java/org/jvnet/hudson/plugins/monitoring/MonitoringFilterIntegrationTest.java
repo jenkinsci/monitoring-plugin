@@ -55,6 +55,14 @@ class MonitoringFilterIntegrationTest {
 
             HtmlPage missingNodePage = wc.goTo("monitoring/nodes/unknown-agent");
             assertThat(missingNodePage.asNormalizedText(), containsString("No agents online"));
+
+            hudson.slaves.DumbSlave agent = rule.createOnlineSlave();
+            HtmlPage onlineAgentPage = wc.goTo("monitoring/nodes/" + agent.getNodeName());
+            assertThat(onlineAgentPage.getTitleText(), startsWith("Monitoring JavaMelody"));
+
+            agent.toComputer().disconnect(null).get();
+            HtmlPage offlineAgentPage = wc.goTo("monitoring/nodes/" + agent.getNodeName());
+            assertThat(offlineAgentPage.asNormalizedText(), containsString("No agents online"));
         }
     }
 }
