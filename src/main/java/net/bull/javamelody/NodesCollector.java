@@ -41,7 +41,7 @@ public class NodesCollector {
 	private final boolean monitoringDisabled;
 	private final Timer timer;
 	private final Collector collector;
-	private Map<String, JavaInformations> lastJavaInformationsList;
+	private Map<String, JavaInformations> lastJavaInformationsList = Collections.emptyMap();
 
 	private static class RemoteCollector extends Collector {
 		RemoteCollector(String application, List<Counter> counters) {
@@ -214,7 +214,8 @@ public class NodesCollector {
 	}
 
 	Map<String, JavaInformations> getLastJavaInformationsList() {
-		return lastJavaInformationsList;
+		return lastJavaInformationsList != null ? lastJavaInformationsList
+				: Collections.emptyMap();
 	}
 
 	/**

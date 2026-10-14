@@ -30,6 +30,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import hudson.model.Node;
 import jenkins.model.Jenkins;
 import net.bull.javamelody.NodesCollector;
 import net.bull.javamelody.NodesController;
@@ -164,8 +165,12 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 	 */
 	private void doMonitoring(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			String nodeName) throws IOException {
-		if (NodesController.isJavaInformationsNeeded(httpRequest)) {
-			getNodesCollector().collectWithoutErrorsNow();
+		final Node node = nodeName != null ? Jenkins.get().getNode(nodeName) : null;
+		if (nodeName == null
+				|| node != null && node.toComputer() != null && node.toComputer().isOnline()) {
+			if (NodesController.isJavaInformationsNeeded(httpRequest)) {
+				getNodesCollector().collectWithoutErrorsNow();
+			}
 		}
 		final NodesController nodesController = new NodesController(getNodesCollector(), nodeName);
 		nodesController.doMonitoring(httpRequest, httpResponse);

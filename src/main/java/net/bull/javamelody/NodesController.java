@@ -75,12 +75,15 @@ public class NodesController {
 		super();
 		this.collector = nodesCollector.getCollector();
 		this.nodeName = nodeName;
+		final Map<String, JavaInformations> map = nodesCollector.getLastJavaInformationsList();
 		if (nodeName == null) {
-			this.lastJavaInformationsList = new ArrayList<>(
-					nodesCollector.getLastJavaInformationsList().values());
+			this.lastJavaInformationsList = map != null ? new ArrayList<>(map.values())
+					: Collections.emptyList();
 		} else {
-			this.lastJavaInformationsList = Collections
-					.singletonList(nodesCollector.getLastJavaInformationsList().get(nodeName));
+			final JavaInformations javaInformations = map != null ? map.get(nodeName) : null;
+			this.lastJavaInformationsList = javaInformations != null
+					? Collections.singletonList(javaInformations)
+					: Collections.emptyList();
 		}
 	}
 
