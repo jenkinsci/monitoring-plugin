@@ -164,8 +164,10 @@ public class HudsonMonitoringFilter extends PluginMonitoringFilter {
 	 */
 	private void doMonitoring(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			String nodeName) throws IOException {
-		if (NodesController.isJavaInformationsNeeded(httpRequest)) {
-			getNodesCollector().collectWithoutErrorsNow();
+		if (nodeName == null || Jenkins.get().getNode(nodeName) != null) {
+			if (NodesController.isJavaInformationsNeeded(httpRequest)) {
+				getNodesCollector().collectWithoutErrorsNow();
+			}
 		}
 		final NodesController nodesController = new NodesController(getNodesCollector(), nodeName);
 		nodesController.doMonitoring(httpRequest, httpResponse);

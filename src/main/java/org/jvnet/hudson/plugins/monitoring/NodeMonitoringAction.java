@@ -17,6 +17,8 @@
  */
 package org.jvnet.hudson.plugins.monitoring;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.kohsuke.stapler.Stapler;
 
 import hudson.model.Action;
@@ -90,8 +92,12 @@ public class NodeMonitoringAction implements Action {
 	 * @return String
 	 */
 	public String getCsrfTokenUrlPart() {
+		final HttpServletRequest req = Stapler.getCurrentRequest2();
+		if (req == null) {
+			return "";
+		}
 		try {
-			SessionListener.bindSession(Stapler.getCurrentRequest2().getSession(false));
+			SessionListener.bindSession(req.getSession(false));
 			return HtmlAbstractReport.getCsrfTokenUrlPart().replace("&amp;", "&");
 		} finally {
 			SessionListener.unbindSession();
