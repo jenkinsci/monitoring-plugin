@@ -82,7 +82,7 @@ public class PluginManagementLink extends ManagementLink {
 				// for New Manage Jenkins UI experiment
 				return "../monitoring";
 			}
-			return req.getContextPath() + "../monitoring";
+			return req.getContextPath() + "/monitoring";
 		}
 		return "/monitoring";
 	}

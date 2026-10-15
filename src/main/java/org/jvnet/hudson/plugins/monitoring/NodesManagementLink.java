@@ -82,7 +82,7 @@ public class NodesManagementLink extends ManagementLink {
 				// for New Manage Jenkins UI experiment
 				return "../monitoring/nodes";
 			}
-			return req.getContextPath() + "../monitoring/nodes";
+			return req.getContextPath() + "/monitoring/nodes";
 		}
 		return "/monitoring/nodes";
 	}
