@@ -49,6 +49,29 @@ for (session in sessions) {
 }
 ```
 
+#### Invalidate anonymous HTTP sessions
+
+If your Jenkins instance requires authentication and that leaves some web-crawlers
+waiting at the gate, you can release associated resources with this script:
+
+```groovy
+import net.bull.javamelody.*;
+import net.bull.javamelody.internal.model.*;
+import net.bull.javamelody.internal.common.*;
+println SessionListener.getSessionCount() + " sessions:";
+sessions = SessionListener.getAllSessionsInformations();
+int count=0
+for (session in sessions) {
+  println "${session} for ${session.remoteUser}"
+  if (session.remoteUser == null || session.remoteUser.blank) {
+    println "^^^ [X]"
+    count ++
+    SessionListener.invalidateSession(session.id)
+  }
+}
+println "Removed: ${count}"
+```
+
 #### Display a simple threads dump
 
 ```groovy
